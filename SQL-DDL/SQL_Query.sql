@@ -1,3 +1,4 @@
+USE DB
 CREATE TABLE [dbo].[USER] (
     User_ID INT NOT NULL,
     Date_of_Birth DATE NOT NULL,
@@ -7,9 +8,9 @@ CREATE TABLE [dbo].[USER] (
     ),
     First_Name VARCHAR(15) NOT NULL,
     Last_Name VARCHAR(15) NOT NULL,
-    Email VARCHAR(20) NOT NULL,
+    Email VARCHAR(50) NOT NULL,
     CHECK (Email LIKE '%@%.%'),
-    Passwrd VARCHAR(20) NOT NULL,
+    Passwd VARCHAR(20) NOT NULL,
     Gender CHAR(1) NOT NULL,
     Approved CHAR(1) NOT NULL,
     CONSTRAINT PK_USER PRIMARY KEY (User_ID)
@@ -36,7 +37,7 @@ CREATE TABLE [dbo].[MEAL_PLAN] (
 
 CREATE TABLE [dbo].[PROPERTY] (
     Property_ID INT NOT NULL,
-    Property_Name VARCHAR(15) NOT NULL,
+    Property_Name VARCHAR(50) NOT NULL,
     Property_Address VARCHAR(15) NOT NULL,
     Property_Description VARCHAR(15) NOT NULL,
     Property_Coordinates VARCHAR(20) NOT NULL,
@@ -51,26 +52,26 @@ CREATE TABLE [dbo].[PROPERTY] (
 
 CREATE TABLE [dbo].[PROPERTY_TYPE] (
     Property_Type_ID INT NOT NULL,
-    Property_Type_Name VARCHAR(15) NOT NULL,
+    Property_Type_Name VARCHAR(50) NOT NULL,
     CONSTRAINT Property_Type_ID PRIMARY KEY (Property_Type_ID)
 );
 
 CREATE TABLE [dbo].[AMENITIES] (
     Amenity_ID INT NOT NULL,
-    Amenity_Type VARCHAR(15) NOT NULL,
+    Amenity_Type VARCHAR(50) NOT NULL,
     CONSTRAINT Amenity_ID PRIMARY KEY (Amenity_ID)
 );
 
 CREATE TABLE [dbo].[ROOM_TYPE] (
     Room_Type_ID INT NOT NULL,
-    Room_Type_Description VARCHAR(15) NOT NULL,
-    Bed_Type VARCHAR(15) NOT NULL,
+    Room_Type_Description VARCHAR(50) NOT NULL,
+    Bed_Type VARCHAR(50) NOT NULL,
     CONSTRAINT Room_Type_ID PRIMARY KEY (Room_Type_ID)
 );
 
 CREATE TABLE [dbo].[FACILITIES] (
     Facility_ID INT NOT NULL,
-    Facility_Type VARCHAR(15) NOT NULL,
+    Facility_Type VARCHAR(50) NOT NULL,
     CONSTRAINT Facility_ID PRIMARY KEY (Facility_ID)
 );
 
@@ -105,9 +106,183 @@ CREATE TABLE [dbo].[REVIEWS] (
 
 CREATE TABLE [dbo].[POLICY] (
     Policy_ID INT NOT NULL,
-    Policy_Description VARCHAR(15) NOT NULL,
+    Policy_Description VARCHAR(50) NOT NULL,
     CONSTRAINT Policy_ID PRIMARY KEY (Policy_ID)
 );
+
+
+USE DB
+BULK 
+	INSERT [dbo].[USER]
+FROM 'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\USER.csv'
+WITH (
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    FIRSTROW = 2
+);
+GO
+
+USE DB
+BULK 
+	INSERT [dbo].[PRODUCT] 
+	FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PRODUCT.csv' WITH (
+    FIELDTERMINATOR = ',',
+    ROWTERMINATOR = '\n',
+    FIRSTROW = 2
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].MEAL_PLAN
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\MEAL_PLAN.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].PROPERTY
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PROPERTY.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].PROPERTY_TYPE
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PROPERTY_TYPE.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].AMENITIES
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\AMENITIES.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].ROOM_TYPE
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\ROOM_TYPE.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].FACILITIES
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\FACILITIES.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].STOCK
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\STOCK.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].RESERVATIONS
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\RESERVATIONS.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].REVIEWS
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\REVIEWS.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].[POLICY]
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\POLICY.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
 
 -- MANY TO MANY RELATIONSHIPS
 GO
@@ -147,6 +322,67 @@ CREATE TABLE [dbo].[PROPERTY_FACILITIES] (
     CONSTRAINT FK_PF_PROPERTY_ID FOREIGN KEY (MProperty_ID) REFERENCES PROPERTY(Property_ID)
 );
 
+BULK
+INSERT
+    [dbo].[MEAL_PLAN_FOR_PRODUCT]
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\MEAL_PLAN_FOR_PRODUCT.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].[PRODUCT_POLICIES]
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PRODUCT_POLICIES.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].[AMENITIES_ROOM_TYPE]
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\AMENITIES_ROOM_TYPE.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+BULK
+INSERT
+    [dbo].[PROPERTY_FACILITIES]
+FROM
+  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PROPERTY_FACILITIES.csv' WITH (
+    FIELDTERMINATOR = ',',
+    -- Change to '\t' if your fields are tab-separated
+    ROWTERMINATOR = '\n',
+    -- Windows-style newline '\r\n' might be needed
+    FIRSTROW = 2,
+    TABLOCK
+
+  );
+GO
+
+
 -- FOREIGN KEYS
 GO
     -- PRODUCT Foreign keys:
@@ -170,7 +406,7 @@ ADD
 GO
     -- RESERVATION Foreign keys:
 ALTER TABLE
-    [dbo].[RESERVATION] WITH CHECK
+    [dbo].[RESERVATIONS] WITH CHECK
 ADD
     CONSTRAINT [FK_Product_ID] FOREIGN KEY([Product_ID]) REFERENCES [dbo].[PRODUCT] ([Product_ID]);
 
