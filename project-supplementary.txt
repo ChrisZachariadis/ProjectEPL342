@@ -1,0 +1,1040 @@
+#Breakfast Item Codes
+#ID		DESCRIPTION
+5001	Bread
+5002	Pastries
+5003	Pancakes
+5004	Butter
+5005	Cheese
+5006	Cold meat
+5007	Eggs
+5008	Yogurt
+5009	Fruits
+5010	Coffee
+5011	Tea
+5012	Hot chocolate
+5013	Champagne
+5014	A la carte menu
+5015	Local specialities
+5016	Cooked/warm meals
+5017	Fruit juice
+5018	Jam
+5019	Cereal
+
+
+#Breakfast Type Codes
+#ID		DESCRIPTION
+5001	Continental
+5002	Italian
+5003	Full English
+5004	Vegetarian
+5005	Vegan
+5006	Halal
+5007	Gluten free
+5008	Kosher
+5009	Asian
+5010	American
+5011	Buffet
+5012	A la carte
+
+
+#Job Titles
+#NAME[@JOBTITLE]
+Administration Employee
+Director of Business Development
+E-Commerce Manager
+Finance Manager
+Front Office Employee
+Front Office Manager
+General Manager
+Marketing Manager
+Owner
+Reservations Employee
+Reservations Manager
+Revenue Manager
+Rooms Division Manager
+Sales & Marketing Manager
+Sales Executive
+Sales Manager
+Unknown
+
+#Language Codes
+#CODE	LANGUAGE
+af	Afrikaans
+ar	Arabic
+az	Azerbaijani
+be	Belarusian
+bg	Bulgarian
+ca	Catalan
+cs	Czech
+da	Danish
+de	German
+el	Greek
+en	English (UK)
+en-gb	English (UK)
+en-us	English (American)
+es	Spanish
+es-ar	Spanish (Argentine)
+et	Estonian
+fr	French
+fi	Finnish
+he	Hebrew
+hi	Hindi
+hr	Croatian
+hu	Hungarian
+id	Indonesian
+is	Icelandic
+it	Italian
+ja	Japanese
+km	Khmer
+ko	Korean
+lo	Lao
+lt	Lithuanian
+lv	Latvian
+ms	Malay
+nl	Dutch
+no	Norwegian
+pl	Polish
+pt	Portuguese
+pt-br	Portuguese (Brazilian)
+pt-pt	Portuguese
+ro	Romanian
+ru	Russian
+sk	Slovak
+sl	Slovenian
+sr	Serbian
+sv	Swedish
+tl	Tagalog
+th	Thai
+tr	Turkish
+uk	Ukrainian
+vi	Vietnamese
+xa	Spanish (Argentine)
+xb	Portuguese (Brazilian)
+xs	Spanish (South American)
+xt	Chinese (Cantonese)
+xu	English (American)
+zh	Chinese (Mandarin)
+zh-cn	Chinese (Simplified)
+zh-tw	Chinese (Traditional)
+ 
+
+#Payment Type Codes
+#ID	DESCRIPTION
+1	American Express
+2	Visa
+3	Euro/Mastercard
+4	Carte Bleue
+5	Diners Club
+7	JCB
+8	PIN
+9	Red 6000
+10	Maestro
+11	Discover
+12	Bancontact
+13	Solo
+14	Switch
+15	Carte Blanche
+16	NICOS
+17	UC
+18	No creditcards accepted, only cash
+19	Bankcard
+21	CartaSi
+22	Argencard
+23	Cabal
+25	Red Compra
+26	Other Cards
+27	Greatwall
+28	Peony
+29	Dragon
+30	Pacific
+31	Jin Sui
+32	Eftpos
+34	Hipercard
+35	UnionPay debit card
+37	EC-Card
+38	BC-Card
+39	MasterCard (virtual credit card)
+40	Mastercard Google Wallet
+41	KH Széchényi Pihenõkártya
+42	MKB Széchényi Pihenõkártya
+43	OTP Széchényi Pihenõkártya
+44	UnionPay credit card
+45	Cash
+46	PayPal
+47	Cheque (domestic only)
+48	ANCV chèques-vacances
+49	PayPlug
+50	Euro 6000
+51	Postepay
+52	Sistema 4B
+53	PagSeguro
+54	Elo Creditcard
+55	Bcash
+56	Interac e-Transfer
+57	M-Pesa
+58	Knet
+59	Western Union
+60	Apple Pay
+61	Square Cash
+62	iDeal
+63	BankAxept
+64	Reka-Check
+65	Paysera.com
+66	BankLink
+67	Alipay
+68	Tenpay
+69	Lastschrift
+70	Sadad
+71	Qiwi
+72	AirPlus
+73	Virtual Credit Card
+74	Visa (virtual credit card)
+75	American Express (virtual credit card)
+
+#Room Type Codes
+#CODE	ROOM TYPE DESCRIPTION	NOTES
+1		Apartment				Separate unit with own bathroom and kitchen/kitchenette.
+4		Quadruple				Unit for 4 persons
+5		Suite					Only "Suite" units. "Suite" have to be mentioned in the Unit name.
+7		Triple					Unit for 3 persons.
+8		Twin					Unit for 2 persons with 2 beds.
+9		Double					Unit for 2 persons with Double/Queen/King bed.
+10		Single					Unit for 1 person.
+12		Studio					Unit with kitchenette or kitchen.
+13		Family					Unit with "Family" in the unit name. It must have 2+ occupancy.
+24		Twin/Double				Standard Double or Twin Room.
+25		Dormitory room			Whole dormitory unit that is sold as one unit. "Dormitory room" needs to be mentioned in the room name.
+26		Bed in Dormitory		Unit for 1 person only. Please specify number of beds in the availability calls.
+27		Bungalow				Any type of bungalow units.
+28		Chalet					Any type of Chalet units.
+29		Holiday home			House, Town House, Holiday home units.
+31		Villa					Only Villa units. "Villa" have to be mentioned in the unit name.
+32		Mobile home				Any type of Mobile Home units.
+33		Tent					Any type of tents.
+
+#Charge Type Codes (OTA 2014B)
+#CODE VALUE		CODE NAME						COMMENT
+1				Per day							Only parking service, internet service
+2				Per hour						Only parking service, internet service
+10				Per minute						Only internet service
+12				Per stay						All except internet service
+17				Per week						Only parking service
+19				Per night						All except parking service, internet service
+20				Per person per stay				All except parking service, internet service
+21				Per person per night			All except parking service, internet service
+5000			Applicable, charges may vary	This can be used only for electricity fee, gas fee, oil fee, water fee and wood fee.
+5001			Charges are applicable			This can be used only for parking service, internet service
+5002			Charges may apply				This can be used only for parking services
+
+#Main Cuisine Code (OTA 2014B)
+#CODE	DESCRIPTION
+1		American
+2		French
+3		Italian
+4		Seafood
+5		Indian
+6		Asian
+8		Mexican
+9		Greek
+10		Thai
+11		Chinese
+12		Vietnamese
+13		Middle eastern
+14		Japanese
+15		Moroccan
+17		European
+18		Ethiopian
+19		Spanish
+22		Turkish
+23		Russian
+24		German
+26		Texmex
+29		Irish
+30		Scottish
+33		Argentinian
+34		Brazilian
+41		Creole
+42		Korean
+43		Latin american
+44		Steakhouse
+49		International
+51		Mediterranean
+53		Pizza
+66		Austrian
+67		Australian
+73		Indonesian
+74		Grill bbq
+76		Polish
+78		African
+79		Belgian
+80		Portuguese
+5000	British
+5001	Cambodian
+5002	Cantonese
+5003	Croation
+5004	Dutch
+5005	Hungarian
+5006	Local
+5007	Malaysian
+5008	Nepalese
+5009	Peruvian
+5010	Sichuan
+5011	Singaporean
+5012	South African
+5013	Sushi
+ 
+
+#Top amenities - Hotel
+#CODE	DESCRIPTION					NOTES
+5154	Swimming pool				More specific codes for swimming pools are: 5109 (Outdoor all year), 5110 (Outdoor seasonal), 5111 (Indoor all year), and 5112 (indoor seasonal).
+76		Restaurant	
+77		Room service	
+165		Bar	
+1		24-hour front desk	
+79		Sauna	
+35		Fitness centre	
+5005	Garden	
+5006	Terrace	
+198		Non-smoking rooms	
+41		Free airport shuttle	
+282		Airport shuttle with surcharge	
+5041	Family Rooms	
+5044	Spa and wellness centre	
+55		Jacuzzi or hot tub	
+5		Air conditioning	
+5054	Kids' club	
+5056	Water park	
+
+#Top amenities - Home
+#CODE	DESCRIPTION					NOTES
+5154	Swimming pool				More specific codes for swimming pools are: 5109 (Outdoor all year), 5110 (Outdoor seasonal), 5111 (Indoor all year), and 5112 (indoor seasonal).
+165		Bar	
+79		Sauna	
+5005	Garden	
+5006	Terrace	
+198		Non-smoking rooms	
+5041	Family Rooms	
+55		Jacuzzi or hot tub	
+5		Air conditioning	
+
+#Top amenities - Hostel
+#CODE	DESCRIPTION					
+165		Bar	
+5005	Garden	
+44		Game room	
+5025	Billiard					
+5026	Table tennis				
+5045	Karaoke						
+5046	Soundproof-rooms	
+5020	Hiking						
+5002	Bikes available (free)	
+62		Nightclub/DJ				
+262		Shared Kitchen	
+5009	Shared lounge/TV area	
+60		Evening Entertainment		
+5061	Board games/puzzles	
+5094	Pub crawls					
+5096	Movie nights				
+5097	Walking tours				
+5098	Bike tours					
+5100	Happy hour					
+5103	Live music/performance		
+
+#Top amenities - Geography dependent
+#Depending on your geographical location, the following may also be considered top facilities:
+#CODE	DESCRIPTION	
+5015	Beach	
+272		Skiing	
+
+#Sustainability amenities codes
+CODE	DESCRIPTION																											NOTES
+316		Electric vehicle charging station		
+5156	Property removed all, or never offered, single-use plastic toiletries.		
+5157	Towels Changed Upon Request																							Indicates property encourages guests to use their towels more than one day.
+5168	Property removed all, or never offered, plastic stirrers.		
+5169	Property removed all, or never offered, plastic straws.		
+5170	Property removed all, or never offered, plastic cups.		
+5171	Property removed all, or never offered, plastic water bottles.		
+5172	Property removed all, or never offered, plastic bottles for non-water drinks.		
+5173	Property removed all, or never offered, plastic cutlery and tableware.		
+5174	Keycard for room electricity		
+5175	Opt-out from daily room cleaning		
+5176	Refillable water stations		
+5177	Bike rental		
+5178	Bike parking
+5204	Wild (non-domesticated) animals are not harmed at the property		
+5205	Recycling bins are available to guests and waste is recycled		
+5206	At least 80% of food is sourced from your region		
+5207	At least 80% of lighting uses energy-efficient LED bulbs		
+5208	Only using water-efficient toilets		
+5209	Only using water-efficient showers		
+5210	All windows are double-glazed		
+5211	Food waste policy in place that includes education, food waste prevention, reduction, recycling, and disposal		
+5212	Investing a percentage of revenue back into community projects or sustainability projects		
+5213	Compensate for at least 10% of total annual carbon emissions by purchasing certified carbon offsets		
+5214	Tours and activities organized by local guides and businesses offered		
+5215	Vegetarian options available at the property		
+5216	Vegan options available at the property		
+5217	Green spaces such as gardens/rooftop gardens on the property		
+5218	At least 80% of the food provided is organic		
+5219	100% renewable electricity is used throughout the property		
+5220	Local artists are offered a platform to display their talents		
+5221	Provide guests with information regarding local ecosystems, heritage and culture, as well as visitor etiquette		
+
+#amenity/service
+CODE	DESCRIPTION																		
+1		24-hour front desk		
+5		Air conditioning		
+7		ATM on site		
+8		Baby sitting		
+9		BBQ/Picnic area		
+14		Library		
+15		Car rental		
+16		Casino		
+22		Concierge desk		
+26		Currency exchange		
+33		Elevators		
+35		Fitness Center		
+36		Express Check-in/Check-out		
+41		Airport shuttle (free)		
+44		Game room		
+45		Souvenir/Gift Shop		
+49		Heated pool		
+50		Housekeeping - daily		
+53		Indoor parking		
+54		Indoor pool		
+55		Jacuzzi (Hot Tub)		
+60		Evening Entertainment		
+61		Massage		
+62		Nightclub/DJ		
+66		Outdoor pool		
+76		Restaurant		
+77		Room service		
+78		Safe		
+79		Sauna		
+81		Shoeshine		
+83		Solarium		
+86		Turkish/ Steam Bath		
+91		Tour Desk		
+96		Dry cleaning		
+97		Valet parking		
+98		Vending Machine(snacks)		
+116		Accessible parking		
+122		Shops (on site)		
+149		Grocery shopping service available		
+165		Bar		
+168		Laundry		
+173		Breakfast																		
+186		Street parking		
+193		Playground		
+197		Lockers		
+198		Non-smoking rooms		
+202		Bicycle rentals		
+228		Business center		
+230		Secured parking		
+233		Tennis court		
+234		Water Sport Facilities (on site)		
+236		Golf Course (within 2 miles)		
+237		Horseback riding		
+239		Beachfront		
+242		Heating		
+262		Shared Kitchen		
+269		Meeting/Banquet Facilities		
+272		Skiing		
+282		Airport shuttle service (surcharge)		
+283		Baggage Storage		
+292		Newspaper		
+310		Hypoallergenic room available		
+312		All Spaces Non-Smoking (public and private)		
+316		Electric vehicle charging station		
+327		Events ticket service		
+5000	Breakfast in the room		
+5001	Public transport tickets		
+5002	Bikes available (free)		
+5003	Outdoor furniture		
+5004	Outdoor fireplace		
+5005	Garden		
+5006	Terrace		
+5007	Sun terrace		
+5008	Chapel/shrine		
+5009	Shared lounge/TV area		
+5010	Ironing service		
+5011	Trouser press		
+5012	Designated smoking area		
+5013	Pet basket		
+5014	Pet bowls		
+5015	Beach		
+5016	Bowling		
+5017	Darts		
+5018	Fishing		
+5020	Hiking		
+5021	Minigolf		
+5022	Snorkeling		
+5023	Squash		
+5024	Windsurfing		
+5025	Billiard		
+5026	Table tennis		
+5027	Canoeing		
+5028	Ski-to-door access		
+5029	Diving		
+5030	Tennis equipment		
+5031	Badminton equipment		
+5032	Cycling		
+5033	Ski storage		
+5034	Ski school		
+5035	Ski equipment hire (on site)		
+5036	Ski pass vendor		
+5037	Private beach area		
+5039	Rooms/Facilities for Disabled		
+5040	Hair dresser-beautician		
+5041	Family Rooms		
+5042	Viproom facilities		
+5043	Bridal Suite		
+5044	Spa & Wellness Centre		
+5045	Karaoke		
+5046	Soundproof-rooms		
+5047	Packed Lunches		
+5048	Ticket service		
+5049	Entertainment Staff		
+5050	Private Check-in/Check-out		
+5051	Special Diet Menus (on request)		
+5052	Vending Machine (drinks)		
+5053	Hot Spring Bath		
+5054	Kids' club		
+5055	Minimarket on site		
+5056	Water park		
+5057	Adult only		
+5058	Open-air bath		
+5059	Public bath		
+5060	Water slide		
+5061	Board games/puzzles		
+5062	Book/DVD/Music library for children		
+5063	Indoor play area		
+5064	Kids' outdoor play equipment		
+5065	Baby safety gates		
+5066	Children television networks		
+5067	Kid meals		
+5068	Kid-friendly buffet		
+5069	Pool towels		
+5070	Wine/Champagne		
+5071	Bottle of water		
+5072	Fruits		
+5073	Chocolate/Cookies		
+5074	Strollers		
+5075	On-site coffee house		
+5076	Sun loungers or beach chairs		
+5077	Sun umbrellas		
+5078	Picnic area		
+5079	Beauty Services		
+5080	Spa Facilities		
+5081	Steam room		
+5082	Spa lounge/relaxation area		
+5083	Foot bath		
+5084	Spa/wellness packages		
+5085	Massage chair		
+5086	Fitness		
+5087	Yoga classes		
+5088	Fitness classes		
+5089	Personal trainer		
+5090	Fitness/spa locker rooms		
+5091	Kids pool		
+5092	Shuttle Service		
+5093	Temporary art galleries		
+5094	Pub crawls		
+5095	Stand-up comedy		
+5096	Movie nights		
+5097	Walking tours		
+5098	Bike tours		
+5099	Themed dinner nights		
+5100	Happy hour		
+5101	Tour or class about local culture		
+5102	Cooking class		
+5103	Live music/performance		
+5104	Live sports events (broadcast)		
+5105	Archery		
+5106	Aerobics		
+5107	Bingo		
+5108	Ski Shuttle		
+5109	Outdoor Swimming Pool (all year)		
+5110	Outdoor Swimming Pool (seasonal)		
+5111	Indoor Swimming Pool (all year)		
+5112	Indoor Swimming Pool (seasonal)		
+5113	Swimming pool toys		
+5114	Rooftop pool		
+5115	Infinity pool		
+5116	Pool with view		
+5117	Salt-water pool		
+5118	Plunge pool		
+5119	Pool bar		
+5120	Shallow end pool		
+5121	Pool cover		
+5122	Fence around pool		
+5123	Airport Shuttle (surcharge)		
+5124	Property is wheel chair accessible		
+5125	Toilet with grab rails		
+5126	Higher level toilet		
+5127	Low bathroom sink		
+5128	Bathroom emergency pull cord		
+5129	Visual aids: Braille		
+5130	Visual aids: Tactile Signs		
+5131	Auditory Guidance		
+5132	Back massage		
+5133	Neck massage		
+5134	Foot massage		
+5135	Couples massage		
+5136	Head massage		
+5137	Hand massage		
+5138	Full body massage		
+5139	Facial treatments		
+5140	Waxing services		
+5141	Make up services		
+5142	Hair treatments		
+5143	Manicure		
+5144	Pedicure		
+5145	Hair cut		
+5146	Hair colouring		
+5147	Hair styling		
+5148	Body Treatments		
+5149	Body scrub		
+5150	Body wrap		
+5151	Light therapy		
+5152	Shuttle Service (free)		
+5153	Shuttle Service (surcharge)		
+5154	Swimming pool		
+5156	Property removed all, or never offered, single-use plastic toiletries.		
+5157	Towels Changed Upon Request		
+5158	24-hour security		
+5159	Security alarm		
+5160	Smoke alarms		
+5161	CCTV in common areas		
+5162	CCTV outside property		
+5163	Fire extinguishers		
+5164	Key access		
+5165	Key card access		
+5166	Carbon monoxide detector		
+5167	Carbon monoxide source		
+5168	Property removed all, or never offered, plastic stirrers.		
+5169	Property removed all, or never offered, plastic straws.		
+5170	Property removed all, or never offered, plastic cups.		
+5171	Property removed all, or never offered, plastic water bottles.		
+5172	Property removed all, or never offered, plastic bottles for non-water drinks.		
+5173	Property removed all, or never offered, plastic cutlery and tableware.		
+5174	Keycard for room electricity		
+5175	Opt-out from daily room cleaning		
+5176	Refillable water stations		
+5177	Bike rental		
+5178	Bike parking		
+5179	Use of cleaning chemicals that are effective against Coronavirus		
+5180	Linens, towels and laundry washed in accordance with local authorities guidelines		
+5181	Guest accommodation is disinfected between stays		
+5182	Guest accommodation sealed after cleaning		
+5183	Physical distancing in dining areas		
+5184	In-room dining options available		
+5185	Staff follow all safety protocols as directed by local authorities		
+5186	Shared stationery such as printed menus, magazines, pens, and paper removed		
+5187	Hand sanitiser in guest accommodation and key areas		
+5188	Process in place to check health of guests		
+5189	First aid kit available		
+5190	Contactless check-in/out		
+5191	Cashless payment available		
+5192	Physical distancing following guidelines from local authorities		
+5193	Mobile app for room service		
+5194	Screens or physical barriers placed between staff and guests in appropriate areas		
+5195	Property is cleaned by professional cleaning companies		
+5196	All plates, cutlery, glasses and other tableware have been sanitised		
+5197	Guest accommodation cleaning can be avoided on request		
+5198	Invoices Provided		
+5199	Breakfast takeaway containers		
+5200	Delivered food is securely covered		
+5201	Access to health care professionals		
+5202	Thermometers for guests provided by property		
+5203	Face masks for guests available		
+5204	Wild (non-domesticated) animals are not harmed at the property		
+5205	Recycling bins are available to guests and waste is recycled		
+5206	At least 80% of food is sourced from your region		
+5207	At least 80% of lighting uses energy-efficient LED bulbs		
+5208	Only using water-efficient toilets		
+5209	Only using water-efficient showers		
+5210	All windows are double-glazed		
+5211	Food waste policy in place that includes education, food waste prevention, reduction, recycling, and disposal		
+5212	Investing a percentage of revenue back into community projects or sustainability projects		
+5213	Compensate for at least 10% of total annual carbon emissions by purchasing certified carbon offsets		
+5214	Tours and activities organized by local guides and businesses offered		
+5215	Vegetarian options available at the property		
+5216	Vegan options available at the property		
+5217	Green spaces such as gardens/rooftop gardens on the property		
+5218	At least 80% of the food provided is organic		
+5219	100% renewable electricity is used throughout the property		
+5220	Local artists are offered a platform to display their talents		
+5221	Provide guests with information regarding local ecosystems, heritage and culture, as well as visitor etiquette		
+6000	Lunch		
+6001	Dinner		
+
+#Meal Plan Types (OTA 2014B)
+#CODE	DESCRIPTION				
+1		All inclusive			
+0		(None)					
+19		Breakfast				
+21		Lunch					
+22		Dinner					
+2		American				
+3		Bed & breakfast			
+4		Buffet breakfast		
+5		Caribbean breakfast		
+6		Continental breakfast	
+7		English breakfast		
+8		European plan			
+9		Family plan				
+10		Full board				
+11		Full breakfast			
+12		Half board/modified American plan
+14		Room only
+15		Self catering
+16		Bermuda
+17		Dinner bed and breakfast plan
+18		Family American
+20		Modified
+23		Breakfast & lunch
+24		Lunch & Dinner
+
+#Property Class Type Codes (OTA 2014B) — Implemented
+#CODE	NAME
+30		Resort	
+19		Hostel	
+20		Hotel	
+21		Inn
+22		Lodge	
+27		Motel
+5003	Love Hotel	
+5005	Japanese-style Business Hotel	
+5008	Capsule Hotel	
+
+#Home properties
+#CODE	NAME
+3		Apartment	Apartment
+t		Bed and Breakfast	
+6		Campground
+7		Chalet
+12		Cruise
+15		Guest farm
+33		Tent
+35		Villa
+40		Pension
+5000	ApartHotel
+5001	Riad	
+5002	Ryokan	
+5004	Homestay	
+5006	Holiday Home
+5007	Country house	
+5009	Holiday Park
+
+#Room Amenity Type Codes (OTA 2014B)
+CODE	DESCRIPTION
+2		Air conditioning
+3		Alarm clock
+5		AM/FM radio
+7		Terrace
+8		Barbeque grills
+9		Bath tub with spray jets
+10		Bathrobe
+11		Bathroom amenities (free toiletries)
+13		Bathtub
+14		Bathtub only
+15		Bath or Shower
+16		Bidet
+18		Cable television
+19		Coffee/Tea maker
+20		Color television
+21		Computer
+22		Connecting rooms
+25		Cordless phone
+28		Desk
+29		Desk with lamp
+32		Dishwasher
+38		Fax machine
+41		Fireplace
+46		Free movies/video
+47		Full kitchen
+49		Grecian tub
+50		Hairdryer
+55		Iron (ironing facilities)
+56		Ironing board
+57		Whirpool
+59		Kitchen
+60		Kitchen supplies
+61		Kitchenette
+63		Laptop
+64		Large desk
+68		Microwave
+69		Minibar
+72		Multi-line phone
+77		Oven
+78		Pay per view movies on TV
+80		Phone in bathroom
+81		Plates and bowls
+85		Private bathroom
+88		Refrigerator
+89		Refrigerator with ice maker
+92		Safe
+94		Separate closet
+97		Shower only
+98		Silverware/utensils
+99		Sitting area
+103		Speaker phone
+105		Stove
+107		Telephone
+108		Telephone for hearing impaired
+115		VCR movies
+117		Video games
+119		Wake-up calls
+126		Air conditioning individually controlled in room
+127		Bathtub &whirlpool separate
+129		CD player
+133		Desk with electrical outlet
+138		Marble bathroom
+139		List of movie channels available
+141		Oversized bathtub
+142		Shower
+144		Soundproofed room
+146		Tables and chairs
+147		Two-line phone
+149		Washer/dryer1)
+155		Separate tub and shower
+157		Ceiling fan
+158		CNN available
+162		Closets in room
+163		DVD player
+164		Mini-refrigerator
+166		Self-controlled heating/cooling system
+167		Toaster
+193		Shared bathroom
+194		Telephone TDD/Textphone
+210		Satellite television
+214		iPod docking station
+217		Satellite radio
+218		Video on demand
+220		Gulf view
+223		Mountain view
+224		Ocean view
+228		Slippers
+230		Chair provided with desk
+234		Luxury linen type
+245		Private pool
+246		High Definition (HD) Flat Panel Television - 32 inches or greater
+251		TV
+254		Video game player:
+256		Dining room seats
+258		Mobile/cellular phones
+259		Movies
+260		Multiple closets
+262		Safe large enough to accommodate a laptop
+265		Bluray player
+268		Non-allergenic room
+270		Seating area with sofa/chair
+271		Separate toilet area
+273		Widescreen TV
+276		Separate tub or shower
+280		Plunge pool
+5001	Coffee/Tea maker
+5003	Mini-bar
+5004	Shower
+5005	Bath
+5006	Safe Deposit Box
+5007	Pay-per-view Channels
+5008	TV
+5009	Telephone
+5010	Fax
+5011	Airconditioning
+5012	Hair Dryer
+5013	Wake Up Service/Alarm-clock
+5014	Hot Tub
+5015	Clothing Iron
+5016	Kitchenette
+5017	Balcony
+5018	Trouser Press
+5019	Bath-robe
+5020	Spa Bath
+5021	Radio
+5022	Refrigerator
+5023	Desk
+5024	Shared Bathroom
+5025	Ironing facilities
+5026	Seating area
+5027	Free Toiletries
+5028	DVD-Player
+5029	CD-Player
+5030	Fan
+5031	Toilet
+5032	Microwave
+5033	Dishwasher
+5034	Washing machine
+5035	Video
+5036	Video Games
+5037	Patio
+5038	Bathroom
+5039	Extra long beds (> 2 meter)
+5040	Heating
+5041	Dressing room
+5042	Guest toilet
+5043	Slippers
+5044	Satellite Channels
+5045	Kitchen
+5068	Cable channels
+5069	Bath or Shower
+5070	Carpeted Floor
+5071	Fireplace
+5072	Additional Toilet
+5073	Interconnecting Room(s) available
+5074	Laptop Safe Box
+5075	Flat-screen TV
+5076	Private Entrance
+5077	Sofa
+5079	Soundproofing
+5080	Tiled / Marble floor
+5081	View
+5082	Wooden / Parquet floor
+5083	Wake Up Service
+5084	Alarm Clock
+5085	Dining Area
+5086	Electric Kettle
+5087	Executive Lounge Access
+5088	iPod Docking Station
+5089	Kitchenware
+5090	Mosquito Net
+5091	Towels/Linens at surcharge
+5092	Sauna
+5093	Private Pool
+5094	Tumble dryer (machine)
+5095	Wardrobe/Closet
+5096	Oven
+5097	Stove
+5098	Toaster
+5099	Barbecue
+5100	Bidet
+5101	Computer
+5102	iPad
+5103	Game Console
+5104	Game Console - Xbox 360
+5105	Game Console - PS2
+5106	Game Console - PS3
+5107	Game Console - Nintendo Wii
+5108	Sea View
+5109	Lake View
+5110	Garden View
+5111	Pool View
+5112	Mountain View
+5113	Landmark View
+5114	Laptop
+5115	Allergy-Free
+5116	Cleaning products
+5117	Electric blankets
+5118	Additional Bathroom
+5119	Blu-ray player
+5120	Coffee Machine
+5121	City View
+5122	River View
+5123	Terrace
+5124	Towels
+5125	Linen
+5126	Dining table
+5127	Children highchair
+5129	Outdoor furniture
+5130	Outdoor dining area
+5131	Entire property on ground floor
+5132	Upper floor reachable by lift
+5133	Upper floor reachable by stairs only
+5134	Entire unit wheelchair accessible
+5135	Detached
+5136	Semi-detached
+5137	Private flat in block of flats
+5138	Clothes Rack
+5139	Rollaway bed
+5140	Clothes drying rack
+5141	Toilet paper
+5142	Child safety socket covers
+5143	Board games/puzzles
+5144	Book/DVD/Music library for children
+5145	Baby safety gates
+5146	Sofa bed
+5147	toilet with grab rails
+5148	adapted bath
+5149	roll in shower
+5150	walk in shower
+5151	higher level toilet
+5152	low bathroom sink
+5153	bathroom emergency pull cord
+5154	shower chair
+5157	rooftop pool
+5158	infinity pool
+5159	pool with view
+5160	heated pool
+5161	salt-water pool
+5162	plunge pool
+5163	pool towels
+5164	shallow end
+5165	pool cover
+5166	wine/champagne
+5167	bottle of water
+5168	fruits
+5169	chocolate/cookies
+5170	Trash cans
+5171	Wine glasses
+5172	Game console - Xbox One
+5173	Game console - Wii U
+5174	Game console - PS4
+5175	Children crib/cots
+5176	toothbrush
+5177	shampoo
+5178	conditioner
+5179	body soap
+5180	shower cap
+5181	pajamas
+5182	yukata
+5184	socket near the bed
+5185	adapter
+5186	feather pillow
+5187	non-feather pillow
+5188	hypoallergenic pillow
+5189	Accessible by Lift
+5190	Inner courtyard view
+5191	Quiet street view
+5196	Portable Wifi
+5198	Smartphone
+5199	Streaming service (such as Netflix)
+5200	Lockers
+5201	Fire alarms or smoke detectors
+5202	Fire extinguishers
+5203	Metal keys access
+5204	Electronic key card access
+5205	Reading light
+5206	Earplugs
+5207	Private curtain
+5211	Carbon monoxide detector
+5212	Carbon monoxide source
+5215	Air purifiers available
+5230	Single-room air conditioning for guest accommodation
+5231	Hand sanitiser
+
+#bed types
+#CODE	DESCRIPTION						
+249		Double (Bed)					
+200		Futon Mat	
+58		Extra large Double [King size]	
+86		Large Double [Queen size]		
+102		Sofa Bed	
+113		Twin (bed)						
+203		Single (bed)					
+4001	Bunk bed	
+
+# Transportation Code (OTA 2014B)
+#CODE	DESCRIPTION
+5000	Shuttle arranged by property
+5001	Public shuttle
+3		Bus
+5		Car
+10		Metro
+18		Subway
+20		Taxi
+21		Train
+22		Trolley (Tram)
+24		Walk
