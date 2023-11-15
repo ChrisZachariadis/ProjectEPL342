@@ -25,7 +25,6 @@ CREATE TABLE [dbo].[PRODUCT] (
     --FKeys
     Room_Type_ID INT NOT NULL,
     Property_ID INT NOT NULL,
-    Stock_ID INT NOT NULL,
     CONSTRAINT Product_ID PRIMARY KEY (Product_ID)
 );
 
@@ -77,6 +76,10 @@ CREATE TABLE [dbo].[FACILITIES] (
 
 CREATE TABLE [dbo].[STOCK] (
     Stock_ID INT NOT NULL,
+	--FK
+	Product_ID INT NOT NULL,
+
+
     Stock_Date DATE NOT NULL,
     Stock_Amount INT NOT NULL,
     CHECK (Stock_Amount >= 0),
@@ -399,16 +402,16 @@ ADD
 
 GO
 ALTER TABLE
-    [dbo].[PRODUCT] WITH CHECK
+    [dbo].[STOCK] WITH CHECK
 ADD
-    CONSTRAINT [FK_Stock_ID] FOREIGN KEY([Stock_ID]) REFERENCES [dbo].[STOCK] ([Stock_ID]);
+    CONSTRAINT [FK_Product_Stock_ID] FOREIGN KEY([Product_ID]) REFERENCES [dbo].[PRODUCT] ([Product_ID]);
 
 GO
     -- RESERVATION Foreign keys:
 ALTER TABLE
     [dbo].[RESERVATIONS] WITH CHECK
 ADD
-    CONSTRAINT [FK_Product_ID] FOREIGN KEY([Product_ID]) REFERENCES [dbo].[PRODUCT] ([Product_ID]);
+    CONSTRAINT [FK_Product_Res_ID] FOREIGN KEY([Product_ID]) REFERENCES [dbo].[PRODUCT] ([Product_ID]);
 
 GO
 ALTER TABLE

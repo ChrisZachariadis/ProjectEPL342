@@ -1,3 +1,4 @@
+USE DB
 DECLARE @sql NVARCHAR(MAX) = '';
 
 -- Generate script to drop all foreign key constraints
