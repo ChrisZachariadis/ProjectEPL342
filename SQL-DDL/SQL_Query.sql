@@ -40,16 +40,13 @@ CREATE TABLE [dbo].[PROPERTY] (
     Property_Address VARCHAR(15) NOT NULL,
     Property_Description VARCHAR(15) NOT NULL,
     Property_Coordinates VARCHAR(20) NOT NULL,
+    Property_Location VARCHAR(20) NOT NULL,
     Owner_ID INT NOT NULL,
     Owner_First_Name VARCHAR(15) NOT NULL,
     Owner_Last_Name VARCHAR(15) NOT NULL,
     --FKeys
     Property_Type_ID INT NOT NULL,
     User_ID INT NOT NULL,
-    Property_Location VARCHAR(20) NOT NULL,
-    CHECK (
-        Property_Location IN ('Athens', 'Admin', 'Property Owner')
-    ),
     CONSTRAINT Property_ID PRIMARY KEY (Property_ID)
 );
 
