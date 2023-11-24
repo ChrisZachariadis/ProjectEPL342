@@ -17,6 +17,16 @@ END
 
 --get Amenities of a product based on Product_ID 
 
+CREATE PROCEDURE getAmenities
+@Product_ID INT
+AS
+BEGIN
+SELECT A.*
+FROM [dbo].[AMENITIES] A, [dbo].[PRODUCT] P, [dbo].[ROOM_TYPE] RT, [dbo].[ROOM_TYPE_AMENITIES] RTA
+
+WHERE P.[Product_ID] = @Product_ID AND P.[Room_Type_ID] = RT.[Room_Type_ID] AND RT[Room_Type_ID] = RTA.[Room_Type_ID] AND RTA.[Amenities_ID] = A.[Amenities_ID] 
+END
+ 
 
 
 
