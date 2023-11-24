@@ -41,7 +41,7 @@ arketa (pano apo 30 hotels pou esto apo 5 tipous kai kathe tipos domatious 5-6 d
 
 ANAKEFALEOSI:
 
-programmataki na ftiaxnei tixea dedomena (sql script)
+programmataki na ftiaxnei tixea dedomena (sql script) (MOCKAROO)
 
 afou exo ta dedomena, eite dika mou dedomena eite dedomena tou script prepei na parousiasoume ta queries na diksoume oti douleuoun kanonika 
 
