@@ -16,25 +16,46 @@ WHERE A.[Property_Location] = @Property_Location AND A.[Property_ID] = B.[Proper
 END
 
 --get Amenities of a product based on Product_ID 
-
+--returns Amenity_Type's
 CREATE PROCEDURE getAmenities
 @Product_ID INT
 AS
 BEGIN
-SELECT A.*
-FROM [dbo].[AMENITIES] A, [dbo].[PRODUCT] P, [dbo].[ROOM_TYPE] RT, [dbo].[ROOM_TYPE_AMENITIES] RTA
-
-WHERE P.[Product_ID] = @Product_ID AND P.[Room_Type_ID] = RT.[Room_Type_ID] AND RT[Room_Type_ID] = RTA.[Room_Type_ID] AND RTA.[Amenities_ID] = A.[Amenities_ID] 
+SELECT AM.[Amenity_Type]
+FROM [dbo].[AMENITIES] AM
+WHERE AM.[Amenity_ID] IN ( 
+SELECT ART.[MAmenity_ID] 
+FROM [dbo].[AMENITIES_ROOM_TYPE] ART 
+WHERE ART.[MRoom_Type_ID] IN (SELECT A.[Room_Type_ID]
+                            FROM [dbo].[PRODUCT] A
+                            WHERE P.[Product_ID] =@Product_ID) )
 END
- 
+
+--get Facilities of a product based on Product_ID
+--returns facility_type's
+CREATE PROCEDURE getFacilities
+@Product_ID INT
+AS
+BEGIN
+SELECT F.[Facility_Type]
+FROM [dbo].[FACILITIES] F
+WHERE F.[Facility_ID] IN ( 
+SELECT PF.[MFacility_ID] 
+FROM [dbo].[PROPERTY_FACILITIES] PF
+WHERE PF.[MProperty_ID] IN (SELECT P.[Property_ID]
+                            FROM [dbo].[PRODUCT] P
+                            WHERE P.[Product_ID] =@Product_ID) )
+END
 
 
 
 
 
 
---getProducts based on property id
+
+
+
+
 --getAvailableProducts based on date and property id
---getProducts based on property id and facilities
---getProducts based on property id and facilities and amenities
+
 --getProperties based on Property_type
