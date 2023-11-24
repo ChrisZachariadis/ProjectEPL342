@@ -46,6 +46,10 @@ CREATE TABLE [dbo].[PROPERTY] (
     --FKeys
     Property_Type_ID INT NOT NULL,
     User_ID INT NOT NULL,
+    Property_Location VARCHAR(20) NOT NULL,
+    CHECK (
+        Property_Location IN ('Athens', 'Admin', 'Property Owner')
+    ),
     CONSTRAINT Property_ID PRIMARY KEY (Property_ID)
 );
 
@@ -117,7 +121,7 @@ CREATE TABLE [dbo].[POLICY] (
 USE DB
 BULK 
 	INSERT [dbo].[USER]
-FROM 'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\USER.csv'
+FROM 'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\USER.csv'
 WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
@@ -129,7 +133,7 @@ USE DB
 BULK 
 	INSERT [dbo].[PRODUCT] 
 	FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PRODUCT.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\PRODUCT.csv' WITH (
     FIELDTERMINATOR = ',',
     ROWTERMINATOR = '\n',
     FIRSTROW = 2
@@ -141,7 +145,7 @@ BULK
 INSERT
     [dbo].MEAL_PLAN
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\MEAL_PLAN.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\MEAL_PLAN.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -156,7 +160,7 @@ BULK
 INSERT
     [dbo].PROPERTY
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PROPERTY.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\PROPERTY.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -171,7 +175,7 @@ BULK
 INSERT
     [dbo].PROPERTY_TYPE
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PROPERTY_TYPE.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\PROPERTY_TYPE.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -186,7 +190,7 @@ BULK
 INSERT
     [dbo].AMENITIES
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\AMENITIES.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\AMENITIES.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -201,7 +205,7 @@ BULK
 INSERT
     [dbo].ROOM_TYPE
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\ROOM_TYPE.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\ROOM_TYPE.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -216,7 +220,7 @@ BULK
 INSERT
     [dbo].FACILITIES
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\FACILITIES.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\FACILITIES.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -231,7 +235,7 @@ BULK
 INSERT
     [dbo].STOCK
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\STOCK.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\STOCK.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -246,7 +250,7 @@ BULK
 INSERT
     [dbo].RESERVATIONS
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\RESERVATIONS.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\RESERVATIONS.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -261,7 +265,7 @@ BULK
 INSERT
     [dbo].REVIEWS
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\REVIEWS.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\REVIEWS.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -276,7 +280,7 @@ BULK
 INSERT
     [dbo].[POLICY]
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\POLICY.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\POLICY.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -329,7 +333,7 @@ BULK
 INSERT
     [dbo].[MEAL_PLAN_FOR_PRODUCT]
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\MEAL_PLAN_FOR_PRODUCT.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\MEAL_PLAN_FOR_PRODUCT.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -344,7 +348,7 @@ BULK
 INSERT
     [dbo].[PRODUCT_POLICIES]
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PRODUCT_POLICIES.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\PRODUCT_POLICIES.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -359,7 +363,7 @@ BULK
 INSERT
     [dbo].[AMENITIES_ROOM_TYPE]
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\AMENITIES_ROOM_TYPE.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\AMENITIES_ROOM_TYPE.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',
@@ -374,7 +378,7 @@ BULK
 INSERT
     [dbo].[PROPERTY_FACILITIES]
 FROM
-  'G:\My Drive\UCY\UNIVERSITY(5TH semester)\EPL342\BigProject\ProjectEPL342\Supplemenraty\PROPERTY_FACILITIES.csv' WITH (
+  'C:\Users\asus\Documents\GitHub\ProjectEPL342\Supplemenraty\PROPERTY_FACILITIES.csv' WITH (
     FIELDTERMINATOR = ',',
     -- Change to '\t' if your fields are tab-separated
     ROWTERMINATOR = '\n',

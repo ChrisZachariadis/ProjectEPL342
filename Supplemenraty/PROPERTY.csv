@@ -1,6 +1,6 @@
-Property_ID,Property_Name,Property_Address,Property_Description,Property_Coordinates,Owner_ID,Owner_First_Name,Owner_Last_Name,Property_Type_ID,User_ID
-1,Bar Yehuda Airfield,7th Floor,,-22.573256,1,Andréanne,O'Reagan,1,1
-2,Ukunda Airstrip,Room 734,,45.4352011,2,Cinéma,Czajkowska,2,2
-3,Jim Kelly Field,4th Floor,,59.3409629,3,Maëlla,Guarnier,3,3
-4,Maganja da Costa Airport,Suite 78,,59.9506531,4,Gösta,Durden,4,4
-5,General E. Mosconi Airport,PO Box 62170,,55.3964727,5,Åslög,Wetherick,5,5
+Property_ID,Property_Name,Property_Address,Property_Description,Property_Coordinates,Owner_ID,Owner_First_Name,Owner_Last_Name,Property_Type_ID,User_ID,Property_Location
+1,Bar Yehuda Airfield,7th Floor,,-22.573256,1,Andréanne,O'Reagan,1,1,
+2,Ukunda Airstrip,Room 734,,45.4352011,2,Cinéma,Czajkowska,2,2,
+3,Jim Kelly Field,4th Floor,,59.3409629,3,Maëlla,Guarnier,3,3,
+4,Maganja da Costa Airport,Suite 78,,59.9506531,4,Gösta,Durden,4,4,
+5,General E. Mosconi Airport,PO Box 62170,,55.3964727,5,Åslög,Wetherick,5,5,
