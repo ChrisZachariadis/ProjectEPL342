@@ -1,6 +1,19 @@
 Room_Type_ID,Room_Type_Description,Bed_Type
-1,,Queen Size
-2,,Single
-3,,King size
-4,,Queen Size
-5,,King size
+1,Apartment,
+2,Quadruple,
+3,Suite,
+4,Triple,
+5,Twin,
+6,Double,
+7,Single,
+8,Studio,
+9,Family,
+10,Twin/Double,
+11,Dormitory Room,
+12,Bed in Dormitory,
+13,Bungalow,
+14,Chalet,
+15,Holiday Home,
+16,Villa,
+17,Mobile Home,
+18,Tent,

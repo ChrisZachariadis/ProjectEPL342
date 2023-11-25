@@ -1,6 +1,287 @@
 Facility_ID,Facility_Type
-1,Pool
-2,Massage
-3,Massage
-4,Massage
-5,Sauna
+1,24-hour front desk
+2,Air conditioning
+3,ATM on site
+4,Baby sitting
+5,BBQ/Picnic area
+6,Library
+7,Car rental
+8,Casino
+9,Concierge desk
+10,Currency exchange
+11,Elevators
+12,Fitness Center
+13,Express Check-in/Check-out
+14,Airport shuttle (free)
+15,Game room
+16,Souvenir/Gift Shop
+17,Heated pool
+18,Housekeeping - daily
+19,Indoor parking
+20,Indoor pool
+21,Jacuzzi (Hot Tub)
+22,Evening Entertainment
+23,Massage
+24,Nightclub/DJ
+25,Outdoor pool
+26,Restaurant
+27,Room service
+28,Safe
+29,Sauna
+30,Shoeshine
+31,Solarium
+32,Turkish/ Steam Bath
+33,Tour Desk
+34,Dry cleaning
+35,Valet parking
+36,Vending Machine(snacks)
+37,Accessible parking
+38,Shops (on site)
+39,Grocery shopping service available
+40,Bar
+41,Laundry
+42,Breakfast
+43,Street parking
+44,Playground
+45,Lockers
+46,Non-smoking rooms
+47,Bicycle rentals
+48,Business center
+49,Secured parking
+50,Tennis court
+51,Water Sport Facilities (on site)
+52,Golf Course (within 2 miles)
+53,Horseback riding
+54,Beachfront
+55,Heating
+56,Shared Kitchen
+57,Meeting/Banquet Facilities
+58,Skiing
+59,Airport shuttle service (surcharge)
+60,Baggage Storage
+61,Newspaper
+62,Hypoallergenic room available
+63,All Spaces Non-Smoking (public and private)
+64,Electric vehicle charging station
+65,Events ticket service
+66,Breakfast in the room
+67,Public transport tickets
+68,Bikes available (free)
+69,Outdoor furniture
+70,Outdoor fireplace
+71,Garden
+72,Terrace
+73,Sun terrace
+74,Chapel/shrine
+75,Shared lounge/TV area
+76,Ironing service
+77,Trouser press
+78,Designated smoking area
+79,Pet basket
+80,Pet bowls
+81,Beach
+82,Bowling
+83,Darts
+84,Fishing
+85,Hiking
+86,Minigolf
+87,Snorkeling
+88,Squash
+89,Windsurfing
+90,Billiard
+91,Table tennis
+92,Canoeing
+93,Ski-to-door access
+94,Diving
+95,Tennis equipment
+96,Badminton equipment
+97,Cycling
+98,Ski storage
+99,Ski school
+100,Ski equipment hire (on site)
+101,Ski pass vendor
+102,Private beach area
+103,Rooms/Facilities for Disabled
+104,Hair dresser-beautician
+105,Family Rooms
+106,Viproom facilities
+107,Bridal Suite
+108,Spa & Wellness Centre
+109,Karaoke
+110,Soundproof-rooms
+111,Packed Lunches
+112,Ticket service
+113,Entertainment Staff
+114,Private Check-in/Check-out
+115,Special Diet Menus (on request)
+116,Vending Machine (drinks)
+117,Hot Spring Bath
+118,Kids' club
+119,Minimarket on site
+120,Water park
+121,Adult only
+122,Open-air bath
+123,Public bath
+124,Water slide
+125,Board games/puzzles
+126,Book/DVD/Music library for children
+127,Indoor play area
+128,Kids' outdoor play equipment
+129,Baby safety gates
+130,Children television networks
+131,Kid meals
+132,Kid-friendly buffet
+133,Pool towels
+134,Wine/Champagne
+135,Bottle of water
+136,Fruits
+137,Chocolate/Cookies
+138,Strollers
+139,On-site coffee house
+140,Sun loungers or beach chairs
+141,Sun umbrellas
+142,Picnic area
+143,Beauty Services
+144,Spa Facilities
+145,Steam room
+146,Spa lounge/relaxation area
+147,Foot bath
+148,Spa/wellness packages
+149,Massage chair
+150,Fitness
+151,Yoga classes
+152,Fitness classes
+153,Personal trainer
+154,Fitness/spa locker rooms
+155,Kids pool
+156,Shuttle Service
+157,Temporary art galleries
+158,Pub crawls
+159,Stand-up comedy
+160,Movie nights
+161,Walking tours
+162,Bike tours
+163,Themed dinner nights
+164,Happy hour
+165,Tour or class about local culture
+166,Cooking class
+167,Live music/performance
+168,Live sports events (broadcast)
+169,Archery
+170,Aerobics
+171,Bingo
+172,Ski Shuttle
+173,Outdoor Swimming Pool (all year)
+174,Outdoor Swimming Pool (seasonal)
+175,Indoor Swimming Pool (all year)
+176,Indoor Swimming Pool (seasonal)
+177,Swimming pool toys
+178,Rooftop pool
+179,Infinity pool
+180,Pool with view
+181,Salt-water pool
+182,Plunge pool
+183,Pool bar
+184,Shallow end pool
+185,Pool cover
+186,Fence around pool
+187,Airport Shuttle (surcharge)
+188,Property is wheel chair accessible
+189,Toilet with grab rails
+190,Higher level toilet
+191,Low bathroom sink
+192,Bathroom emergency pull cord
+193,Visual aids: Braille
+194,Visual aids: Tactile Signs
+195,Auditory Guidance
+196,Back massage
+197,Neck massage
+198,Foot massage
+199,Couples massage
+200,Head massage
+201,Hand massage
+202,Full body massage
+203,Facial treatments
+204,Waxing services
+205,Make up services
+206,Hair treatments
+207,Manicure
+208,Pedicure
+209,Hair cut
+210,Hair colouring
+211,Hair styling
+212,Body Treatments
+213,Body scrub
+214,Body wrap
+215,Light therapy
+216,Shuttle Service (free)
+217,Shuttle Service (surcharge)
+218,Swimming pool
+219,"Property removed all, or never offered, single-use plastic toiletries."
+220,Towels Changed Upon Request
+221,24-hour security
+222,Security alarm
+223,Smoke alarms
+224,CCTV in common areas
+225,CCTV outside property
+226,Fire extinguishers
+227,Key access
+228,Key card access
+229,Carbon monoxide detector
+230,Carbon monoxide source
+231,"Property removed all, or never offered, plastic stirrers."
+232,"Property removed all, or never offered, plastic straws."
+233,"Property removed all, or never offered, plastic cups."
+234,"Property removed all, or never offered, plastic water bottles."
+235,"Property removed all, or never offered, plastic bottles for non-water drinks."
+236,"Property removed all, or never offered, plastic cutlery and tableware."
+237,Keycard for room electricity
+238,Opt-out from daily room cleaning
+239,Refillable water stations
+240,Bike rental
+241,Bike parking
+242,Use of cleaning chemicals that are effective against Coronavirus
+243,"Linens, towels and laundry washed in accordance with local authorities guidelines"
+244,Guest accommodation is disinfected between stays
+245,Guest accommodation sealed after cleaning
+246,Physical distancing in dining areas
+247,In-room dining options available
+248,Staff follow all safety protocols as directed by local authorities
+249,"Shared stationery such as printed menus, magazines, pens, and paper removed"
+250,Hand sanitiser in guest accommodation and key areas
+251,Process in place to check health of guests
+252,First aid kit available
+253,Contactless check-in/out
+254,Cashless payment available
+255,Physical distancing following guidelines from local authorities
+256,Mobile app for room service
+257,Screens or physical barriers placed between staff and guests in appropriate areas
+258,Property is cleaned by professional cleaning companies
+259,"All plates, cutlery, glasses and other tableware have been sanitised"
+260,Guest accommodation cleaning can be avoided on request
+261,Invoices Provided
+262,Breakfast takeaway containers
+263,Delivered food is securely covered
+264,Access to health care professionals
+265,Thermometers for guests provided by property
+266,Face masks for guests available
+267,Wild (non-domesticated) animals are not harmed at the property
+268,Recycling bins are available to guests and waste is recycled
+269,At least 80% of food is sourced from your region
+270,At least 80% of lighting uses energy-efficient LED bulbs
+271,Only using water-efficient toilets
+272,Only using water-efficient showers
+273,All windows are double-glazed
+274,"Food waste policy in place that includes education, food waste prevention, reduction, recycling, and disposal"
+275,Investing a percentage of revenue back into community projects or sustainability projects
+276,Compensate for at least 10% of total annual carbon emissions by purchasing certified carbon offsets
+277,Tours and activities organized by local guides and businesses offered
+278,Vegetarian options available at the property
+279,Vegan options available at the property
+280,Green spaces such as gardens/rooftop gardens on the property
+281,At least 80% of the food provided is organic
+282,100% renewable electricity is used throughout the property
+283,Local artists are offered a platform to display their talents
+284,"Provide guests with information regarding local ecosystems, heritage and culture, as well as visitor etiquette"
+285,Lunch
+286,Dinner
