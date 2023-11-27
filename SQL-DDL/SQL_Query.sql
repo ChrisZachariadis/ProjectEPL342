@@ -30,14 +30,14 @@ CREATE TABLE [dbo].[PRODUCT] (
 
 CREATE TABLE [dbo].[MEAL_PLAN] (
     Meal_Plan_ID INT NOT NULL,
-    Meal_Plan_Description VARCHAR(15) NOT NULL,
+    Meal_Plan_Description VARCHAR(50) NOT NULL,
     CONSTRAINT Meal_Plan_ID PRIMARY KEY (Meal_Plan_ID)
 );
 
 CREATE TABLE [dbo].[PROPERTY] (
     Property_ID INT NOT NULL,
     Property_Name VARCHAR(50) NOT NULL,
-    Property_Address VARCHAR(15) NOT NULL,
+    Property_Address VARCHAR(50) NOT NULL,
     Property_Description VARCHAR(15) NOT NULL,
     Property_Coordinates VARCHAR(20) NOT NULL,
     Property_Location VARCHAR(20) NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE [dbo].[PROPERTY_TYPE] (
 
 CREATE TABLE [dbo].[AMENITIES] (
     Amenity_ID INT NOT NULL,
-    Amenity_Type VARCHAR(50) NOT NULL,
+    Amenity_Type VARCHAR(200) NOT NULL,
     CONSTRAINT Amenity_ID PRIMARY KEY (Amenity_ID)
 );
 
@@ -71,7 +71,7 @@ CREATE TABLE [dbo].[ROOM_TYPE] (
 
 CREATE TABLE [dbo].[FACILITIES] (
     Facility_ID INT NOT NULL,
-    Facility_Type VARCHAR(50) NOT NULL,
+    Facility_Type VARCHAR(200) NOT NULL,
     CONSTRAINT Facility_ID PRIMARY KEY (Facility_ID)
 );
 

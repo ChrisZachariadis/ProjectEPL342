@@ -1,6 +1,285 @@
 Amenity_ID,Amenity_Type
-1,Fan
-2,Fan
-3,Fan
-4,Chess Set
-5,Chess Set
+1,Air conditioning
+2,Alarm clock
+3,AM/FM radio
+4,Terrace
+5,Barbeque grills
+6,Bath tub with spray jets
+7,Bathrobe
+8,Bathroom amenities (free toiletries)
+9,Bathtub
+10,Bathtub only
+11,Bath or Shower
+12,Bidet
+13,Cable television
+14,Coffee/Tea maker
+15,Color television
+16,Computer
+17,Connecting rooms
+18,Cordless phone
+19,Desk
+20,Desk with lamp
+21,Dishwasher
+22,Fax machine
+23,Fireplace
+24,Free movies/video
+25,Full kitchen
+26,Grecian tub
+27,Hairdryer
+28,Iron (ironing facilities)
+29,Ironing board
+30,Whirpool
+31,Kitchen
+32,Kitchen supplies
+33,Kitchenette
+34,Laptop
+35,Large desk
+36,Microwave
+37,Minibar
+38,Multi-line phone
+39,Oven
+40,Pay per view movies on TV
+41,Phone in bathroom
+42,Plates and bowls
+43,Private bathroom
+44,Refrigerator
+45,Refrigerator with ice maker
+46,Safe
+47,Separate closet
+48,Shower only
+49,Silverware/utensils
+50,Sitting area
+51,Speaker phone
+52,Stove
+53,Telephone
+54,Telephone for hearing impaired
+55,VCR movies
+56,Video games
+57,Wake-up calls
+58,Air conditioning individually controlled in room
+59,Bathtub &whirlpool separate
+60,CD player
+61,Desk with electrical outlet
+62,Marble bathroom
+63,List of movie channels available
+64,Oversized bathtub
+65,Shower
+66,Soundproofed room
+67,Tables and chairs
+68,Two-line phone
+69,Washer/dryer1)
+70,Separate tub and shower
+71,Ceiling fan
+72,CNN available
+73,Closets in room
+74,DVD player
+75,Mini-refrigerator
+76,Self-controlled heating/cooling system
+77,Toaster
+78,Shared bathroom
+79,Telephone TDD/Textphone
+80,Satellite television
+81,iPod docking station
+82,Satellite radio
+83,Video on demand
+84,Gulf view
+85,Mountain view
+86,Ocean view
+87,Slippers
+88,Chair provided with desk
+89,Luxury linen type
+90,Private pool
+91,High Definition (HD) Flat Panel Television - 32 inches or greater
+92,TV
+93,Video game player:
+94,Dining room seats
+95,Mobile/cellular phones
+96,Movies
+97,Multiple closets
+98,Safe large enough to accommodate a laptop
+99,Bluray player
+100,Non-allergenic room
+101,Seating area with sofa/chair
+102,Separate toilet area
+103,Widescreen TV
+104,Separate tub or shower
+105,Plunge pool
+106,Coffee/Tea maker
+107,Mini-bar
+108,Shower
+109,Bath
+110,Safe Deposit Box
+111,Pay-per-view Channels
+112,TV
+113,Telephone
+114,Fax
+115,Airconditioning
+116,Hair Dryer
+117,Wake Up Service/Alarm-clock
+118,Hot Tub
+119,Clothing Iron
+120,Kitchenette
+121,Balcony
+122,Trouser Press
+123,Bath-robe
+124,Spa Bath
+125,Radio
+126,Refrigerator
+127,Desk
+128,Shared Bathroom
+129,Ironing facilities
+130,Seating area
+131,Free Toiletries
+132,DVD-Player
+133,CD-Player
+134,Fan
+135,Toilet
+136,Microwave
+137,Dishwasher
+138,Washing machine
+139,Video
+140,Video Games
+141,Patio
+142,Bathroom
+143,Extra long beds (> 2 meter)
+144,Heating
+145,Dressing room
+146,Guest toilet
+147,Slippers
+148,Satellite Channels
+149,Kitchen
+150,Cable channels
+151,Bath or Shower
+152,Carpeted Floor
+153,Fireplace
+154,Additional Toilet
+155,Interconnecting Room(s) available
+156,Laptop Safe Box
+157,Flat-screen TV
+158,Private Entrance
+159,Sofa
+160,Soundproofing
+161,Tiled / Marble floor
+162,View
+163,Wooden / Parquet floor
+164,Wake Up Service
+165,Alarm Clock
+166,Dining Area
+167,Electric Kettle
+168,Executive Lounge Access
+169,iPod Docking Station
+170,Kitchenware
+171,Mosquito Net
+172,Towels/Linens at surcharge
+173,Sauna
+174,Private Pool
+175,Tumble dryer (machine)
+176,Wardrobe/Closet
+177,Oven
+178,Stove
+179,Toaster
+180,Barbecue
+181,Bidet
+182,Computer
+183,iPad
+184,Game Console
+185,Game Console - Xbox 360
+186,Game Console - PS2
+187,Game Console - PS3
+188,Game Console - Nintendo Wii
+189,Sea View
+190,Lake View
+191,Garden View
+192,Pool View
+193,Mountain View
+194,Landmark View
+195,Laptop
+196,Allergy-Free
+197,Cleaning products
+198,Electric blankets
+199,Additional Bathroom
+200,Blu-ray player
+201,Coffee Machine
+202,City View
+203,River View
+204,Terrace
+205,Towels
+206,Linen
+207,Dining table
+208,Children highchair
+209,Outdoor furniture
+210,Outdoor dining area
+211,Entire property on ground floor
+212,Upper floor reachable by lift
+213,Upper floor reachable by stairs only
+214,Entire unit wheelchair accessible
+215,Detached
+216,Semi-detached
+217,Private flat in block of flats
+218,Clothes Rack
+219,Rollaway bed
+220,Clothes drying rack
+221,Toilet paper
+222,Child safety socket covers
+223,Board games/puzzles
+224,Book/DVD/Music library for children
+225,Baby safety gates
+226,Sofa bed
+227,toilet with grab rails
+228,adapted bath
+229,roll in shower
+230,walk in shower
+231,higher level toilet
+232,low bathroom sink
+233,bathroom emergency pull cord
+234,shower chair
+235,rooftop pool
+236,infinity pool
+237,pool with view
+238,heated pool
+239,salt-water pool
+240,plunge pool
+241,pool towels
+242,shallow end
+243,pool cover
+244,wine/champagne
+245,bottle of water
+246,fruits
+247,chocolate/cookies
+248,Trash cans
+249,Wine glasses
+250,Game console - Xbox One
+251,Game console - Wii U
+252,Game console - PS4
+253,Children crib/cots
+254,toothbrush
+255,shampoo
+256,conditioner
+257,body soap
+258,shower cap
+259,pajamas
+260,yukata
+261,socket near the bed
+262,adapter
+263,feather pillow
+264,non-feather pillow
+265,hypoallergenic pillow
+266,Accessible by Lift
+267,Inner courtyard view
+268,Quiet street view
+269,Portable Wifi
+270,Smartphone
+271,Streaming service (such as Netflix)
+272,Lockers
+273,Fire alarms or smoke detectors
+274,Fire extinguishers
+275,Metal keys access
+276,Electronic key card access
+277,Reading light
+278,Earplugs
+279,Private curtain
+280,Carbon monoxide detector
+281,Carbon monoxide source
+282,Air purifiers available
+283,Single-room air conditioning for guest accommodation
+284,Hand sanitiser

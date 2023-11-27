@@ -1,6 +1,24 @@
-Meal_Plan_ID,Meal_Plan_Description
-1,Breakfast
-2,Lunch
-3,All inclusive
-4,All inclusive
-5,Breakfast
+Meal_Plan_ID,Meal_Plan_Description			
+1,(None)					
+2,Breakfast				
+3,Lunch					
+4,Dinner					
+5,American				
+6,Bed & breakfast			
+7,Buffet breakfast		
+8,Caribbean breakfast		
+9,Continental breakfast	
+10,English breakfast		
+11,European plan			
+12,Family plan				
+13,Full board				
+14,Full breakfast			
+15,Half board/modified American plan
+16,Room only
+17,Self catering
+18,Bermuda
+19,Dinner bed and breakfast plan
+20,Family American
+21,Modified
+22,Breakfast & lunch
+23,Lunch & Dinner
