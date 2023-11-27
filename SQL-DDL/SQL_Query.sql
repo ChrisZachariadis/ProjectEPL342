@@ -1,20 +1,27 @@
 USE DB
 
 CREATE TABLE [dbo].[TempResultsLocation](
-    Product_ID INT
-)
+    Product_ID INT,
+    Property_ID INT
+);
 
 CREATE TABLE [dbo].[TempResultsRoomType](
-    Product_ID INT
-)
+    Product_ID INT,
+        Property_ID INT
+
+);
 
 CREATE TABLE [dbo].[TempResultsPropertyType](
-    Product_ID INT
-)
+    Product_ID INT,
+    Property_ID INT
+
+);
 
 CREATE TABLE [dbo].[TempResultsDate](
-    Product_ID INT
-)
+    Product_ID INT,
+    Property_ID INT
+
+);
 
 CREATE TABLE [dbo].[USER] (
     User_ID INT NOT NULL,

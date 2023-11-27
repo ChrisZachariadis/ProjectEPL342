@@ -1,7 +1,15 @@
 
--- ALL THE SP ARE USED FOR FILTERS 
+------------EXEC OF MAIN STORED PROCEDURE-------------
+--Just add whatever filters you want and see which products match
+--EXEC getProductsBasedOnFilters @Property_LocationA='Athens' ,@Room_TypeA='Triple',@Property_Type_NameA='' ,@StartDateA='', @EndDateA=''
 
---get products based on location and stores them on a table named TempResultsLocation
+
+
+
+-- ALL THE SP ARE USED FOR FILTERS 
+---------------------------------------
+
+--(1)Get products based on location and stores them on a table named TempResultsLocation
 CREATE PROCEDURE getProductByLocation
     @Property_Location VARCHAR(20)
 AS
@@ -21,12 +29,14 @@ BEGIN
     IF OBJECT_ID('[dbo].[TempResultsLocation]') IS NOT NULL DROP TABLE [dbo].[TempResultsLocation];
     CREATE TABLE [dbo].[TempResultsLocation] (
         Product_ID INT,
+        Property_ID INT
+
     );
 
     -- Insert the query results into the temporary table
-    INSERT INTO [dbo].[TempResultsLocation] (Product_ID)
+    INSERT INTO [dbo].[TempResultsLocation] (Product_ID,Property_ID)
     SELECT 
-        B.[Product_ID]
+        B.[Product_ID],B.[Property_ID]
     FROM 
         [dbo].[PROPERTY] A, 
         [dbo].[PRODUCT] B, 
@@ -44,7 +54,7 @@ END
 GO
 
 
---get products based on room type and insert to temporary table named TempResultsRoomType
+--(2)Get products based on room type and insert to temporary table named TempResultsRoomType
 CREATE PROCEDURE getProductByRoomType
 @Room_Type VARCHAR(50)
 AS
@@ -52,9 +62,11 @@ BEGIN
 IF OBJECT_ID('[dbo].[TempResultsRoomType]') IS NOT NULL DROP TABLE [dbo].[TempResultsRoomType];
 CREATE TABLE [dbo].[TempResultsRoomType] (
 Product_ID INT,
+Property_ID INT
+
 );
-INSERT INTO [dbo].[TempResultsRoomType] (Product_ID)
-SELECT  P.[Product_ID]
+INSERT INTO [dbo].[TempResultsRoomType] (Product_ID,Property_ID)
+SELECT  P.[Product_ID],P.[Property_ID]
 FROM [dbo].[PRODUCT] P
 WHERE P.[Room_Type_ID] IN (
     SELECT A.[Room_Type_ID]
@@ -64,7 +76,7 @@ END
 GO
 
 
--- get products based on property type and insert to temporary table name TempResultsPropertyType
+--(3)Get products based on property type and insert to temporary table name TempResultsPropertyType
 CREATE PROCEDURE getProductByPropertyType
 @Property_Type_Name VARCHAR(50)
 AS
@@ -72,10 +84,12 @@ BEGIN
 IF OBJECT_ID('[dbo].[TempResultsPropertyType]') IS NOT NULL DROP TABLE [dbo].[TempResultsPropertyType];
 CREATE TABLE [dbo].[TempResultsPropertyType] (
 Product_ID INT,
-);
-INSERT INTO [dbo].[TempResultsPropertyType] (Product_ID)
+Property_ID INT
 
-SELECT A.[Product_ID]
+);
+INSERT INTO [dbo].[TempResultsPropertyType] (Product_ID,Property_ID)
+
+SELECT A.[Product_ID], A.[Property_ID]
 FROM [dbo].[PRODUCT] A
 WHERE A.[Property_ID] IN 
 ((SELECT P.[Property_ID]
@@ -87,8 +101,8 @@ WHERE P.[Property_Type_ID] IN (SELECT PT.[Property_Type_ID]
 END
 GO
 
---gets products based on a range of dates and the stock. It saves the results in TempResultsByDate
-CREATE PROCEDURE getProductByDate
+--(4)Gets products based on a range of dates and the stock. It saves the results in TempResultsByDate
+CREATE PROCEDURE getProductDate
     @StartDate DATE,
     @EndDate DATE
 AS
@@ -101,9 +115,10 @@ BEGIN
     END
 
     -- Create the temporary table
-    IF OBJECT_ID('[dbo].[TempResultsByDate]') IS NOT NULL DROP TABLE [dbo].[TempResultsByDate];
-    CREATE TABLE [dbo].[TempResultsByDate] (
-        Product_ID INT
+    IF OBJECT_ID('[dbo].[TempResultsDate]') IS NOT NULL DROP TABLE [dbo].[TempResultsDate];
+    CREATE TABLE [dbo].[TempResultsDate] (
+        Product_ID INT,
+        Property_ID INT
     );
 
     -- Calculate the total number of days in the range
@@ -113,13 +128,13 @@ BEGIN
     WHILE @CurrentDate <= @EndDate
     BEGIN
     -- Insert into the temporary table the product IDs that have stock_amount > 0 for all days in the range
-    INSERT INTO [dbo].[TempResultsByDate] (Product_ID)
-    SELECT Product_ID
-    FROM [dbo].[STOCK]
-    WHERE Stock_Amount > 0 AND  Stock_Date BETWEEN @StartDate
+    INSERT INTO [dbo].[TempResultsDate] (Product_ID,Property_ID)
+    SELECT S.Product_ID, P.Property_ID
+    FROM [dbo].[STOCK] S,[dbo].[Product] P
+    WHERE S.Stock_Amount > 0 AND  S.Stock_Date BETWEEN @StartDate
     AND  @EndDate
-    GROUP BY Product_ID
-    HAVING COUNT(DISTINCT Stock_Date) = @TotalDays
+    GROUP BY S.Product_ID, P.Property_ID
+    HAVING COUNT(DISTINCT S.Stock_Date) = @TotalDays
 
 
   SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate)
@@ -149,7 +164,7 @@ CREATE PROCEDURE getProductsBasedOnFilters
         IF(@Property_Type_NameA IS NOT NULL)
             EXEC getProductByPropertyType @Property_Type_Name=@Property_Type_NameA
         IF(@StartDateA IS NOT NULL AND @EndDateA IS NOT NULL)
-            EXEC getProductByDate @StartDate=@StartDateA, @EndDate=@EndDateA
+            EXEC getProductDate @StartDate=@StartDateA, @EndDate=@EndDateA
         
         --return the intersection of all the temp resutls.
 
@@ -180,6 +195,9 @@ IF EXISTS (SELECT TOP 1 1 FROM [dbo].[TempResultsLocation])
     ELSE
         SET @Query = @Query + N' INTERSECT SELECT * FROM [dbo].[TempResultsLocation]';
 
+
+
+
 -- Execute the dynamically constructed query
 EXEC sp_executesql @Query;
 
@@ -190,16 +208,11 @@ GO
 
 
 
-
-
-
-
-
 -- THIS PART IS FOR WHEN WE ARE DIPLAYING THE PRODUCTS IN THE PRODUCT LIST. 
+----------------------------------------------------------------------------
 
+-- Get Amenities of a product based on Product_ID 
 
---get Amenities of a product based on Product_ID 
---returns Amenity_Type's
 CREATE PROCEDURE getAmenities
 @Product_ID INT
 AS
@@ -214,8 +227,8 @@ WHERE ART.[MRoom_Type_ID] IN (SELECT P.[Room_Type_ID]
                             WHERE P.[Product_ID] =@Product_ID) )
 END
 
---get Facilities of a product based on Product_ID
---returns facility_type's
+-- Get Facilities of a product based on Product_ID
+
 CREATE PROCEDURE getFacilities
 @Product_ID INT
 AS
@@ -231,8 +244,8 @@ WHERE PF.[MProperty_ID] IN (SELECT P.[Property_ID]
 END
 
 
+-- Get Prices of a product based on Product_ID
 
---get Prices of a product based on Product_ID
 CREATE PROCEDURE getPrices
 @Product_ID INT
 AS 
@@ -245,37 +258,94 @@ END
 
 
 
+----------------------------NOT CHECKED IF THESE STORED PROCEDURES WORK ON OUR DATABASE----------------------------------------------
 
 
 
 
 
 
---getAvailableProducts based on date and property id
---getProperties based on Property_type
 
 
 
 
+-- Get Properties based on Property_type
+
+CREATE PROCEDURE spGetPropertiesByType
+    @Property_Type_Name VARCHAR(50)
+AS
+BEGIN
+    SELECT P.* 
+    FROM [dbo].[PROPERTY] P
+    WHERE P.[Property_ID] IN (
+        SELECT PT.[Property_ID]
+        FROM [dbo].[PROPERTY_TYPE] PT
+        WHERE PT.[Property_Type_Name] = @Property_Type_Name
+    );
+END
 
 
---User register (add name,surname, ID, dateofbirth, sex)
+-- CUSTOMER REGISTRATION. ONLY CUSTOMERS CAN REGISTER (PROPERTY OWNER IS ADDED BY THE ADMIN)
 
+CREATE PROCEDURE spRegister_Customer
+    @User_ID INT,
+    @Date_of_Birth DATE,
+    @First_Name VARCHAR(15),
+    @Last_Name VARCHAR(15),
+    @Email VARCHAR(50),
+    @Passwd VARCHAR(20),
+    @Gender CHAR(1),
+    @Approved CHAR(1)
+AS
+BEGIN
+    -- Check if the Email format is valid
+    IF @Email NOT LIKE '%@%.%'
+    BEGIN
+        RAISERROR ('Invalid Email format', 16, 1);
+        RETURN;
+    END
+
+    -- Insert customer data into the table with User_Type set to 'Customer'
+    INSERT INTO [dbo].[UserTable] 
+        (User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+    VALUES 
+        (@User_ID, @Date_of_Birth, 'Customer', @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+END
 
 
 
 --Add a product with a new product_ID / PRODUCT_ID IS AUTO INCREMENTED, WE DO NOT NEED TO INSERT IT.
 
-INSERT INTO [dbo].[PRODUCT] (Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
-VALUES (@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
+CREATE PROCEDURE spInsert_Product
+    @Product_Price DECIMAL(10, 2),
+    @Max_Guests INT,
+    @Product_Description NVARCHAR(MAX),
+    @Room_Type_ID INT,
+    @Property_ID INT
+AS
+BEGIN
+    INSERT INTO [dbo].[PRODUCT] (Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
+    VALUES (@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
+END
 
 
 --Edit the product based on product_ID  --> Room_type, 
 
-UPDATE [dbo].[PRODUCT]
-SET Product_Price = @Product_Price,
-    Max_Guests = @Max_Guests,
-    Product_Description = @Product_Description,
-    Room_Type_ID = @Room_Type_ID,
-    Property_ID = @Property_ID
-WHERE Product_ID = @Product_ID;
+CREATE PROCEDURE spEdit_Product
+    @Product_ID INT,
+    @Product_Price DECIMAL(10, 2),
+    @Max_Guests INT,
+    @Product_Description NVARCHAR(MAX),
+    @Room_Type_ID INT,
+    @Property_ID INT
+AS
+BEGIN
+    UPDATE [dbo].[PRODUCT]
+    SET Product_Price = @Product_Price,
+        Max_Guests = @Max_Guests,
+        Product_Description = @Product_Description,
+        Room_Type_ID = @Room_Type_ID,
+        Property_ID = @Property_ID
+    WHERE Product_ID = @Product_ID;
+END
+
