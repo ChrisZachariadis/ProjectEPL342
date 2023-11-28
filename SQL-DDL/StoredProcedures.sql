@@ -147,7 +147,7 @@ BEGIN
 END
 GO
 
---procedure that gets all is used by the PHP.
+--procedure that gets all data based on filters and stores them in the temporary table (TempResultFinal)
 CREATE PROCEDURE getProductsBasedOnFilters
     @Property_LocationA VARCHAR(20),
     @Room_TypeA VARCHAR(50),
@@ -199,10 +199,86 @@ IF EXISTS (SELECT TOP 1 1 FROM [dbo].[TempResultsLocation])
 
 
 -- Execute the dynamically constructed query
+IF OBJECT_ID('[dbo].[TempResultsFinal]') IS NOT NULL DROP TABLE [dbo].[TempResultsFinal];
+CREATE TABLE [dbo].[TempResultsFinal] (
+Product_ID INT,
+Property_ID INT
+
+);
+INSERT INTO [dbo].[TempResultsFinal] (Product_ID,Property_ID)
 EXEC sp_executesql @Query;
 
     END
 GO
+
+--(5)returns all property data that match the filters.
+CREATE PROCEDURE getAllPropertyData
+AS
+BEGIN
+    SELECT DISTINCT 
+        Prop.[Property_ID], 
+        Prop.[Property_Name], 
+        Prop.[Property_Location], 
+        Prop.[Property_Description], 
+        (SELECT MIN(Prod.[Product_Price])
+         FROM [dbo].[TempResultsFinal] Temp
+         JOIN [dbo].[PRODUCT] Prod ON Temp.[Product_ID] = Prod.[Product_ID]
+         WHERE Temp.[Property_ID] = Prop.[Property_ID]) AS MinPrice
+    FROM [dbo].[PROPERTY] Prop
+    JOIN [dbo].[TempResultsFinal] Temp ON Prop.[Property_ID] = Temp.[Property_ID];
+END
+GO
+
+
+
+
+
+-- CREATE PROCEDURE getAllProperties
+-- AS
+-- BEGIN
+
+-- DECLARE @CurrentPropertyID INT;
+
+-- -- Declare the cursor
+-- DECLARE property_cursor CURSOR FOR
+-- SELECT Property_ID FROM [dbo].[TempResultsFinal];
+
+-- -- Open the cursor
+-- OPEN property_cursor;
+
+-- -- Fetch the first row from the cursor
+-- FETCH NEXT FROM property_cursor INTO @CurrentPropertyID;
+
+-- -- Loop through the cursor
+-- WHILE @@FETCH_STATUS = 0
+-- BEGIN
+--     -- Call your stored procedure for each Property_ID
+--     EXEC getPropertyData @Property_ID = @CurrentPropertyID;
+
+--     -- Fetch the next row from the cursor
+--     FETCH NEXT FROM property_cursor INTO @CurrentPropertyID;
+-- END
+
+-- -- Close and deallocate the cursor
+-- CLOSE property_cursor;
+-- DEALLOCATE property_cursor;
+
+
+-- END
+
+-- --(5)Returns Property data based on property_id.
+-- CREATE PROCEDURE getPropertyData
+--     @Property_ID INT
+-- AS
+-- BEGIN
+--     SELECT DISTINCT P.[Property_ID] , P.[Property_Name] , P.[Property_Location] , P.[Property_Description] , (SELECT MIN(P.[Product_Price]) 
+--                                                                                                                 FROM [dbo].[TempResultsFinal] T, [dbo].[PRODUCT] P
+--                                                                                                                 WHERE T.[Property_ID]=@Property_ID AND T.[Product_ID]=P.[Product_ID] ) AS MinPrice
+--     FROM [dbo].[PROPERTY] P, [dbo].[TempResultsFinal] T 
+--     WHERE P.[Property_ID] = @Property_ID;
+-- END
+-- GO
+
 
 
 
@@ -264,29 +340,7 @@ END
 
 
 
-
-
-
-
-
--- Get Properties based on Property_type
-
-CREATE PROCEDURE spGetPropertiesByType
-    @Property_Type_Name VARCHAR(50)
-AS
-BEGIN
-    SELECT P.* 
-    FROM [dbo].[PROPERTY] P
-    WHERE P.[Property_ID] IN (
-        SELECT PT.[Property_ID]
-        FROM [dbo].[PROPERTY_TYPE] PT
-        WHERE PT.[Property_Type_Name] = @Property_Type_Name
-    );
-END
-
-
 -- CUSTOMER REGISTRATION. ONLY CUSTOMERS CAN REGISTER (PROPERTY OWNER IS ADDED BY THE ADMIN)
-
 CREATE PROCEDURE spRegister_Customer
     @User_ID INT,
     @Date_of_Birth DATE,
@@ -314,9 +368,12 @@ END
 
 
 
---Add a product with a new product_ID / PRODUCT_ID IS AUTO INCREMENTED, WE DO NOT NEED TO INSERT IT.
 
+-- ADMIN DASHBOARD // CAN ADD AND EDIT PRODUCTS USING PRODUCT_ID.
+
+--Add a product with a new product_ID.
 CREATE PROCEDURE spInsert_Product
+    @Product_ID INT,
     @Product_Price DECIMAL(10, 2),
     @Max_Guests INT,
     @Product_Description NVARCHAR(MAX),
@@ -324,13 +381,12 @@ CREATE PROCEDURE spInsert_Product
     @Property_ID INT
 AS
 BEGIN
-    INSERT INTO [dbo].[PRODUCT] (Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
-    VALUES (@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
+    INSERT INTO [dbo].[PRODUCT] (Product_ID,Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
+    VALUES (@Product_ID, @Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
 END
 
 
 --Edit the product based on product_ID  --> Room_type, 
-
 CREATE PROCEDURE spEdit_Product
     @Product_ID INT,
     @Product_Price DECIMAL(10, 2),
@@ -348,4 +404,72 @@ BEGIN
         Property_ID = @Property_ID
     WHERE Product_ID = @Product_ID;
 END
+
+
+-- PROPERTY MANAGER // CAN ADD PROPERTY AND EDIT THE AVAILABILITY / PRICE  -- AN ADMIN NEEDS TO APPROVE HIS CHANGES 
+
+CREATE PROCEDURE spInsert_Property
+    @Property_ID INT,
+    @Property_Name VARCHAR(50),
+    @Property_Address VARCHAR(50),
+    @Property_Description VARCHAR(15),
+    @Property_Coordinates VARCHAR(20),
+    @Property_Location VARCHAR(20),
+    @Owner_ID INT,
+    @Owner_First_Name VARCHAR(15),
+    @Owner_Last_Name VARCHAR(15),
+    @Property_Type_ID INT,
+    @User_ID INT
+AS
+BEGIN
+    INSERT INTO [dbo].[PROPERTY] (
+        Property_ID, Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location,
+        Owner_ID, Owner_First_Name, Owner_Last_Name, Property_Type_ID, User_ID
+    )
+    VALUES (
+        @Property_ID, @Property_Name, @Property_Address, @Property_Description, @Property_Coordinates,
+        @Property_Location, @Owner_ID, @Owner_First_Name, @Owner_Last_Name, @Property_Type_ID, @User_ID
+    );
+END;
+
+
+
+-- EDIT PROPERTY BASED ON THE PROPERTY_ID 
+
+CREATE PROCEDURE spUpdate_Property
+    @Property_ID INT,
+    @Property_Name VARCHAR(50),
+    @Property_Address VARCHAR(50),
+    @Property_Description VARCHAR(15),
+    @Property_Coordinates VARCHAR(20),
+    @Property_Location VARCHAR(20),
+    @Owner_ID INT,
+    @Owner_First_Name VARCHAR(15),
+    @Owner_Last_Name VARCHAR(15),
+    @Property_Type_ID INT,
+    @User_ID INT
+AS
+BEGIN
+    UPDATE [dbo].[PROPERTY]
+    SET 
+        Property_Name = @Property_Name,
+        Property_Address = @Property_Address,
+        Property_Description = @Property_Description,
+        Property_Coordinates = @Property_Coordinates,
+        Property_Location = @Property_Location,
+        Owner_ID = @Owner_ID,
+        Owner_First_Name = @Owner_First_Name,
+        Owner_Last_Name = @Owner_Last_Name,
+        Property_Type_ID = @Property_Type_ID,
+        User_ID = @User_ID
+    WHERE Property_ID = @Property_ID;
+END;
+
+
+    
+    
+
+
+
+
 
