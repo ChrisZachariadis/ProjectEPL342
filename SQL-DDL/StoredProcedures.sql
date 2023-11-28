@@ -132,7 +132,7 @@ BEGIN
     SELECT S.Product_ID, P.Property_ID
     FROM [dbo].[STOCK] S,[dbo].[Product] P
     WHERE S.Stock_Amount > 0 AND  S.Stock_Date BETWEEN @StartDate
-    AND  @EndDate
+    AND  @EndDate AND S.Product_ID = P.Product_ID
     GROUP BY S.Product_ID, P.Property_ID
     HAVING COUNT(DISTINCT S.Stock_Date) = @TotalDays
 
