@@ -154,7 +154,7 @@ body {
   -ms-justify-content: space-between;
   padding: 50px 57px; }
 
-input {
+input, select {
   border: none;
   background: #fff;
   border-radius: 5px;
@@ -241,6 +241,11 @@ label {
 
 .form-icon {
   position: relative; }
+
+  .form-icon2 {
+    position: relative;
+    right: 315px;
+    width: 230px; }
 
 .ui-datepicker-trigger {
   position: absolute;

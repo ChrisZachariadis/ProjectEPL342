@@ -15,8 +15,14 @@
 
     <!-- Vendor CSS (If needed) -->
     <link rel="stylesheet" href="vendor/jquery-ui/jquery-ui.min.css">
+
+    <link rel="stylesheet" href="css/logregY.css" media="screen">
 </head>
 
+<hreader>
+    <button onclick="location.href='login.php'" type="button" class="log" style="">Log in</button>
+    <button onclick="location.href='register.php'" type="button" class="reg">Register</button>
+</hreader>
 <body>
 
     <div class="main">
@@ -26,38 +32,104 @@
             <img src="images/dots.png" alt="">
         </div>
         <div class="container">
-            <form id="booking-form" class="booking-form" method="POST">
+            <form id="booking-form" class="booking-form" method="POST" action="Catalogue-Property.php">
                 <div class="form-group">
                     <div class="form-destination">
                         <label for="destination">Destination</label>
-                        <input type="text" id="destination" name="destination" placeholder="EG. Athens" />
+                        <select type="text" id="destination" name="destination">
+                            <option value="">Select a Destination</option>
+                            <option value="Rhodes">Rhodes</option>
+                            <option value="Santorini">Santorini</option>
+                            <option value="Thessaloniki">Thessaloniki</option>
+                            <option value="Athens">Athens</option>
+                            <option value="Thessaloniki">Thessaloniki</option>
+                            <option value="Athens">Athens</option>
+                            <option value="Naxos">Naxos</option>
+                            <option value="Mykonos">Mykonos</option>
+                            <option value="Aridea">Aridea</option>
+                            <option value="Salamina">Salamina</option>
+                        </select>
                     </div>
                     <div class="form-date-from form-icon">
                         <label for="date_from">From</label>
-                        <input type="text" id="date_from" class="date_from" placeholder="Pick a date" />
+                        <input type="text" id="date_from" class="date_from" name="date_from" placeholder="Pick a date"
+                            required readonly/>
                     </div>
                     <div class="form-date-to form-icon">
                         <label for="date_to">To</label>
-                        <input type="text" id="date_to" class="date_to" placeholder="Pick a date" />
-                    </div>
-                    <div class="form-quantity">
-                        <label for="quantity">Quantity</label>
-                        <span class="modify-qty plus" onClick="Tang()"><i class="zmdi zmdi-chevron-up"></i></span>
-                        <input type="number" name="quantity" id="quantity" value="0" min="0" class="nput-text qty text">
-                        <span class="modify-qty minus" onClick="Giam()"><i class="zmdi zmdi-chevron-down"></i></span>
+                        <input type="text" id="date_to" class="date_to" name="date_to" placeholder="Pick a date"
+                            required readonly/>
                     </div>
 
                     <!-- <div class="form-submit">
                         <input type="submit" id="submit" class="submit" value="Book now" /> -->
 
                     <div class="form-submit">
-                        <a href="catalogue.html" id="submit" class="submit-button">Book now</a>
+                        <button type="submit" id="submit" class="submit-button">Book now</button>
                     </div>
 
 
                     <!-- </div> -->
                 </div>
-        </div>
+
+                <div class="form-group">
+                    <div class="form-date-from" style="width: 230px;">
+                        <label for="Rooms">Room Type</label>
+                        <select id="Rooms" name="Rooms">
+                            <option value="">Select a room type</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Quadruple">Quadruple</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Triple">Triple</option>
+                            <option value="Twin">Twin</option>
+                            <option value="Double">Double</option>
+                            <option value="Single">Single</option>
+                            <option value="Studio">Studio</option>
+                            <option value="Family">Family</option>
+                            <option value="Twin/Double">Twin/Double</option>
+                            <option value="Dormitory">Dormitory</option>
+                            <option value="Bed">Bed</option>
+                            <option value="Bungalow">Bungalow</option>
+                            <option value="Chalet">Chalet</option>
+                            <option value="Holiday">Holiday</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Mobile">Mobile</option>
+                            <option value="Tent">Tent</option>
+
+                            <!-- Add more options as needed -->
+                        </select>
+                    </div>
+                    <div class="form-date-from form-icon2">
+                        <label for="date_from">Property Type</label>
+                        <select id="Property" name="Property">
+                            <option value="">Select a property type</option>
+                            <option value="Resort">Resort</option>
+                            <option value="Hostel">Hostel</option>
+                            <option value="Hotel">Hotel</option>
+                            <option value="Lodge">Lodge</option>
+                            <option value="Motel">Motel</option>
+                            <option value="Love">Love</option>
+                            <option value="Capsule">Capsule</option>
+                            <option value="Japanese">Japanese</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="Tent">Tent</option>
+                            <option value="Villa">Villa</option>
+                            <option value="Homestay">Homestay</option>
+                            <option value="Country">Country</option>
+                            <option value="Chalet">Chalet</option>
+                            <option value="Xartokouto">Kashia</option>
+                        </select>
+                    </div>
+
+                    <!-- <div class="form-submit">
+                        <input type="submit" id="submit" class="submit" value="Book now" /> -->
+
+
+
+
+                    <!-- </div> -->
+                </div>
+        
         </form>
     </div>
 

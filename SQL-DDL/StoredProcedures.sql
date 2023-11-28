@@ -430,8 +430,13 @@ END;
 
     
     
+-- Get Prices of a product based on Product_ID
 
-
-
-
-
+CREATE PROCEDURE getPrices
+@Product_ID INT
+AS 
+BEGIN
+SELECT P.[Product_Price]
+FROM [dbo].[PRODUCT] P
+WHERE P.[Product_ID] = @Product_ID
+END

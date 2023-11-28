@@ -1,5 +1,13 @@
 <?php
+$sqlDBname = "DB";
+//$_SESSION["serverName"] = "DESKTOP-H9FM89T\MSSQLSERVER01";
+$_SESSION["serverName"] = "PC-KILLER";
+$_SESSION["connectionOptions"] = array(
+  "Database" => $sqlDBname
+);
 
+$_SESSION["LoggedIn"] = false;
+$_SESSION["Adming"] = false;
 ?>
 
 <!DOCTYPE html>
@@ -13,6 +21,7 @@
   <!-- <meta name="description" content=""> -->
   <link rel="stylesheet" href="css/nicepage.css" media="screen">
   <link rel="stylesheet" href="css/Home.css" media="screen">
+  <link rel="stylesheet" href="css/logregP.css" media="screen">
   <!-- <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script> -->
   <!-- <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script> -->
   <!-- <meta name="generator" content="Nicepage 6.0.3, nicepage.com"> -->
@@ -34,9 +43,15 @@
   <!-- <meta data-intl-tel-input-cdn-path="intlTelInput/"> -->
 </head>
 
+
+
 <body data-path-to-root="./" data-include-products="true" class="u-body u-xl-mode" data-lang="en">
-  <section class="u-clearfix u-image u-section-1" id="sec-28a0" data-image-width="1500" data-image-height="1000">
-    <div class="u-clearfix u-sheet u-sheet-1">
+  
+<section class="u-clearfix u-image u-section-1" id="sec-28a0" data-image-width="1500" data-image-height="1000">
+<button onclick="location.href='login.php'" type="button" class="log">Log in</button>
+    <button onclick="location.href='register.php'" type="button" class="reg">Register</button>
+    
+<div class="u-clearfix u-sheet u-sheet-1">
       <img src="images/Island-Greece.webp" alt="" class="u-image u-image-round u-radius-50 u-image-1"
         data-image-width="1200" data-image-height="800" data-animation-name="customAnimationIn"
         data-animation-duration="1750" data-animation-delay="500">
