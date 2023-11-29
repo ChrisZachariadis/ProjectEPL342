@@ -86,6 +86,8 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 
  	for 30/11 : 
 
+	---approve property owners page
+
 	--add product page --- product price , max guests, description, room type, property id --- o xristis sto stored procedure dinete kai to USER_ID
 
 	edit product
