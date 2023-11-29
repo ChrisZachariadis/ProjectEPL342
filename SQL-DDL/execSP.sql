@@ -77,11 +77,6 @@ EXEC spInsert_Property
     @Property_Type_ID = 301, -- Replace with the actual Property Type ID
     @User_ID = 401; -- Replace with the actual User ID
 
-	Property_ID,Property_Name,Property_Address,Property_Description,Property_Coordinates,Property_Location,Owner_ID,Owner_First_Name,Owner_Last_Name,Property_Type_ID,User_ID
-	1,Hotel Maria,123 maria street,,56.1343878,Rhodes,1,Maria,Nikolaou,3,1
-
-
-
 GO
 SELECT *
 FROM [dbo].[PROPERTY]
