@@ -343,7 +343,7 @@ CREATE PROCEDURE getReviews
     @Property_ID INT
 AS
 BEGIN
-    SELECT R.Review_Description
+    SELECT R.Review_Description, R.Review_Rating
     FROM REVIEWS R
     INNER JOIN [dbo].[RESERVATIONS] RES ON R.Review_ID = RES.Review_ID
     INNER JOIN [dbo].[PRODUCT] P ON RES.Product_ID = P.Product_ID
