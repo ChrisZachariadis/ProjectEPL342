@@ -65,10 +65,37 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 	----29/11 Notes------
 
 
-	PROPERTY MANAGER: O MANAGER (OPOU STON PINAKA USER_ID EXEI STATUS MANAGER) THA EXEI TA DIKA TOU PROPERTY_IDs pou kanei manage. Gia ekeina ta properties
+	PROPERTY MANAGER: O MANAGER (OPOU STON PINAKA USER_ID EXEI STATUS MANAGER) THA EXEI TA DIKA TOU PROPERTY_IDs pou kanei manage. 
+	Gia ekeina ta properties
 	exei kai ta analoga product IDs. Prepei se auton na mporei na kanei edit mono ta sigkekrimena products.
 
-	O ADMIN MPOREI NA KANEI TA PANTA!   
+	O ADMIN MPOREI NA KANEI TA PANTA!  
+
+
+	gia ta reviews --- otan kano book prepei na exo selida opou vlepo ta reservations mou-- ekei pera
+	tha prepei na exo tin ikanotita na mporo na kano kai review (gia ta proionta pou ekana book)
+
+
+
+
+
+	sto login/register an ime sto login na exei epilogi "not a member? register" opos episis sto login na pigenei sto register
+	
+
+	-----------------------------------------------------------------------------------------------
+
+ 	for 30/11 : 
+
+	--add product page --- product price , max guests, description, room type, property id --- o xristis sto stored procedure dinete kai to USER_ID
+
+	edit product
+
+	--view reservations // cancel reservations    (+ ta html tous)
+
+
+
+
+
 
 	
 

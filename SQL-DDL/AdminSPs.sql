@@ -41,7 +41,7 @@
 GO
 
 CREATE PROCEDURE spRegister_User
-    @User_ID INT,
+    -- @User_ID INT,
     @Date_of_Birth DATE,
     @User_Type VARCHAR(15),
     @First_Name VARCHAR(15),
@@ -84,14 +84,11 @@ BEGIN
     BEGIN
         -- Insert user data into the table with dynamic User_Type
         INSERT INTO [dbo].[USER] 
-            (User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+            (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
         VALUES 
-            (@User_ID, @Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
     END
 END;
-
-
-
 
 
 
