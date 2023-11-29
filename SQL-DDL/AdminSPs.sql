@@ -1,45 +1,105 @@
 
--- USER REGISTRATION. ONLY CUSTOMERS CAN REGISTER (PROPERTY OWNER IS ADDED BY THE ADMIN)
+-- -- USER REGISTRATION. ONLY CUSTOMERS CAN REGISTER (PROPERTY OWNER IS ADDED BY THE ADMIN)
+-- CREATE PROCEDURE spRegister_User
+--     @User_ID INT,
+--     @Date_of_Birth DATE,
+--     @First_Name VARCHAR(15),
+--     @Last_Name VARCHAR(15),
+--     @Email VARCHAR(50),
+--     @Passwd VARCHAR(20),
+--     @Gender CHAR(1),
+--     @Approved CHAR(1)
+-- AS
+-- BEGIN
+--     SET @First_Name = RTRIM(@First_Name);
+--     SET @Last_Name = RTRIM(@Last_Name);
+--     SET @Email = RTRIM(@Email);
+--     SET @Passwd = RTRIM(@Passwd);
+
+--     -- Check if the Email format is valid
+--     IF @Email NOT LIKE '%@%.%'
+--     BEGIN
+--         RAISERROR ('Invalid Email format', 16, 1);
+--         RETURN;
+--     END
+-- ELSE IF EXISTS (
+--   SELECT *
+--   FROM [dbo].[USER]
+--   WHERE [Email] = @Email
+-- ) BEGIN PRINT 'Error: Email already exists'
+-- END
+-- ELSE BEGIN
+--     -- Insert customer data into the table with User_Type set to 'Customer'
+--     INSERT INTO [dbo].[USER] 
+--         (User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+--     VALUES 
+--         (@User_ID, @Date_of_Birth, 'Customer', @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+-- END
+-- END
+
+
+GO
+
 CREATE PROCEDURE spRegister_User
     @User_ID INT,
     @Date_of_Birth DATE,
+    @User_Type VARCHAR(15),
     @First_Name VARCHAR(15),
     @Last_Name VARCHAR(15),
     @Email VARCHAR(50),
     @Passwd VARCHAR(20),
-    @Gender CHAR(1),
-    @Approved CHAR(1)
+    @Gender CHAR(1)
 AS
 BEGIN
     SET @First_Name = RTRIM(@First_Name);
     SET @Last_Name = RTRIM(@Last_Name);
     SET @Email = RTRIM(@Email);
     SET @Passwd = RTRIM(@Passwd);
+    SET @User_Type = RTRIM(@User_Type);
 
+    DECLARE @Approved CHAR(1);
+    IF @User_Type = 'Customer' 
+    BEGIN
+        SET @Approved = 'Y';
+    END
+    ELSE IF @User_Type = 'Property_Owner'
+    BEGIN
+        SET @Approved = 'N';
+    END
     -- Check if the Email format is valid
     IF @Email NOT LIKE '%@%.%'
     BEGIN
         RAISERROR ('Invalid Email format', 16, 1);
         RETURN;
     END
-ELSE IF EXISTS (
-  SELECT *
-  FROM [dbo].[USER]
-  WHERE [Email] = @Email
-) BEGIN PRINT 'Error: Email already exists'
-END
-ELSE BEGIN
-    -- Insert customer data into the table with User_Type set to 'Customer'
-    INSERT INTO [dbo].[USER] 
-        (User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
-    VALUES 
-        (@User_ID, @Date_of_Birth, 'Customer', @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
-END
-END
+    ELSE IF EXISTS (
+        SELECT *
+        FROM [dbo].[USER]
+        WHERE [Email] = @Email
+    )
+    BEGIN 
+        PRINT 'Error: Email already exists';
+    END
+    ELSE
+    BEGIN
+        -- Insert user data into the table with dynamic User_Type
+        INSERT INTO [dbo].[USER] 
+            (User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+        VALUES 
+            (@User_ID, @Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+    END
+END;
+
+
+
+
+
+
 
 GO
 
 ------------------USER LOGIN--------------------------------
+
 CREATE PROCEDURE spLOGIN 
     @Email VARCHAR(50),
     @Passwd VARCHAR(20) 
@@ -63,39 +123,50 @@ BEGIN
     END
     ELSE
     BEGIN
-        PRINT 'Login successful';
         -- Also return the user_id of the user who logged in
-        SELECT [user_id]
+        SELECT [user_id],[User_Type]
         FROM [dbo].[USER]
         WHERE [Email] = @Email
         AND [Passwd] = @Passwd;
     END
 END;
 
-
 GO
 
----ADMIN LOGIN--------
-
-CREATE PROCEDURE spADMINLOGIN @UserName VARCHAR(30),
-  @Passwd VARCHAR(20),
-  @Email VARCHAR(50) 
-  AS 
-  BEGIN
-  IF NOT EXISTS (
-    SELECT *
+CREATE PROCEDURE spGetUserType
+    @User_ID INT
+AS
+BEGIN
+    -- Select User_Type for the given user_id
+    SELECT User_Type
     FROM [dbo].[USER]
-    WHERE [Email] = @Email AND @Email = 'administrator@gmail.com'
-      AND [Passwd] = @Passwd
-  )  BEGIN 
-    PRINT 'Error: Invalid email or password' 
-    PRINT HASHBYTES('SHA2_256', @Passwd)
-    END
-    ELSE
-    BEGIN
-        PRINT 'Admin Login successful';
-    END
+    WHERE user_id = @User_ID;
 END;
+
+
+
+-- GO
+-- ---ADMIN LOGIN--------
+
+-- CREATE PROCEDURE spADMINLOGIN @UserName VARCHAR(30),
+--   @Passwd VARCHAR(20),
+--   @Email VARCHAR(50) 
+--   AS 
+--   BEGIN
+--   IF NOT EXISTS (
+--     SELECT *
+--     FROM [dbo].[USER]
+--     WHERE [Email] = @Email AND @Email = 'administrator@gmail.com'
+--       AND [Passwd] = @Passwd
+--   )  BEGIN 
+--     PRINT 'Error: Invalid email or password' 
+--     PRINT HASHBYTES('SHA2_256', @Passwd)
+--     END
+--     ELSE
+--     BEGIN
+--         PRINT 'Admin Login successful';
+--     END
+-- END;
 
 
 
@@ -117,6 +188,8 @@ BEGIN
     INSERT INTO [dbo].[PRODUCT] (Product_ID,Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
     VALUES (@Product_ID, @Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
 END
+
+
 
 GO
 --Edit the product based on product_ID
@@ -144,7 +217,7 @@ GO
 -- PROPERTY MANAGER // CAN ADD PROPERTY AND EDIT THE AVAILABILITY / PRICE  -- AN ADMIN NEEDS TO APPROVE HIS CHANGES 
 
 
--- GET properties that belong to the property owner with the given user_id.
+-- GET properties that belong to the property owner with the given user_id. (property owner) 
 
 CREATE PROCEDURE spGetPropertyOwnerProperties
     @User_ID INT
@@ -219,5 +292,29 @@ BEGIN
 END;
 
 
-    
-    
+
+--- FOR OWNER --- VIEW THE REGISTERED PROPERTY OWNERS AND IF HE WANT HE CAN APPROVE THEM.
+GO
+
+CREATE PROCEDURE spViewUnapprovedPropertyOwners
+AS
+BEGIN
+    SELECT User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved
+    FROM [dbo].[USER]
+    WHERE User_Type = 'Property Owner' AND Approved = 'N'
+END;
+
+
+
+GO
+
+-- FOR OWNER --- APPROVE THE PROPERTY OWNER BASED ON THE USER_ID
+
+CREATE PROCEDURE spApproveUnapprovedOwnersByID
+    @User_ID INT
+AS
+BEGIN
+    UPDATE [dbo].[USER]
+    SET Approved = 'Y'
+    WHERE User_ID = @User_ID
+END;

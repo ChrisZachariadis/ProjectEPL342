@@ -68,7 +68,9 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 	PROPERTY MANAGER: O MANAGER (OPOU STON PINAKA USER_ID EXEI STATUS MANAGER) THA EXEI TA DIKA TOU PROPERTY_IDs pou kanei manage. Gia ekeina ta properties
 	exei kai ta analoga product IDs. Prepei se auton na mporei na kanei edit mono ta sigkekrimena products.
 
-	O ADMIN MPOREI NA KANEI TA PANTA!
+	O ADMIN MPOREI NA KANEI TA PANTA!   
+
+	
 
 
 

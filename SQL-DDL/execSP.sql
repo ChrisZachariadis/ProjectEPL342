@@ -35,6 +35,12 @@ EXEC spLOGIN
 
 GO
 
+-- Return user_type for the given user_id
+
+EXEC spGetUserType @User_ID = 2;
+
+GO
+
 
 ------Insert product with new Product_ID-----
 
@@ -97,3 +103,14 @@ EXEC spUpdate_Property
     @Property_Type_ID = 3, -- Replace with the updated Property Type ID
     @User_ID = 1; -- Replace with the updated User ID
 
+
+
+--- View the property owners that are not approved yet. ----
+
+EXEC spViewUnapprovedPropertyOwners;
+
+
+
+-- Edit unapproved property owner with the given user_id. (admin)
+
+EXEC spApproveUnapprovedOwnersByID @User_ID = 1;
