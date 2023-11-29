@@ -4,31 +4,36 @@ session_start();
 //LUIGI: DESKTOP-HQM94Q5
 //PETTE: DESKTOP-H9FM89T
 
-
-
 $Location = $_POST['destination'];
 $date_from = $_POST['date_from'];
 $date_to = $_POST['date_to'];
 $Room = $_POST['Rooms'];
 $Property = $_POST['Property'];
 
+$_SESSION['date_from'] = $date_from;
+$_SESSION['date_to'] = $date_to;
+
 // Print all variables
 $serverName = $_SESSION["serverName"];
 $connectionOptions = $_SESSION["connectionOptions"];
 $conn = sqlsrv_connect($serverName, $connectionOptions);
-var_dump($serverName, $connectionOptions, $conn);
-
+print_r($_SESSION['Admin']);
+$_SESSION['Admin'] = true;
 if ($conn === false) {
   die(print_r(sqlsrv_errors(), true));
 }
 
 
-$tsql = "{call getProductsBasedOnFilters (?)}";
-$params = array($Location, $Room, $Property, $date_from, $date_to); // replace 'Electronics' with the category you want
+
+$tsql = "{call getProductsBasedOnFilters (?, ?, ?, ?, ?)}";
+
+$params = array($Location, $Room, $Property, $date_from, $date_to);
 $return = sqlsrv_query($conn, $tsql, $params);
 if ($return === false) {
   die(print_r(sqlsrv_errors(), true));
 }
+
+sqlsrv_free_stmt($return);
 sqlsrv_close($conn);
 
 function products()
@@ -226,7 +231,7 @@ function products()
       <h1 id="TITLE" class="home-text">Heading</h1>
       <div class="container">
         
-        <?php //products(); ?>
+        <?php products(); ?>
       </div>
     </div>
   </div>

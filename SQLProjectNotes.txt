@@ -54,10 +54,21 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 	stin periptosi pou o owner idi iparxei stin vasi kai apla kataxorei neo property??
 
 
+
 	PROPERTY -- isos na min xriazotan to ownerID, owen name and surname kai aplos me to USER_ID na perno oles tis plirofories  ???
 	(ekei afou tha kseroume an ine approved i oxi o user)
 
 	pos tha ksexorizoume ton administrator ean kano login me to email? tha exo desmeumeno email p.x administrator@gmail.com ?
+
+
+
+	----29/11 Notes------
+
+
+	PROPERTY MANAGER: O MANAGER (OPOU STON PINAKA USER_ID EXEI STATUS MANAGER) THA EXEI TA DIKA TOU PROPERTY_IDs pou kanei manage. Gia ekeina ta properties
+	exei kai ta analoga product IDs. Prepei se auton na mporei na kanei edit mono ta sigkekrimena products.
+
+	O ADMIN MPOREI NA KANEI TA PANTA!
 
 
 

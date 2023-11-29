@@ -26,39 +26,56 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Login Page with Background Image Example</title>
   <link rel="stylesheet" href="./css/Register.css">
-
+  <link rel="stylesheet" href="vendor/jquery-ui/jquery-ui.min.css">
 </head>
+
 <body>
-<!-- partial:index.partial.html -->
-<div id="bg"></div>
+  <!-- partial:index.partial.html -->
+  <div id="bg"></div>
 
-<form method="POST" action="">
-  <div class="form-field">
-    <input type="email" placeholder="Email / Username" required/>
-  </div>
-  
-  <div class="form-field">
-    <input type="password" placeholder="Password" required/>     
-  </div>
+  <form method="POST" action="">
+    <div class="form-field">
+      <input type="FName" placeholder="First Name" required />
+    </div>
 
-  <div class="form-field">
-    <input type="Username" placeholder="Password" required/>     
-  </div>
+    <div class="form-field">
+      <input type="LName" placeholder="Last Name" required />
+    </div>
 
-  <div class="form-field">
-    <input type="Phone" placeholder="Password" required/>     
-  </div>
-  
-  <div class="form-field">
-    <button class="btn" type="submit">Log in</button>
-  </div>
-</form>
-<!-- partial -->
-  
+    <div class="form-field">
+      <input type="email" placeholder="Email / Username" required />
+    </div>
+
+    <div class="form-field">
+      <input type="password" placeholder="Password" required />
+    </div>
+
+    <div class="form-field half left">
+      <input type="text" id="birth" class="birth" name="birth" placeholder="Birthdate" required />
+    </div>
+
+    <div class="form-field half right">
+    <select name="gender" required>
+        <option value="">Gender</option>
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+    </select>
+</div>
+
+    <div class="form-field Login">
+      <button class="btn" type="submit">Log in</button>
+    </div>
+  </form>
+  <!-- partial -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/jquery-ui/jquery-ui.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
+
 </html>

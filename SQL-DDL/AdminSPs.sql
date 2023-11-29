@@ -24,7 +24,7 @@ BEGIN
     END
 ELSE IF EXISTS (
   SELECT *
-  FROM [dbo].USER
+  FROM [dbo].[USER]
   WHERE [Email] = @Email
 ) BEGIN PRINT 'Error: Email already exists'
 END
@@ -35,7 +35,9 @@ ELSE BEGIN
     VALUES 
         (@User_ID, @Date_of_Birth, 'Customer', @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
 END
+END
 
+GO
 
 ------------------USER LOGIN--------------------------------
 CREATE PROCEDURE spLOGIN 
@@ -62,30 +64,38 @@ BEGIN
     ELSE
     BEGIN
         PRINT 'Login successful';
+        -- Also return the user_id of the user who logged in
+        SELECT [user_id]
+        FROM [dbo].[USER]
+        WHERE [Email] = @Email
+        AND [Passwd] = @Passwd;
     END
 END;
 
 
+GO
 
 ---ADMIN LOGIN--------
 
 CREATE PROCEDURE spADMINLOGIN @UserName VARCHAR(30),
-  @Passwd VARCHAR(20) 
+  @Passwd VARCHAR(20),
+  @Email VARCHAR(50) 
   AS 
   BEGIN
   IF NOT EXISTS (
     SELECT *
-    FROM [dbo].USER
+    FROM [dbo].[USER]
     WHERE [Email] = @Email AND @Email = 'administrator@gmail.com'
       AND [Passwd] = @Passwd
-  )  BEGIN PRINT 'Error: Invalid email or password' PRINT HASHBYTES('SHA2_256', @Passwd)
+  )  BEGIN 
+    PRINT 'Error: Invalid email or password' 
+    PRINT HASHBYTES('SHA2_256', @Passwd)
     END
     ELSE
     BEGIN
-        PRINT 'Login successful';
+        PRINT 'Admin Login successful';
     END
 END;
-
 
 
 
@@ -133,8 +143,26 @@ GO
 
 -- PROPERTY MANAGER // CAN ADD PROPERTY AND EDIT THE AVAILABILITY / PRICE  -- AN ADMIN NEEDS TO APPROVE HIS CHANGES 
 
+
+-- GET properties that belong to the property owner with the given user_id.
+
+CREATE PROCEDURE spGetPropertyOwnerProperties
+    @User_ID INT
+AS
+BEGIN
+    -- Select properties that belong to the user
+    SELECT Property_ID, Property_Name, Property_Address, Property_Description, 
+           Property_Coordinates, Property_Location, Owner_ID, Owner_First_Name, 
+           Owner_Last_Name, Property_Type_ID
+    FROM [dbo].[PROPERTY]
+    WHERE User_ID = @User_ID;
+END;
+
+GO
+
+
 CREATE PROCEDURE spInsert_Property
-    @Property_ID INT,
+    @Property_ID INT,  
     @Property_Name VARCHAR(50),
     @Property_Address VARCHAR(50),
     @Property_Description VARCHAR(15),

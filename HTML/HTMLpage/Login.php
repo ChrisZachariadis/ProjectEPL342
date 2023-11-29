@@ -13,14 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     die(print_r(sqlsrv_errors(), true));
   }
 
-  //TODO: $tsql = "{call getProduct (?)}";
-  $params = array($Location); // replace 'Electronics' with the category you want
-  $getResults = sqlsrv_query($conn, $tsql, $params);
-  if ($getResults === false) {
-    die(print_r(sqlsrv_errors(), true));
-  }
-  // Now you can use $email and $password
-  // Remember to sanitize and validate these values before using them
+  // $tsql = "{call getProduct (?)}";
+  // $params = array($Location); // replace 'Electronics' with the category you want
+  // $getResults = sqlsrv_query($conn, $tsql, $params);
+  // if ($getResults === false) {
+  //   die(print_r(sqlsrv_errors(), true));
+  // }
+
+  // $row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC);
+  // $row = $row['User_ID'];
+  $_SESSION['LogedIn'] = true;
+  // $_SESSION['UserID'] = $row;
+  echo '<script type="text/javascript">',
+     'window.onload = function() {',
+     '  alert("Succesfully Loged In.");',
+     '  window.location.href = "Home.php";',
+     '};',
+     '</script>';
+
 }
 
 ?>
@@ -41,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <form method="POST">
     <div class="form-field">
-      <input type="email" placeholder="Email / Username" required />
+      <input type="email" placeholder="Email" required />
     </div>
 
     <div class="form-field">
