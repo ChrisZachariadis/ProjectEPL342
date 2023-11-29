@@ -1,109 +1,113 @@
-ta panta sto sql server (store procidure o kathenas ksexorista)
-
-oloi se ola, php,sql,...
-
-------------------------------------------------------------------------------------------------------------------------
-
-
 deksi click tasks, generate scripts:
 
 	na min valoume tin vasi mas i tous xristes.
+ 	epilego gia pio pinaka i store procedure thelo
 	
-	epilego gia pio pinaka i store procedure thelo
-	
-
 	set scripting option -> advanced:
 		check for object exstence true, 
 		script drop and create (select), 
 		types of data to scirpt[data only,schema and data, schema only]
 
 		triti 5 tou dekemvri 30 lepta, na treksoume ta queries gia na diksoume ti douleyei kai ti kaname, 
-
-
-PARAGOGI DEDOMENWN: (OPOS TO MOCKAUP DATA)
-
-prepei na valoume demomena stin vasi mas 
-(me programma i na to perasoume sto excel na ta perasoume kai na prosthesoume mia extra stili na to valoume san keimeno....
-	
-
-
+----------------------------------------------------------------------------------------------------------------------
 sql sever : NEWID()  - paragei GUID (global unique identifier) to xrisimopoio: apo enan pinaka perno mia tixea grammi- perno tixees grammes kai 
 					   akolouthos na tis sindeo-
-
-
+----------------------------------------------------------------------------------------------------------------------
 minimum dedomena pou prepei na ftiakso : 
 arketa (pano apo 30 hotels pou esto apo 5 tipous kai kathe tipos domatious 5-6 diaforetika proionta) 
-
-
-
 ------------------------------------------------------------------------------------------------------------------------
-
-
 ANAKEFALEOSI:
-
-programmataki na ftiaxnei tixea dedomena (sql script) (MOCKAROO)
-
-afou exo ta dedomena, eite dika mou dedomena eite dedomena tou script prepei na parousiasoume ta queries na diksoume oti douleuoun kanonika 
-
-
+-programmataki na ftiaxnei tixea dedomena (sql script) (MOCKAROO)
+-afou exo ta dedomena, eite dika mou dedomena eite dedomena tou script prepei na parousiasoume ta queries na diksoume oti douleuoun kanonika 
 ------------------------------------------------------------------------------------------------------------------------
-
-
 PARADOSEIS: 
-
-tha prepei na paradosoume kai ilektronika kai se fisiki morfi 
-
-mexri tin kiriaki nixta to deadline (documentation, scripts, kodika, interface)
-
+-tha prepei na paradosoume kai ilektronika kai se fisiki morfi 
+-mexri tin kiriaki nixta to deadline (documentation, scripts, kodika, interface)
+----------------------------------------------------------------------------------------------------------------------
 Sto documentation:::::::::
-
-
 1.	prepei na dosoume er,sxesiako montelo pou dinei o sql server, to er oxi anagkastika sto erd+,
-
 2.	episi prepei na grapsoume ti exoume kanei, apofaseis pou exoume parei oso afora tin ilopoihsh, (gia paradeigma ekeino me tin imerominia),
-
 3.	ligo polli pos douleuei to sistima.
-
-
-episi kai se hardcopy gia tin triti, 
-
-mexri kai trin triti mporoume na kanoume allages gia to documentation, oxi gia ta alla.
-
-
-
-
+----------------------------------------------------------------------------------------------------------------------
+mexri kai trin triti mporoume na kanoume allages gia to documentation, oxi gia ta alla. (TRITI HARDCOPY)
+----------------------------------------------------------------------------------------------------------------------
 interface: 	apla na kalei kapia pragmata sto sql, diaxirisei dedomenwn, 
 		forma gia to insert gia to update (oxi to delete) gia euresi, 
 		gia kathe ti pou iparxei stin vasi mou,
 
 		prepei na iparxei tropo na ta kano sto interface,
-
-
-
+----------------------------------------------------------------------------------------------------------------------
 cascade delete- no action ( gia na min ginonte kikloi) ????????
 
-
-
-
-
-
-
 ------------------------------------------------------------------------------------------------------------------------
 
 
 
-triti i parousiasi. prepei na tou eksigisoume:
-	
-	1. ekana auto to pragma, 
-	2. douleuei auto to pragma, 
-	3. to pernis auto to pragma (karfoto).
+
+	------- 28/11 Notes ---------
+
+	-Elegxos sto User register ean dothike username pou iparxei idi
+	-episis sto user login ean ta stoixeia pou dothikan einai sosta
 
 
-------------------------------------------------------------------------------------------------------------------------
-Lecture::
+	-otan kano insert ena neo property zitao owner id , owner name and surname... 
+	stin periptosi pou o owner idi iparxei stin vasi kai apla kataxorei neo property??
 
-Xrisi twn indexes
 
-xrisimopoioume to html 1 (mazi me to php)
+
+	PROPERTY -- isos na min xriazotan to ownerID, owen name and surname kai aplos me to USER_ID na perno oles tis plirofories  ???
+	(ekei afou tha kseroume an ine approved i oxi o user)
+
+	pos tha ksexorizoume ton administrator ean kano login me to email? tha exo desmeumeno email p.x administrator@gmail.com ?
+
+
+
+	----29/11 Notes------
+
+
+	PROPERTY MANAGER: O MANAGER (OPOU STON PINAKA USER_ID EXEI STATUS MANAGER) THA EXEI TA DIKA TOU PROPERTY_IDs pou kanei manage. Gia ekeina ta properties
+	exei kai ta analoga product IDs. Prepei se auton na mporei na kanei edit mono ta sigkekrimena products.
+
+	O ADMIN MPOREI NA KANEI TA PANTA!
+
+
+
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Καταγραφή και περιγραφή διαθέσιμων δωματίων, την διαθεσημότητα τους και τις κρατήσεις τους.
+
+Πρέπει να έχουμε Pages για καταχώριση, αναζήτηση, ενημέρωση και διαγραφή καταλυμάτων.
+Για να διαγράψουμε πρέπει να μην υπάρχουν κρατήσεις στο κατάλυμα. Κατάλυμα εννοεί το Property/Hotel όχι το product/Δωμάτιο.
+
+
+
+Λειτουργία 1-> Δημηουργία Account (Παράγραφος 1)
+
+Διαχειρηστής Συστήματος= Δικαίωμα πρόσβασης σε όλα τα επίπεδα.
+
+Διαχειρηστής Καταλύματος= Δικαίωμα καταχώρισης και διαχείρησης διαθεσιμότητας, καταλυμάτος, τιμής κ.α. Πρέπει να κάνει self-register και κάποιος Root να τον κάνει επιβεβέωση.
+
+Απλή Χρήστες= αναζήτηση, κράτηση κάποιου product, για κάθε κράτηση μπορεί να βάλει review.
+Κάνουν self-register χωρίς επιβεβέωση. 
+
+
+
+Λειτουργία 2-> Διαχείρηση καταλύματος. Για να βάλουμε νέα product στο σύστημα πρέπει πρώτα να βάλουμε ένα νέο κατάλυμα.
+
+
+Λειτουργία αναζήτησης-> κάνουμε search με διάφορα κριτήρια και εμφανίζονται καταλύματα(Hotel) αυτά που έχουν stock, μαζί με την ελάχιστη τιμή τους. Αν πατήσω πάνω θα μου δίξει products του εν λόγω property με την τιμή του κάθε Product, τα χαρακτηριστικά του (amenities), και θα δίχνει γενικά τα reviews και facilities.
+
+Λειτουργία κράτησης-> Μετά την αναζήτηση επιλέγω πιο product θέλω να κάνω book και αυτόματα αλλάζει το stock του.
+
+
+
+
+
 
 

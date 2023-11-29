@@ -1,4 +1,3 @@
-USE DB
 DECLARE @sql NVARCHAR(MAX) = '';
 
 -- Generate script to drop all foreign key constraints
@@ -22,4 +21,18 @@ WHERE TABLE_TYPE = 'BASE TABLE'
     AND TABLE_NAME != 'dtproperties' -- Exclude system tables and special tables
 
 -- Execute the generated script to drop all tables
+EXEC sp_executesql @sql;
+
+--------------------------------------This part Drops Stored Procedures-------------------------
+GO 
+
+DECLARE @sql NVARCHAR(MAX) = '';
+
+SET @sql = '';
+
+-- Generate DROP statements for all stored procedures
+SELECT @sql += 'DROP PROCEDURE [' + SCHEMA_NAME(schema_id) + '].[' + name + '];' + CHAR(13)
+FROM sys.procedures
+
+-- Execute the generated command to drop stored procedures
 EXEC sp_executesql @sql;
