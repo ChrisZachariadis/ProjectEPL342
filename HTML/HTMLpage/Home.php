@@ -1,13 +1,22 @@
 <?php
+session_start();
+
+//LUIGI: DESKTOP-HQM94Q5
+//PETTE: DESKTOP-H9FM89T
+
 $sqlDBname = "DB";
 //$_SESSION["serverName"] = "DESKTOP-H9FM89T\MSSQLSERVER01";
-$_SESSION["serverName"] = "PC-KILLER";
+$_SESSION["serverName"] = "DESKTOP-H9FM89T\MSSQLSERVER01";
 $_SESSION["connectionOptions"] = array(
   "Database" => $sqlDBname
 );
 
 $_SESSION["LoggedIn"] = false;
+$_SESSION["UserID"] = 1;
 $_SESSION["Adming"] = false;
+$_SESSION['date_from'] = "";
+$_SESSION['date_to'] = "";
+
 ?>
 
 <!DOCTYPE html>
@@ -48,8 +57,11 @@ $_SESSION["Adming"] = false;
 <body data-path-to-root="./" data-include-products="true" class="u-body u-xl-mode" data-lang="en">
   
 <section class="u-clearfix u-image u-section-1" id="sec-28a0" data-image-width="1500" data-image-height="1000">
-<button onclick="location.href='login.php'" type="button" class="log">Log in</button>
-    <button onclick="location.href='register.php'" type="button" class="reg">Register</button>
+<?php 
+if($_SESSION['LoggedIn'] == false)
+echo "<button onclick='location.href='login.php'' type='button' class='log'>Log in</button>
+<button onclick='location.href='register.php'' type='button' class='reg'>Register</button>";
+?>
     
 <div class="u-clearfix u-sheet u-sheet-1">
       <img src="images/Island-Greece.webp" alt="" class="u-image u-image-round u-radius-50 u-image-1"
@@ -63,7 +75,7 @@ $_SESSION["Adming"] = false;
           </h5>
           <h1 class="u-align-left u-text u-text-palette-1-light-1 u-text-2">Find your<br>perfect place
           </h1>
-          <a href="BookSearch.html" <!
+          <a href="BookSearch.php" <!
             class="u-active-palette-2-base u-align-left u-border-none u-btn u-btn-round u-button-style u-hover-palette-2-base u-palette-1-base u-radius-50 u-text-active-white u-text-body-alt-color u-text-hover-white u-btn-1">Book
             now</a>
         </div>

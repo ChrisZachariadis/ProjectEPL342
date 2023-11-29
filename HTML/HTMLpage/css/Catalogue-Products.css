@@ -43,6 +43,18 @@ top: 30%;
   top: 50%;
 }
 
+.Text3{
+  position: absolute;
+  left: 28%;
+  top: 70%;
+}
+
+.Text4{
+  position: absolute;
+  left: 28%;
+  top: 90%;
+}
+
 .HotelTitle{
 position: absolute;
 left: 300px;
@@ -85,4 +97,8 @@ top: 10px;
 .home-button1 {
   text-align: center;
   text-transform: uppercase;
+}
+
+.facilities{
+  background-color: #D9D9D9;
 }
