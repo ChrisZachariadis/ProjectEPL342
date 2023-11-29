@@ -1,7 +1,7 @@
 USE DB
 
 CREATE TABLE [dbo].[USER] (
-    User_ID INT NOT NULL,
+    User_ID INT IDENTITY (1,1),
     Date_of_Birth DATE NOT NULL,
     User_Type VARCHAR(15) NOT NULL,
     CHECK (
@@ -9,7 +9,7 @@ CREATE TABLE [dbo].[USER] (
     ),
     First_Name VARCHAR(15) NOT NULL,
     Last_Name VARCHAR(15) NOT NULL,
-    Email VARCHAR(50) NOT NULL,
+    Email VARCHAR(50) NOT NULL UNIQUE,
     CHECK (Email LIKE '%@%.%'),
     Passwd VARCHAR(20) NOT NULL,
     Gender CHAR(1) NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[USER] (
 );
 
 CREATE TABLE [dbo].[PRODUCT] (
-    Product_ID INT NOT NULL,
+    Product_ID INT IDENTITY (31,1),
     Product_Price FLOAT NOT NULL,
     Max_Guests INT NOT NULL,
     CHECK (Max_Guests > 0),
@@ -36,7 +36,7 @@ CREATE TABLE [dbo].[MEAL_PLAN] (
 );
 
 CREATE TABLE [dbo].[PROPERTY] (
-    Property_ID INT NOT NULL,
+    Property_ID INT IDENTITY (1,1),
     Property_Name VARCHAR(50) NOT NULL,
     Property_Address VARCHAR(50) NOT NULL,
     Property_Description VARCHAR(15) NOT NULL,
@@ -89,17 +89,17 @@ CREATE TABLE [dbo].[STOCK] (
 );
 
 CREATE TABLE [dbo].[RESERVATIONS] (
-    Reservation_ID INT NOT NULL,
+    Reservation_ID INT IDENTITY (1,1),
     Reservation_Date DATE NOT NULL,
     --FKeys
-    Review_ID INT NOT NULL,
+    Review_ID INT,
     User_ID INT NOT NULL,
     Product_ID INT NOT NULL,
     CONSTRAINT Reservation_ID PRIMARY KEY (Reservation_ID)
 );
 
 CREATE TABLE [dbo].[REVIEWS] (
-    Review_ID INT NOT NULL,
+    Review_ID INT IDENTITY (1,1),
     Review_Description VARCHAR(170) NOT NULL,
     Review_Rating INT NOT NULL,
     CHECK (

@@ -1,6 +1,6 @@
 User_ID,Date_of_Birth,User_Type,First_Name,Last_Name,Email,Passwd,Gender,Approved
-1,04/05/2002,Property Owner,Lynnea,Bowstead,lbowstead0@bbc.co.uk,28916965033762317437,F,0
-2,08/18/2002,Customer,Steffen,Toffler,stoffler1@shop-pro.jp,15320267378481813729,M,0
-3,01/22/2001,Admin,Audry,Cheson,acheson2@mediafire.com,14200339279800897501,F,0
-4,02/15/2002,Customer,Amandie,Stegell,astegell3@chicagotribune.com,19617533097290032930,F,0
-5,11/06/2001,Customer,Garfield,Featenby,gfeatenby4@army.mil,15830422865982700720,M,0
+,04/05/2002,Property Owner,Lynnea,Bowstead,lbowstead0@bbc.co.uk,28916965033762317437,F,0
+,08/18/2002,Customer,Steffen,Toffler,stoffler1@shop-pro.jp,15320267378481813729,M,0
+,01/22/2001,Admin,Audry,Cheson,acheson2@mediafire.com,14200339279800897501,F,0
+,02/15/2002,Customer,Amandie,Stegell,astegell3@chicagotribune.com,19617533097290032930,F,0
+,11/06/2001,Customer,Garfield,Featenby,gfeatenby4@army.mil,15830422865982700720,M,0

@@ -3,7 +3,7 @@
 --EXEC getProductsBasedOnFilters @Property_LocationA='Athens' ,@Room_TypeA='Triple',@Property_Type_NameA='' ,@StartDateA='', @EndDateA=''
 
 -------------------------------------
--- ALL THE SP ARE USED FOR FILTERS -- 
+-- ALL THE SP ARE USED FOR FILTERS / GET PROPERTIES / GET PRODUCTS -- 
 ----------------------------------------------------------------------------------------------------
 --(1) Get products based on location and stores them on a table named TempResultsLocation
 CREATE PROCEDURE getProductByLocation
@@ -159,25 +159,21 @@ CREATE PROCEDURE getProductsBasedOnFilters
 SET @Query = N'SELECT * WHERE 1 = 0';
 
 IF OBJECT_ID('[dbo].[TempResultsRoomType]') IS NOT NULL 
---IF EXISTS (SELECT TOP 1 1 FROM [dbo].[TempResultsRoomType])
     SET @Query = N'SELECT * FROM [dbo].[TempResultsRoomType]';
 
 IF OBJECT_ID('[dbo].[TempResultsPropertyType]') IS NOT NULL 
---IF EXISTS (SELECT TOP 1 1 FROM [dbo].[TempResultsPropertyType])
     IF @Query = N'SELECT * WHERE 1 = 0'
         SET @Query = N'SELECT * FROM [dbo].[TempResultsPropertyType]'
     ELSE
         SET @Query = @Query + N' INTERSECT SELECT * FROM [dbo].[TempResultsPropertyType]';
 
 IF OBJECT_ID('[dbo].[TempResultsDate]') IS NOT NULL 
---IF EXISTS (SELECT TOP 1 1 FROM [dbo].[TempResultsDate])
     IF @Query = N'SELECT * WHERE 1 = 0'
         SET @Query = N'SELECT * FROM [dbo].[TempResultsDate]'
     ELSE
         SET @Query = @Query + N' INTERSECT SELECT * FROM [dbo].[TempResultsDate]';
 
 IF OBJECT_ID('[dbo].[TempResultsLocation]') IS NOT NULL 
---IF EXISTS (SELECT TOP 1 1 FROM [dbo].[TempResultsLocation])
     IF @Query = N'SELECT * WHERE 1 = 0'
         SET @Query = N'SELECT * FROM [dbo].[TempResultsLocation]'
     ELSE
@@ -225,23 +221,133 @@ GO
 ------------------------------------------------------------------------------------------------------------
 --(7) Get all products based on property ID
 CREATE PROCEDURE getAllProductsData
-    @PropertyID INT
+    @Property_ID INT
 AS
 BEGIN
-    SELECT P.Product_ID, P.Product_Price, P.Max_Guests, P.Product_Description, (SELECT RT.Room_Type_Description 
+    SELECT O.Product_ID, O.Product_Price, O.Max_Guests, O.Product_Description, (SELECT RT.Room_Type_Description                         
                                                                                 FROM [dbo].[ROOM_TYPE] RT 
-                                                                                WHERE Room_Type_ID = P.Room_Type_ID) AS Room_Type
-    FROM [dbo].[TempResultFinal] T, [dbo].[PRODUCT] P
-    WHERE T.Property_ID = @PropertyID  AND T.Product_ID = P.Product_ID
+                                                                                WHERE Room_Type_ID = O.Room_Type_ID) AS Room_Type ,
+(SELECT STRING_AGG (M.Meal_Plan_Description,', ') 
+FROM [dbo].[MEAL_PLAN] M
+WHERE M.[Meal_Plan_ID] IN ( SELECT MP.Meal_Plan_ID FROM [dbo].[MEAL_PLAN_FOR_PRODUCT] MP WHERE MP.[Product_ID] = O.Product_ID)) AS Meal_Plan, 
+
+(SELECT  STRING_AGG (AM.Amenity_Type,', ')
+FROM [dbo].[AMENITIES] AM
+WHERE AM.[Amenity_ID] IN ( 
+SELECT ART.[MAmenity_ID] 
+FROM [dbo].[AMENITIES_ROOM_TYPE] ART 
+WHERE ART.[MRoom_Type_ID] IN (SELECT P.[Room_Type_ID]
+                            FROM [dbo].[PRODUCT] P
+                            WHERE P.[Product_ID] =O.Product_ID))) AS Amenities , 
+							
+(SELECT  STRING_AGG (P.Policy_Description,', ')
+FROM [dbo].[POLICY] P
+WHERE P.[Policy_ID] IN ( SELECT PP.[MPolicy_ID] FROM [dbo].[PRODUCT_POLICIES] PP WHERE PP.[MProduct_ID]=O.Product_ID)) AS Policies
+
+
+FROM [dbo].[TempResultsFinal] T, [dbo].[PRODUCT] O
+WHERE T.Property_ID = @Property_ID  AND T.Product_ID = O.Product_ID
+END
+GO
+
+------------------------------------------------------------------------------
+     --   USED TO GET FACILITIES / MAKE RESERVATION / MAKE REVIEW    --
+------------------------------------------------------------------------------
+
+------------------------------------------------------------------------------------------------------------
+-- Get Facilities of a product based on Product_ID
+CREATE PROCEDURE getFacilities
+@Property_ID INT
+AS
+BEGIN
+SELECT F.[Facility_Type]
+FROM [dbo].[FACILITIES] F
+WHERE F.[Facility_ID] IN ( 
+SELECT PF.[MFacility_ID] 
+FROM [dbo].[PROPERTY_FACILITIES] PF
+WHERE PF.[MProperty_ID] IN (SELECT P.[Property_ID]
+                            FROM [dbo].[PRODUCT] P
+                            WHERE P.[Product_ID] =@Property_ID) )
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Makes a new Reservation for every date and returns all the reservation ID's
+CREATE PROCEDURE makeReservation
+    @Product_ID INT,
+    @User_ID INT,
+    @Start_Date DATE,
+    @End_Date DATE
+AS
+BEGIN
+    DECLARE @Current_Date DATE = @Start_Date
+
+    WHILE @Current_Date <= @End_Date
+    BEGIN
+        -- Insert a reservation and capture the Reservation_ID
+        INSERT INTO [dbo].RESERVATIONS (Reservation_Date, User_ID, Product_ID)
+        VALUES (@Current_Date, @User_ID, @Product_ID)
+
+        -- Update stock amount
+        UPDATE [dbo].STOCK
+        SET Stock_Amount = Stock_Amount - 1
+        WHERE Product_ID = @Product_ID AND Stock_Date = @Current_Date
+
+        -- Move to the next day
+        SET @Current_Date = DATEADD(DAY, 1, @Current_Date)
+    END
+
+    SELECT TOP 1 R.Reservation_ID
+    FROM [dbo].[RESERVATIONS] R
+    ORDER BY R.Reservation_ID DESC;
+
+    -- Return the inserted reservation IDs
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Create a new Review and also alter the table RESERVATIONS to include the Review ID.
+CREATE PROCEDURE makeReview
+    @Reservation_ID INT,
+    @Review_Description VARCHAR(170),
+    @Review_Rating INT
+AS
+BEGIN
+    -- Table variable to store the generated Review_ID
+    DECLARE @Generated_Review_IDs TABLE (Review_ID INT);
+
+    -- Insert the review and capture the Review_ID
+    INSERT INTO [dbo].[REVIEWS] (Review_Description, Review_Rating)
+    OUTPUT INSERTED.Review_ID INTO @Generated_Review_IDs
+    VALUES (@Review_Description, @Review_Rating);
+
+    -- Extract the generated Review_ID
+    DECLARE @Generated_Review_ID INT;
+    SELECT @Generated_Review_ID = Review_ID FROM @Generated_Review_IDs;
+
+    -- Update the reservation with the new Review_ID
+    UPDATE [dbo].[RESERVATIONS]
+    SET Review_ID = @Generated_Review_ID
+    WHERE Reservation_ID = @Reservation_ID;
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Get Reviews for a specific Property
+CREATE PROCEDURE getReviews
+    @Property_ID INT
+AS
+BEGIN
+    SELECT R.Review_Description
+    FROM REVIEWS R
+    INNER JOIN [dbo].[RESERVATIONS] RES ON R.Review_ID = RES.Review_ID
+    INNER JOIN [dbo].[PRODUCT] P ON RES.Product_ID = P.Product_ID
+    WHERE P.Property_ID = @Property_ID;
 END
 GO
 ------------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------
---   USED TO GET POLICIES / FACILITES / ROOM TYPE / AMENITIES BASED ON ID   --
-------------------------------------------------------------------------------
+
 
 ------------------------------------------------------------------------------------------------------------
+-- EXTRA ---------------------------------------------------------------------------------------------------
 -- Get Amenities of a product based on Product_ID 
 CREATE PROCEDURE getAmenities
 @Product_ID INT
@@ -280,18 +386,32 @@ WHERE P.[Policy_ID] IN ( SELECT PP.[MPolicy_ID] FROM [dbo].[PRODUCT_POLICIES] PP
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Get Facilities of a product based on Product_ID
-CREATE PROCEDURE getFacilities
-@Product_ID INT
+
+
+CREATE PROCEDURE spInsert_Product
+    @User_ID INT,
+    @Product_Price DECIMAL(10, 2),
+    @Max_Guests INT,
+    @Product_Description NVARCHAR(MAX),
+    @Room_Type_ID INT,
+    @Property_ID INT
 AS
 BEGIN
-SELECT F.[Facility_Type]
-FROM [dbo].[FACILITIES] F
-WHERE F.[Facility_ID] IN ( 
-SELECT PF.[MFacility_ID] 
-FROM [dbo].[PROPERTY_FACILITIES] PF
-WHERE PF.[MProperty_ID] IN (SELECT P.[Property_ID]
-                            FROM [dbo].[PRODUCT] P
-                            WHERE P.[Product_ID] =@Product_ID) )
+    -- Check if the @User_ID matches the User_ID for the specified Property_ID
+    IF EXISTS (
+        SELECT 1
+        FROM [dbo].[PROPERTY]
+        WHERE Property_ID = @Property_ID
+        AND User_ID = @User_ID
+    )
+    BEGIN
+        -- Insert the product 
+        INSERT INTO [dbo].[PRODUCT] (Product_ID, Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
+        VALUES (,@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);        
+        PRINT 'SUCCESS.';
+    END
+    ELSE
+    BEGIN
+        PRINT 'FAILURE.';
+    END
 END
-GO
