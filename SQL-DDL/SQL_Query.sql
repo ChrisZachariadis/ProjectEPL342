@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[USER] (
 );
 
 CREATE TABLE [dbo].[PRODUCT] (
-    Product_ID INT IDENTITY (31,1),
+    Product_ID INT IDENTITY (1,1),
     Product_Price FLOAT NOT NULL,
     Max_Guests INT NOT NULL,
     CHECK (Max_Guests > 0),

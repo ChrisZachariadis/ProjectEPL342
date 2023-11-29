@@ -296,11 +296,19 @@ BEGIN
         SET @Current_Date = DATEADD(DAY, 1, @Current_Date)
     END
 
-    SELECT TOP 1 R.Reservation_ID
+    
+
+    -- Return the inserted reservation IDs
+END
+GO
+
+CREATE PROCEDURE getID
+AS
+BEGIN
+SELECT TOP 1 R.Reservation_ID
     FROM [dbo].[RESERVATIONS] R
     ORDER BY R.Reservation_ID DESC;
 
-    -- Return the inserted reservation IDs
 END
 GO
 ------------------------------------------------------------------------------------------------------------
