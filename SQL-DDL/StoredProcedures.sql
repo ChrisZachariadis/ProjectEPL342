@@ -301,16 +301,34 @@ BEGIN
     -- Return the inserted reservation IDs
 END
 GO
-
+------------------------------------------------------------------------------------------------------------
+-- Used with makeReservation to get the Reservation ID.
 CREATE PROCEDURE getID
 AS
 BEGIN
-SELECT TOP 1 R.Reservation_ID
-    FROM [dbo].[RESERVATIONS] R
-    ORDER BY R.Reservation_ID DESC;
-
+    WITH CTE AS (
+        SELECT 
+            R.Reservation_ID,
+            R.User_ID,
+            R.Product_ID,
+            ROW_NUMBER() OVER (ORDER BY R.Reservation_ID DESC) AS RowNum
+        FROM [dbo].[RESERVATIONS] R
+    )
+    SELECT STRING_AGG(Reservation_ID, ', ') AS Reservation_ID
+    FROM CTE
+    WHERE User_ID = (SELECT TOP 1 User_ID FROM CTE ORDER BY RowNum)
+    AND Product_ID = (SELECT TOP 1 Product_ID FROM CTE ORDER BY RowNum);
 END
 GO
+-- CREATE PROCEDURE getID
+-- AS
+-- BEGIN
+-- SELECT TOP 1 R.Reservation_ID
+--     FROM [dbo].[RESERVATIONS] R
+--     ORDER BY R.Reservation_ID DESC;
+
+-- END
+-- GO
 ------------------------------------------------------------------------------------------------------------
 -- Create a new Review and also alter the table RESERVATIONS to include the Review ID.
 CREATE PROCEDURE makeReview
@@ -351,6 +369,394 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
+-- Insert a new product on a specific property
+CREATE PROCEDURE spInsert_Product
+    @User_ID INT,
+    @Product_Price DECIMAL(10, 2),
+    @Max_Guests INT,
+    @Product_Description NVARCHAR(MAX),
+    @Room_Type_Description VARCHAR(15),
+    @Property_ID INT
+AS
+BEGIN
+    DECLARE @Room_Type_ID INT
+
+    -- Check if the @User_ID matches the User_ID for the specified Property_ID
+    IF EXISTS (
+        SELECT 1
+        FROM [dbo].[PROPERTY]
+        WHERE Property_ID = @Property_ID
+        AND User_ID = @User_ID
+    )
+    BEGIN
+        -- Check if the Room_Type_Description exists in the ROOM_TYPE table
+        SELECT @Room_Type_ID = Room_Type_ID
+        FROM ROOM_TYPE
+        WHERE Room_Type_Description = @Room_Type_Description
+
+        -- Insert the product 
+        INSERT INTO [dbo].[PRODUCT] ( Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
+        VALUES (@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);        
+    END
+    ELSE
+    BEGIN
+        PRINT 'FAILURE.';
+    END
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Insert a new property
+CREATE PROCEDURE spInsert_Property
+    @Property_ID INT,  
+    @Property_Name VARCHAR(50),
+    @Property_Address VARCHAR(50),
+    @Property_Description VARCHAR(15),
+    @Property_Coordinates VARCHAR(20),
+    @Property_Location VARCHAR(20),
+    @Owner_ID INT,
+    @Owner_First_Name VARCHAR(15),
+    @Owner_Last_Name VARCHAR(15),
+    @Property_Type_ID INT,
+    @User_ID INT
+AS
+BEGIN
+    INSERT INTO [dbo].[PROPERTY] (
+        Property_ID, Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location,
+        Owner_ID, Owner_First_Name, Owner_Last_Name, Property_Type_ID, User_ID
+    )
+    VALUES (
+        @Property_ID, @Property_Name, @Property_Address, @Property_Description, @Property_Coordinates,
+        @Property_Location, @Owner_ID, @Owner_First_Name, @Owner_Last_Name, @Property_Type_ID, @User_ID
+    );
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Update a property based on property ID.
+CREATE PROCEDURE spEdit_Property
+	@Property_ID INT,
+    @Property_Name VARCHAR(50),
+    @Property_Address VARCHAR(50),
+    @Property_Description VARCHAR(15),
+    @Property_Coordinates VARCHAR(20),
+    @Property_Location VARCHAR(20),
+    @Owner_ID INT,
+    @Owner_First_Name VARCHAR(15),
+    @Owner_Last_Name VARCHAR(15),
+    @Property_Type_Name VARCHAR(15)
+AS
+BEGIN
+    DECLARE @Property_Type_ID INT
+
+    -- Check if the Property_Type_Name exists in the PROPERTY_TYPE table and get the corresponding Property_Type_ID
+    SELECT @Property_Type_ID = Property_Type_ID
+    FROM PROPERTY_TYPE
+    WHERE Property_Type_Name = @Property_Type_Name
+
+    -- Update the PROPERTY table
+    UPDATE [dbo].[PROPERTY]
+    SET 
+        Property_Name = @Property_Name,
+        Property_Address = @Property_Address,
+        Property_Description = @Property_Description,
+        Property_Coordinates = @Property_Coordinates,
+        Property_Location = @Property_Location,
+        Owner_ID = @Owner_ID,
+        Owner_First_Name = @Owner_First_Name,
+        Owner_Last_Name = @Owner_Last_Name,
+        Property_Type_ID = @Property_Type_ID
+    WHERE Property_ID = @Property_ID;
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Get product details based on product ID.
+CREATE PROCEDURE spGet_Product
+    @Product_ID INT
+AS
+BEGIN
+    SELECT P.Product_Price, P.Max_Guests, P.Product_Description, (SELECT RT.Room_Type_Description FROM [dbo].[ROOM_TYPE] RT WHERE RT.Room_Type_ID=P.Room_Type_ID) AS Room_Type, P.Property_ID
+    FROM [dbo].[PRODUCT] P
+    WHERE Product_ID = @Product_ID
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Update product based on product ID.
+CREATE PROCEDURE spEdit_Product
+    @Product_ID INT,
+    @Product_Price DECIMAL(10, 2),
+    @Max_Guests INT,
+    @Product_Description NVARCHAR(MAX),
+    @Room_Type_Description VARCHAR(15)
+AS
+BEGIN
+    DECLARE @Room_Type_ID INT
+
+    -- Check if the Room_Type_Description exists in the ROOM_TYPE table and get the corresponding Room_Type_ID
+    SELECT @Room_Type_ID = Room_Type_ID
+    FROM ROOM_TYPE
+    WHERE Room_Type_Description = @Room_Type_Description
+
+    -- Update the PRODUCT table
+    UPDATE [dbo].[PRODUCT]
+    SET 
+        Product_Price = @Product_Price,
+        Max_Guests = @Max_Guests,
+        Product_Description = @Product_Description,
+        Room_Type_ID = @Room_Type_ID
+    WHERE Product_ID = @Product_ID;
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Get properties based on manager ID
+CREATE PROCEDURE spGetManagerProperties
+    @User_ID INT
+AS
+BEGIN
+    SELECT *
+    FROM [dbo].[PROPERTY] P
+    WHERE P.User_ID = @User_ID
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Get properties for admin
+CREATE PROCEDURE spGetAdminProperties
+AS
+BEGIN
+    SELECT *
+    FROM [dbo].[PROPERTY] 
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Get products based on property ID
+CREATE PROCEDURE spGetProducts
+    @Property_ID INT
+AS
+BEGIN
+    SELECT *
+    FROM [dbo].[PRODUCT] P
+    WHERE P.Property_ID = @Property_ID
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Delete Product based on product ID 
+CREATE PROCEDURE spDelete_Product
+    @Product_ID INT
+AS
+BEGIN
+	DELETE FROM [dbo].[MEAL_PLAN_FOR_PRODUCT]
+	WHERE Product_ID=@Product_ID
+
+	DELETE FROM [dbo].[PRODUCT_POLICIES]
+	WHERE MProduct_ID= @Product_ID
+
+	DELETE FROM [dbo].[STOCK]
+	WHERE Product_ID=@Product_ID
+
+    DELETE FROM [dbo].[RESERVATIONS]
+    WHERE Product_ID=@Product_ID
+
+    DELETE FROM [dbo].[PRODUCT] 
+    WHERE Product_ID = @Product_ID
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Delete property based on product ID and all its products
+CREATE PROCEDURE spDelete_Property
+    @Property_ID INT
+AS
+BEGIN
+    DELETE FROM [dbo].[MEAL_PLAN_FOR_PRODUCT]
+    WHERE Product_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
+
+    DELETE FROM [dbo].[RESERVATIONS]
+    WHERE Product_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
+
+    DELETE FROM [dbo].[PRODUCT_POLICIES]
+    WHERE MProduct_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
+
+    DELETE FROM [dbo].[STOCK]
+    WHERE Product_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
+
+    DELETE FROM [dbo].[PRODUCT]
+    WHERE Property_ID = @Property_ID;
+
+    DELETE FROM [dbo].[PROPERTY_FACILITIES] 
+    WHERE MProperty_ID = @Property_ID;
+
+    DELETE FROM [dbo].[PROPERTY]
+    WHERE Property_ID = @Property_ID;
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Get not approved property owners.
+CREATE PROCEDURE spView_Unapproved
+AS
+BEGIN
+    SELECT User_ID, Date_of_Birth, First_Name, Last_Name, Email
+    FROM [dbo].[USER]
+    WHERE User_Type = 'Property Owner' AND Approved = '0'
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Approve user based on ID.
+CREATE PROCEDURE spApproveUser
+    @User_ID INT
+AS
+BEGIN
+    UPDATE [dbo].[USER]
+    SET Approved = 'Y'
+    WHERE User_ID = @User_ID
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- View Reservations based on User ID.
+CREATE PROCEDURE spViewReservations
+    @User_ID INT
+AS
+BEGIN
+    SELECT 
+        R.Product_ID,
+        STRING_AGG(R.Reservation_Date, ', ') AS Reservation_Dates
+    FROM [dbo].[Reservations] R
+    WHERE R.User_ID = @User_ID
+    GROUP BY R.Product_ID;
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Cancel Reservation
+CREATE PROCEDURE spCancelReservation
+    @Reservation_IDs VARCHAR(MAX)
+AS
+BEGIN
+    DECLARE @ReservationIDList TABLE (Reservation_ID INT)
+    
+    INSERT INTO @ReservationIDList (Reservation_ID)
+    SELECT value
+    FROM STRING_SPLIT(@Reservation_IDs, ',')
+
+    DECLARE @Reservation_ID INT
+    
+    DECLARE reservationCursor CURSOR FOR
+    SELECT Reservation_ID
+    FROM @ReservationIDList
+    
+    OPEN reservationCursor
+    
+    FETCH NEXT FROM reservationCursor INTO @Reservation_ID
+    
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        DELETE FROM [dbo].[RESERVATIONS]
+        WHERE Reservation_ID = @Reservation_ID
+    
+        FETCH NEXT FROM reservationCursor INTO @Reservation_ID
+    END
+    
+    CLOSE reservationCursor
+    DEALLOCATE reservationCursor
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Register
+CREATE PROCEDURE spRegister_User
+    -- @User_ID INT,
+    @Date_of_Birth DATE,
+    @User_Type VARCHAR(15),
+    @First_Name VARCHAR(15),
+    @Last_Name VARCHAR(15),
+    @Email VARCHAR(50),
+    @Passwd VARCHAR(20),
+    @Gender CHAR(1)
+AS
+BEGIN
+    SET @First_Name = RTRIM(@First_Name);
+    SET @Last_Name = RTRIM(@Last_Name);
+    SET @Email = RTRIM(@Email);
+    SET @Passwd = RTRIM(@Passwd);
+    SET @User_Type = RTRIM(@User_Type);
+
+    DECLARE @Approved CHAR(1);
+    IF @User_Type = 'Customer' 
+    BEGIN
+        SET @Approved = 'Y';
+    END
+    ELSE IF @User_Type = 'Property_Owner'
+    BEGIN
+        SET @Approved = 'N';
+    END
+    -- Check if the Email format is valid
+    IF @Email NOT LIKE '%@%.%'
+    BEGIN
+        RAISERROR ('Invalid Email format', 16, 1);
+        RETURN;
+    END
+    ELSE IF EXISTS (
+        SELECT *
+        FROM [dbo].[USER]
+        WHERE [Email] = @Email
+    )
+    BEGIN 
+        PRINT 'Error: Email already exists';
+    END
+    ELSE
+    BEGIN
+        -- Insert user data into the table with dynamic User_Type
+        INSERT INTO [dbo].[USER] 
+            (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+        VALUES 
+            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+    END
+END
+GO
+------------------------------------------------------------------------------------------------------------
+-- Login
+CREATE PROCEDURE spLOGIN 
+    @Email VARCHAR(50),
+    @Passwd VARCHAR(20) 
+AS 
+BEGIN
+    SET @Email = LTRIM(RTRIM(@Email));
+    SET @Passwd = LTRIM(RTRIM(@Passwd));
+
+    -- Check if the credentials exist in the database
+    IF NOT EXISTS (
+        SELECT *
+        FROM [dbo].[USER]
+        WHERE [Email] = @Email
+          AND [Passwd] = @Passwd
+    )
+    BEGIN 
+        PRINT 'Error: Invalid Email or password';
+        -- It's generally not a good practice to print the hash of the password.
+        -- The below line can be commented out or removed if not required.
+        -- PRINT HASHBYTES('SHA2_256', @Passwd);
+    END
+    ELSE
+    BEGIN
+        -- Also return the user_id of the user who logged in
+        SELECT [user_id],[User_Type]
+        FROM [dbo].[USER]
+        WHERE [Email] = @Email
+        AND [Passwd] = @Passwd;
+    END
+END
+GO
+------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -394,32 +800,3 @@ WHERE P.[Policy_ID] IN ( SELECT PP.[MPolicy_ID] FROM [dbo].[PRODUCT_POLICIES] PP
 END
 GO
 ------------------------------------------------------------------------------------------------------------
-
-
-CREATE PROCEDURE spInsert_Product
-    @User_ID INT,
-    @Product_Price DECIMAL(10, 2),
-    @Max_Guests INT,
-    @Product_Description NVARCHAR(MAX),
-    @Room_Type_ID INT,
-    @Property_ID INT
-AS
-BEGIN
-    -- Check if the @User_ID matches the User_ID for the specified Property_ID
-    IF EXISTS (
-        SELECT 1
-        FROM [dbo].[PROPERTY]
-        WHERE Property_ID = @Property_ID
-        AND User_ID = @User_ID
-    )
-    BEGIN
-        -- Insert the product 
-        INSERT INTO [dbo].[PRODUCT] (Product_ID, Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
-        VALUES (,@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);        
-        PRINT 'SUCCESS.';
-    END
-    ELSE
-    BEGIN
-        PRINT 'FAILURE.';
-    END
-END
