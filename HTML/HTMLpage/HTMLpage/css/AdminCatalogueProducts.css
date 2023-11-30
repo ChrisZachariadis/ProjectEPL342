@@ -1,0 +1,128 @@
+.home-container {
+    width: 100%;
+    display: flex;
+    overflow: auto;
+    min-height: 100vh;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #D9D9D9;
+  }
+  .home-text {
+    margin-top: var(--dl-space-space-halfunit);
+    margin-bottom: 10px;
+  }
+  .home-container1 {
+    width: 100%;
+    margin-bottom: 0.5em;
+    height: auto;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .home-container2 {
+    width: 100%;
+    height: auto;
+    position: relative;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #ffffff;
+  }
+  
+  .Text1{
+  position: absolute;
+  left: 28%;
+  top: 30%;
+  }
+  
+  .Text2{
+    position: absolute;
+    left: 28%;
+    top: 50%;
+  }
+  
+  .Text3{
+    position: absolute;
+    left: 28%;
+    top: 70%;
+  }
+  
+  .Text4{
+    position: absolute;
+    left: 28%;
+    top: 90%;
+  }
+  
+  .HotelTitle{
+  position: absolute;
+  left: 300px;
+  top: 10px;
+  }
+  
+  .home-image {
+    width: auto;
+    height: 200px;
+    align-self: flex-start;
+    object-fit: cover;
+    padding: 5px;
+  }
+  
+  .home-button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .home-container3 {
+    width: 328px;
+    height: 354px;
+    position: relative;
+    align-self: flex-start;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-color: #ffffff;
+  }
+  .home-image1 {
+    width: 200px;
+    align-self: center;
+    object-fit: cover;
+  }
+  .home-text6 {
+    align-self: center;
+    margin-top: 1em;
+  }
+  .home-button1 {
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  .facilities{
+    background-color: #D9D9D9;
+  }
+
+    
+  .home-button3 {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .home-button4 {
+    position: absolute;
+    right: 5px;
+    top: 60px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .home-button5 {
+    position: absolute;
+    right: 160px;
+    top: 10px;
+    text-align: center;
+    text-transform: uppercase;
+  }
