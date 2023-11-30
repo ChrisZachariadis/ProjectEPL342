@@ -1,9 +1,5 @@
-
-------------EXEC OF MAIN STORED PROCEDURE-------------
---EXEC getProductsBasedOnFilters @Property_LocationA='Athens' ,@Room_TypeA='Triple',@Property_Type_NameA='' ,@StartDateA='', @EndDateA=''
-
--------------------------------------
--- ALL THE SP ARE USED FOR FILTERS / GET PROPERTIES / GET PRODUCTS -- 
+----------------------------------------------------------------------------------------------------
+-- USED FOR FILTERS / GET PROPERTIES / GET PRODUCTS FOR CUSTOMERS ONLY -- 
 ----------------------------------------------------------------------------------------------------
 --(1) Get products based on location and stores them on a table named TempResultsLocation
 CREATE PROCEDURE getProductByLocation
@@ -210,6 +206,7 @@ BEGIN
         Prop.[Property_Name], 
         Prop.[Property_Location], 
         Prop.[Property_Description], 
+        (SELECT Property_Type_Name FROM [dbo].[Property_Type] WHERE Property_Type_ID = Prop.Property_Type_ID) AS Property_Type,
         (SELECT MIN(Prod.[Product_Price])
          FROM [dbo].[TempResultsFinal] Temp
          JOIN [dbo].[PRODUCT] Prod ON Temp.[Product_ID] = Prod.[Product_ID]
@@ -251,11 +248,11 @@ END
 GO
 
 ------------------------------------------------------------------------------
-     --   USED TO GET FACILITIES / MAKE RESERVATION / MAKE REVIEW    --
+     --   USED TO GET FACILITIES / GET REVIEWS / MAKE RESERVATION / MAKE REVIEW    --
 ------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------
--- Get Facilities of a product based on Product_ID
+--(8)Get Facilities of a product based on Product_ID
 CREATE PROCEDURE getFacilities
 @Property_ID INT
 AS
@@ -271,7 +268,7 @@ WHERE PF.[MProperty_ID] IN (SELECT P.[Property_ID]
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Makes a new Reservation for every date and returns all the reservation ID's
+--(9)Makes a new Reservation for every date and returns all the reservation ID's
 CREATE PROCEDURE makeReservation
     @Product_ID INT,
     @User_ID INT,
@@ -302,7 +299,7 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Used with makeReservation to get the Reservation ID.
+--(10)Used with makeReservation to get the Reservation ID.
 CREATE PROCEDURE getID
 AS
 BEGIN
@@ -320,17 +317,8 @@ BEGIN
     AND Product_ID = (SELECT TOP 1 Product_ID FROM CTE ORDER BY RowNum);
 END
 GO
--- CREATE PROCEDURE getID
--- AS
--- BEGIN
--- SELECT TOP 1 R.Reservation_ID
---     FROM [dbo].[RESERVATIONS] R
---     ORDER BY R.Reservation_ID DESC;
-
--- END
--- GO
 ------------------------------------------------------------------------------------------------------------
--- Create a new Review and also alter the table RESERVATIONS to include the Review ID.
+--(11)Create a new Review and also alter the table RESERVATIONS to include the Review ID.
 CREATE PROCEDURE makeReview
     @Reservation_ID INT,
     @Review_Description VARCHAR(170),
@@ -356,7 +344,7 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Get Reviews for a specific Property
+--(12)Get Reviews for a specific Property
 CREATE PROCEDURE getReviews
     @Property_ID INT
 AS
@@ -369,13 +357,21 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Insert a new product on a specific property
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+-- USED FOR ADMIN AND MANAGER TO GET PROPERTIES / PRODUCTS / EDIT
+------------------------------------------------------------------------------------------------------------
+--(13)Insert a new product on a specific property
 CREATE PROCEDURE spInsert_Product
     @User_ID INT,
     @Product_Price DECIMAL(10, 2),
     @Max_Guests INT,
     @Product_Description NVARCHAR(MAX),
-    @Room_Type_Description VARCHAR(15),
+    @Room_Type_Description VARCHAR(50),
     @Property_ID INT
 AS
 BEGIN
@@ -391,7 +387,7 @@ BEGIN
     BEGIN
         -- Check if the Room_Type_Description exists in the ROOM_TYPE table
         SELECT @Room_Type_ID = Room_Type_ID
-        FROM ROOM_TYPE
+        FROM [dbo].[ROOM_TYPE]
         WHERE Room_Type_Description = @Room_Type_Description
 
         -- Insert the product 
@@ -405,9 +401,8 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Insert a new property
+--(14)Insert a new property
 CREATE PROCEDURE spInsert_Property
-    @Property_ID INT,  
     @Property_Name VARCHAR(50),
     @Property_Address VARCHAR(50),
     @Property_Description VARCHAR(15),
@@ -416,22 +411,42 @@ CREATE PROCEDURE spInsert_Property
     @Owner_ID INT,
     @Owner_First_Name VARCHAR(15),
     @Owner_Last_Name VARCHAR(15),
-    @Property_Type_ID INT,
+    @Property_Type VARCHAR(50),
     @User_ID INT
 AS
 BEGIN
+    -- Declare a variable to store Property_Type_ID
+    DECLARE @Property_Type_ID INT;
+
+    -- Retrieve Property_Type_ID from PRODUCT_TYPE table
+    SELECT @Property_Type_ID = Property_Type_ID
+    FROM [dbo].[PROPERTY_TYPE]
+    WHERE Property_Type_Name = @Property_Type;
+
+    -- Proceed with the insertion
     INSERT INTO [dbo].[PROPERTY] (
-        Property_ID, Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location,
+        Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location,
         Owner_ID, Owner_First_Name, Owner_Last_Name, Property_Type_ID, User_ID
     )
     VALUES (
-        @Property_ID, @Property_Name, @Property_Address, @Property_Description, @Property_Coordinates,
+        @Property_Name, @Property_Address, @Property_Description, @Property_Coordinates,
         @Property_Location, @Owner_ID, @Owner_First_Name, @Owner_Last_Name, @Property_Type_ID, @User_ID
     );
+END;
+GO
+------------------------------------------------------------------------------------------------------------
+--(15)Get property details based on property ID.
+CREATE PROCEDURE spGet_Property
+    @Property_ID INT
+AS
+BEGIN
+    SELECT P.Property_ID, P.Property_Name, P.Property_Address, P.Property_Coordinates, P.Property_Location, P.Property_Description,P.Owner_First_Name,P.Owner_Last_Name, (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE Property_Type_ID = P.Property_Type_ID) AS Property_Type
+    FROM [dbo].[PROPERTY] P
+	WHERE P.Property_ID=@Property_ID
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Update a property based on property ID.
+--(16)Update a property based on property ID.
 CREATE PROCEDURE spEdit_Property
 	@Property_ID INT,
     @Property_Name VARCHAR(50),
@@ -439,7 +454,6 @@ CREATE PROCEDURE spEdit_Property
     @Property_Description VARCHAR(15),
     @Property_Coordinates VARCHAR(20),
     @Property_Location VARCHAR(20),
-    @Owner_ID INT,
     @Owner_First_Name VARCHAR(15),
     @Owner_Last_Name VARCHAR(15),
     @Property_Type_Name VARCHAR(15)
@@ -460,7 +474,6 @@ BEGIN
         Property_Description = @Property_Description,
         Property_Coordinates = @Property_Coordinates,
         Property_Location = @Property_Location,
-        Owner_ID = @Owner_ID,
         Owner_First_Name = @Owner_First_Name,
         Owner_Last_Name = @Owner_Last_Name,
         Property_Type_ID = @Property_Type_ID
@@ -468,18 +481,39 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Get product details based on product ID.
+--(17)Get all products based on Property ID.
 CREATE PROCEDURE spGet_Product
-    @Product_ID INT
+    @Property_ID INT
 AS
 BEGIN
-    SELECT P.Product_Price, P.Max_Guests, P.Product_Description, (SELECT RT.Room_Type_Description FROM [dbo].[ROOM_TYPE] RT WHERE RT.Room_Type_ID=P.Room_Type_ID) AS Room_Type, P.Property_ID
-    FROM [dbo].[PRODUCT] P
-    WHERE Product_ID = @Product_ID
+SELECT O.Product_ID, O.Product_Price, O.Max_Guests, O.Product_Description, (SELECT RT.Room_Type_Description                         
+                                                                                FROM [dbo].[ROOM_TYPE] RT 
+                                                                                WHERE Room_Type_ID = O.Room_Type_ID) AS Room_Type ,
+(SELECT STRING_AGG (M.Meal_Plan_Description,', ') 
+FROM [dbo].[MEAL_PLAN] M
+WHERE M.[Meal_Plan_ID] IN ( SELECT MP.Meal_Plan_ID FROM [dbo].[MEAL_PLAN_FOR_PRODUCT] MP WHERE MP.[Product_ID] = O.Product_ID)) AS Meal_Plan, 
+
+(SELECT  STRING_AGG (AM.Amenity_Type,', ')
+FROM [dbo].[AMENITIES] AM
+WHERE AM.[Amenity_ID] IN ( 
+SELECT ART.[MAmenity_ID] 
+FROM [dbo].[AMENITIES_ROOM_TYPE] ART 
+WHERE ART.[MRoom_Type_ID] IN (SELECT P.[Room_Type_ID]
+                            FROM [dbo].[PRODUCT] P
+                            WHERE P.[Product_ID] =O.Product_ID))) AS Amenities , 
+							
+(SELECT  STRING_AGG (P.Policy_Description,', ')
+FROM [dbo].[POLICY] P
+WHERE P.[Policy_ID] IN ( SELECT PP.[MPolicy_ID] FROM [dbo].[PRODUCT_POLICIES] PP WHERE PP.[MProduct_ID]=O.Product_ID)) AS Policies
+
+
+FROM  [dbo].[PRODUCT] O
+WHERE O.Property_ID=@Property_ID 
+
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Update product based on product ID.
+--(18)Update product based on product ID.
 CREATE PROCEDURE spEdit_Product
     @Product_ID INT,
     @Product_Price DECIMAL(10, 2),
@@ -506,98 +540,54 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Get properties based on manager ID
+--(19)Get prodcut details based on product ID
+CREATE PROCEDURE spGet_Product_Details
+    @Product_ID INT
+AS
+BEGIN
+    SELECT P.Product_Description, P.Product_Price, P.Product_Description, P.Max_Guests, (SELECT Room_Type_Description FROM [dbo].[ROOM_TYPE] WHERE Room_Type_ID = P.Room_Type_ID) AS Room_Type
+    FROM [dbo].[PRODUCT] P
+    WHERE Product_ID = @Product_ID
+END
+GO
+------------------------------------------------------------------------------------------------------------
+--(20)Get properties based on manager ID
 CREATE PROCEDURE spGetManagerProperties
     @User_ID INT
 AS
 BEGIN
-    SELECT *
+    SELECT P.Property_ID, P.Property_Name, P.Property_Description, P.Property_Location, (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE P.Property_Type_ID = Property_Type_ID) AS Property_Type
     FROM [dbo].[PROPERTY] P
     WHERE P.User_ID = @User_ID
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Get properties for admin
+--(21)Get properties for admin
 CREATE PROCEDURE spGetAdminProperties
 AS
 BEGIN
-    SELECT *
-    FROM [dbo].[PROPERTY] 
+    SELECT  P.Property_ID, P.Property_Name, P.Property_Description, P.Property_Location, (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE P.Property_Type_ID = Property_Type_ID) AS Property_Type
+    FROM [dbo].[PROPERTY] p
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Get products based on property ID
-CREATE PROCEDURE spGetProducts
-    @Property_ID INT
-AS
-BEGIN
-    SELECT *
-    FROM [dbo].[PRODUCT] P
-    WHERE P.Property_ID = @Property_ID
-END
-GO
+
+
+
 ------------------------------------------------------------------------------------------------------------
--- Delete Product based on product ID 
-CREATE PROCEDURE spDelete_Product
-    @Product_ID INT
-AS
-BEGIN
-	DELETE FROM [dbo].[MEAL_PLAN_FOR_PRODUCT]
-	WHERE Product_ID=@Product_ID
-
-	DELETE FROM [dbo].[PRODUCT_POLICIES]
-	WHERE MProduct_ID= @Product_ID
-
-	DELETE FROM [dbo].[STOCK]
-	WHERE Product_ID=@Product_ID
-
-    DELETE FROM [dbo].[RESERVATIONS]
-    WHERE Product_ID=@Product_ID
-
-    DELETE FROM [dbo].[PRODUCT] 
-    WHERE Product_ID = @Product_ID
-END
-GO
+-- USED TO VIEW NOT APPROVE MANAGERS AND APPROVE THEM
 ------------------------------------------------------------------------------------------------------------
--- Delete property based on product ID and all its products
-CREATE PROCEDURE spDelete_Property
-    @Property_ID INT
-AS
-BEGIN
-    DELETE FROM [dbo].[MEAL_PLAN_FOR_PRODUCT]
-    WHERE Product_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
-
-    DELETE FROM [dbo].[RESERVATIONS]
-    WHERE Product_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
-
-    DELETE FROM [dbo].[PRODUCT_POLICIES]
-    WHERE MProduct_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
-
-    DELETE FROM [dbo].[STOCK]
-    WHERE Product_ID IN (SELECT Product_ID FROM [dbo].[PRODUCT] WHERE Property_ID = @Property_ID);
-
-    DELETE FROM [dbo].[PRODUCT]
-    WHERE Property_ID = @Property_ID;
-
-    DELETE FROM [dbo].[PROPERTY_FACILITIES] 
-    WHERE MProperty_ID = @Property_ID;
-
-    DELETE FROM [dbo].[PROPERTY]
-    WHERE Property_ID = @Property_ID;
-END
-GO
-------------------------------------------------------------------------------------------------------------
--- Get not approved property owners.
+--(22)Get not approved property owners.
 CREATE PROCEDURE spView_Unapproved
 AS
 BEGIN
     SELECT User_ID, Date_of_Birth, First_Name, Last_Name, Email
     FROM [dbo].[USER]
-    WHERE User_Type = 'Property Owner' AND Approved = '0'
+    WHERE User_Type = 'Property Owner' AND Approved = 'N'
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Approve user based on ID.
+--(23)Approve user based on ID.
 CREATE PROCEDURE spApproveUser
     @User_ID INT
 AS
@@ -608,21 +598,27 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- View Reservations based on User ID.
+
+
+
+------------------------------------------------------------------------------------------------------------
+-- USED TO VIEW RESERVATIONS AND CANCEL THEM
+------------------------------------------------------------------------------------------------------------
+--(24)View Reservations based on User ID.
 CREATE PROCEDURE spViewReservations
     @User_ID INT
 AS
 BEGIN
     SELECT 
         R.Product_ID,
-        STRING_AGG(R.Reservation_Date, ', ') AS Reservation_Dates
+        STRING_AGG(R.Reservation_Date, ', ') AS Reservation_Dates , (SELECT Product_Name FROM [dbo].[PRODUCT] WHERE Product_ID = R.Product_ID) AS Product_Name
     FROM [dbo].[Reservations] R
     WHERE R.User_ID = @User_ID
     GROUP BY R.Product_ID;
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Cancel Reservation
+--(25)Cancel Reservation
 CREATE PROCEDURE spCancelReservation
     @Reservation_IDs VARCHAR(MAX)
 AS
@@ -656,7 +652,15 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
--- Register
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------
+-- REGISTER / LOGIN 
+------------------------------------------------------------------------------------------------------------
+--Register
 CREATE PROCEDURE spRegister_User
     -- @User_ID INT,
     @Date_of_Birth DATE,
@@ -760,43 +764,3 @@ GO
 
 
 
-------------------------------------------------------------------------------------------------------------
--- EXTRA ---------------------------------------------------------------------------------------------------
--- Get Amenities of a product based on Product_ID 
-CREATE PROCEDURE getAmenities
-@Product_ID INT
-AS
-BEGIN
-SELECT AM.[Amenity_Type]
-FROM [dbo].[AMENITIES] AM
-WHERE AM.[Amenity_ID] IN ( 
-SELECT ART.[MAmenity_ID] 
-FROM [dbo].[AMENITIES_ROOM_TYPE] ART 
-WHERE ART.[MRoom_Type_ID] IN (SELECT P.[Room_Type_ID]
-                            FROM [dbo].[PRODUCT] P
-                            WHERE P.[Product_ID] =@Product_ID) )
-END
-GO
-------------------------------------------------------------------------------------------------------------
--- Get Meal Plan
-CREATE PROCEDURE getMealPlan
-@Product_ID INT
-AS
-BEGIN
-SELECT M.Meal_Plan_Description
-FROM [dbo].[MEAL_PLAN] M
-WHERE M.[Meal_Plan_ID] IN ( SELECT MP.Meal_Plan_ID FROM [dbo].[MEAL_PLAN_FOR_PRODUCT] MP WHERE MP.[Product_ID] = @Product_ID)  
-END
-GO
-------------------------------------------------------------------------------------------------------------
--- Get Policies
-CREATE PROCEDURE getPolices
-@Product_ID INT
-AS
-BEGIN
-SELECT P.[Policy_Description]  
-FROM [dbo].[POLICY] P
-WHERE P.[Policy_ID] IN ( SELECT PP.[MPolicy_ID] FROM [dbo].[PRODUCT_POLICIES] PP WHERE PP.[MProduct_ID]=@Product_ID)
-END
-GO
-------------------------------------------------------------------------------------------------------------

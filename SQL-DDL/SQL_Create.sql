@@ -1,5 +1,4 @@
 USE DB
-
 CREATE TABLE [dbo].[USER] (
     User_ID INT IDENTITY (1,1),
     Date_of_Birth DATE NOT NULL,
