@@ -1,4 +1,4 @@
-.admin-form-product-edit-container {
+.add-property-container {
   width: 100%;
   display: flex;
   overflow: auto;
@@ -7,13 +7,13 @@
   flex-direction: column;
   background-size: cover;
   justify-content: flex-end;
-  background-image: url('https://a.travel-assets.com/findyours-php/viewfinder/images/res70/73000/73472-Nafplio.jpg');
+  background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/28/77/5a/87/caption.jpg?w=1600&h=-1&s=1');
 }
-.admin-form-product-edit-form-container {
-  top: 272px;
-  left: 101px;
-  width: 1227px;
-  height: 420px;
+.add-property-form-container {
+  top: 259px;
+  left: 12px;
+  width: 1175px;
+  height: 495px;
   margin: auto;
   display: flex;
   position: absolute;
@@ -24,7 +24,7 @@
   flex-direction: column;
   justify-content: center;
 }
-.admin-form-product-edit-form {
+.add-property-form {
   top: 98px;
   left: 4px;
   width: 100%;
@@ -35,8 +35,8 @@
   flex-direction: row;
   justify-content: flex-start;
 }
-.admin-form-product-edit-room-type {
-  left: 255px;
+.add-property-property-type {
+  left: 505px;
   width: 20%;
   bottom: 20px;
   height: 80px;
@@ -45,7 +45,17 @@
   border-width: 1px;
   border-radius: var(--dl-radius-radius-radius8);
 }
-.admin-form-product-edit-login-header {
+.add-property-location {
+  top: 5px;
+  left: 506px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.add-property-login-header {
   top: -90px;
   left: 5px;
   color: rgb(255, 255, 255);
@@ -53,7 +63,7 @@
   font-size: 36px;
   text-transform: capitalize;
 }
-.admin-form-product-edit-price {
+.add-property-owner-first-name {
   top: 4px;
   left: 255px;
   width: 20%;
@@ -63,17 +73,28 @@
   border-radius: var(--dl-radius-radius-radius8);
   padding-right: var(--dl-space-space-oneandhalfunits);
 }
-.admin-form-product-edit-description {
-  top: 5px;
-  left: 510px;
-  width: 400px;
-  height: 175px;
+.add-property-owner-last-name {
+  left: 254px;
+  width: 20%;
+  bottom: 20px;
+  height: 80px;
   position: absolute;
   align-self: flex-end;
   border-radius: var(--dl-radius-radius-radius8);
   padding-right: var(--dl-space-space-oneandhalfunits);
 }
-.admin-form-product-edit-max-guests {
+.add-property-description {
+  top: 5px;
+  left: 755px;
+  right: 39px;
+  width: 397px;
+  height: 173px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.add-property-address {
   left: 5px;
   width: 20%;
   bottom: 20px;
@@ -83,8 +104,38 @@
   border-radius: var(--dl-radius-radius-radius8);
   padding-right: var(--dl-space-space-oneandhalfunits);
 }
-.admin-form-product-edit-submit-button {
-  left: 670px;
+.add-property-coordinates {
+  left: 5px;
+  width: 20%;
+  bottom: -70px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: 8px;
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.add-property-coordinates1 {
+  left: 255px;
+  width: 20%;
+  bottom: -70px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: 8px;
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.add-property-property-name {
+  top: 5px;
+  left: 5px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.add-property-submit-button {
+  right: 75px;
   width: 225px;
   bottom: -50px;
   height: 50px;
@@ -99,24 +150,14 @@
   text-transform: uppercase;
   background-color: #000000;
 }
-.admin-form-product-edit-submit-button:hover {
+.add-property-submit-button:hover {
   transform: scale(1.02);
 }
-.admin-form-product-edit-text2 {
+.add-property-text2 {
   color: rgb(255, 255, 255);
   font-size: 18px;
 }
-.admin-form-product-edit-property-id {
-  top: 5px;
-  left: 5px;
-  width: 20%;
-  height: 80px;
-  position: absolute;
-  align-self: flex-start;
-  border-radius: 8px;
-  padding-right: 4px;
-}
-.admin-form-product-edit-login-header1 {
+.add-property-login-header1 {
   top: 25px;
   left: 36px;
   color: rgb(255, 255, 255);

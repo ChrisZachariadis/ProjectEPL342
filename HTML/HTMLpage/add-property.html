@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AdminFormProductEdit - Comfortable Favorite Mongoose</title>
+    <title>AddProperty - Comfortable Favorite Mongoose</title>
     <meta
       property="og:title"
-      content="AdminFormProductEdit - Comfortable Favorite Mongoose"
+      content="AddProperty - Comfortable Favorite Mongoose"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
@@ -55,44 +55,71 @@
   <body>
     <link rel="stylesheet" href="./css/style.css" />
     <div>
-      <link href="./css/admin-form-product-edit.css" rel="stylesheet" />
+      <link href="./css/add-property.css" rel="stylesheet" />
 
-      <div class="admin-form-product-edit-container">
-        <div class="admin-form-product-edit-form-container">
+      <div class="add-property-container">
+        <div class="add-property-form-container">
           <form
             id="stockadd"
             name="stockmanage"
             method="POST"
             enctype="multipart/form-data"
             autocomplete="on"
-            class="admin-form-product-edit-form"
+            class="add-property-form"
           >
             <select
-              id="Room_Type"
-              name="Room_Type"
-              class="admin-form-product-edit-room-type"
+              id="Property Type"
+              name="Property Type"
+              class="add-property-property-type"
             >
-              <option value="Room Type" selected="">Room Type</option>
+              <option value="Property Type" selected="">Property Type</option>
               <option value="Option 1">Option 1</option>
-              <option value="Appartment">Appartment</option>
+              <option value="Resort">Resort</option>
               <option value="Option 2">Option 2</option>
-              <option value="Suite">Suite</option>
+              <option value="Hostel">Hostel</option>
               <option value="Option 3">Option 3</option>
-              <option value="pette room">pette room</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">Japanese Style Hotel</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+            </select>
+            <select id="Location" name="Location" class="add-property-location">
+              <option value="Location" selected="">Location</option>
+              <option value="Option 1">Option 1</option>
+              <option value="Athens">Athens</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Rhodes">Rhodes</option>
+              <option value="Option 3">Option 3</option>
+              <option value="Santorini">Santorini</option>
+              <option value="Thessaloniki">Thessaloniki</option>
               <option value="Mykonos">Mykonos</option>
             </select>
-            <span class="admin-form-product-edit-login-header">
-              <span>-EDIT PRODUCT-</span>
+            <span class="add-property-login-header">
+              <span>-ADD PROPERTY-</span>
               <br />
             </span>
             <input
               type="text"
-              name="Price"
+              name="OwnerName"
               enctype="Surname"
               required=""
-              placeholder="Price"
+              placeholder="Owner FirstName"
               autocomplete="family-name"
-              class="admin-form-product-edit-price input"
+              class="add-property-owner-first-name input"
+            />
+            <input
+              type="text"
+              name="OwnerName"
+              enctype="Surname"
+              required=""
+              placeholder="Owner LastName"
+              autocomplete="family-name"
+              class="add-property-owner-last-name input"
             />
             <input
               type="text"
@@ -101,39 +128,54 @@
               required=""
               placeholder="Description"
               autocomplete="family-name"
-              class="admin-form-product-edit-description input"
+              class="add-property-description input"
             />
             <input
               type="text"
-              name="Max Guests"
+              name="Address"
               enctype="Surname"
               required=""
-              placeholder="Max Guests"
+              placeholder="Address"
               autocomplete="family-name"
-              class="admin-form-product-edit-max-guests input"
+              class="add-property-address input"
             />
-            <button
-              type="submit"
-              class="admin-form-product-edit-submit-button button"
-            >
-              <span class="admin-form-product-edit-text2">ADD</span>
-            </button>
             <input
               type="text"
-              id="PropertyID"
-              name="PropertyID"
+              name="Coordinates"
+              enctype="Surname"
               required=""
-              placeholder="Property ID"
-              autocomplete="name"
-              class="admin-form-product-edit-property-id input"
+              placeholder="Coordinates"
+              autocomplete="family-name"
+              class="add-property-coordinates input"
             />
+            <input
+              type="text"
+              name="Facilities"
+              enctype="Surname"
+              required=""
+              placeholder="Facilities"
+              autocomplete="family-name"
+              class="add-property-coordinates1 input"
+            />
+            <input
+              type="text"
+              id="propertyname"
+              name="Property_Name"
+              required=""
+              placeholder="Property Name"
+              autocomplete="name"
+              class="add-property-property-name input"
+            />
+            <button type="submit" class="add-property-submit-button button">
+              <span class="add-property-text2">ADD</span>
+            </button>
           </form>
         </div>
         <a
           href="https://HOME.php"
           target="_blank"
           rel="noreferrer noopener"
-          class="admin-form-product-edit-login-header1"
+          class="add-property-login-header1"
         >
           <span>GREECE BOOKING</span>
           <br />
