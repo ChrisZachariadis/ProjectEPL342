@@ -315,3 +315,19 @@ BEGIN
     SET Approved = 'Y'
     WHERE User_ID = @User_ID
 END;
+
+GO
+
+-- View reservations --- FOR OWNER --- Edit reservations.
+
+
+CREATE PROCEDURE spViewReservations
+    @Product_ID INT,
+    @User_ID INT
+AS
+BEGIN
+    SELECT Reservation_ID, Reservation_Date, Review_ID, User_ID, Product_ID
+    FROM [dbo].[Reservations]
+    WHERE Product_ID = @Product_ID AND User_ID = @User_ID
+END;
+

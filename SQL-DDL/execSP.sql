@@ -114,3 +114,9 @@ EXEC spViewUnapprovedPropertyOwners;
 -- Edit unapproved property owner with the given user_id. (admin)
 
 EXEC spApproveUnapprovedOwnersByID @User_ID = 1;
+
+GO
+
+-- view reservations for a given product_id and user_id
+
+EXEC spViewReservations @Product_ID = 1, @User_ID = 1;
