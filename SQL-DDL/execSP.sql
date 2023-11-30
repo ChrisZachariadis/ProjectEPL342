@@ -120,3 +120,106 @@ GO
 -- view reservations for a given product_id and user_id
 
 EXEC spViewReservations @Product_ID = 1, @User_ID = 1;
+
+
+
+
+
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR FORMS ----------------------------------------------------------------
+------------ STORE PROCEDURES FOR REVENUE ----------------------------------------------------------------
+
+
+
+GO
+EXEC GenerateReport
+    @StartDate = '1/1/2023', 
+    @EndDate = '12/30/2023',   
+    -- anti id tha prepei na dinoume property_type_description kai roomtypeDescription
+    @PropertyTypeID = NULL,    
+    @RoomTypeID = NULL,         
+    @PropertyLocation = NULL;  
+
+GO
+
+-- mou dinei ta total revenue gia to property 1,gia to 2023, gia ola ta diaforetika room_types kai gia ola ta diaforetika locations!!!!!!!!!!!!
+
+EXEC GenerateReport
+    @StartDate = '1/1/2023',  
+    @EndDate = '12/30/2023',    
+    @PropertyTypeID = 1,    
+    @RoomTypeID = NULL,       
+    @PropertyLocation = NULL;  
+
+GO
+
+
+
+-- EPAULI TOU CHRIS --- EXO RESERVATION GIA 2 MERES SE AUTO (IDIO REVIEW,PRODUCT ID) 
+-- KAI TIPONEI SOSTA TO TOTAL REVENUE TOU
+
+
+GO
+INSERT INTO RESERVATIONS (Reservation_ID, Reservation_Date, Review_ID, User_ID, Product_ID) VALUES
+(1, '1/5/2023', 1, 1, 1),
+(2, '1/6/2023', 1, 1, 1),
+
+(3, '1/15/2023', 1, 1, 6),
+
+(4, '1/20/2023', 1, 4, 6),
+(5, '1/25/2023', 1, 5, 5);
+
+GO
+INSERT INTO PRODUCT (Product_ID, Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID) VALUES
+(1, 100.00, 2, 'Description1', 1, 1),
+(2, 150.00, 4, 'Description2', 2, 2),
+(3, 200.00, 3, 'Description3', 3, 3),
+(4, 250.00, 2, 'Description4', 4, 4),
+(5, 300.00, 4, 'Description5', 5, 5),
+
+(6, 1000.00, 4, 'Description6', 2, 6);
+
+
+GO
+
+INSERT INTO PROPERTY (Property_ID, Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location, Owner_ID, Owner_First_Name, Owner_Last_Name, Property_Type_ID, User_ID) VALUES
+(1, 'Property1', 'Address1', 'OXTAPLO KREVATI', 'Coordinates1', 'AMERIKI', 1, 'Owner1', 'LastName1', 1, 3),
+
+(2, 'Property2', 'Address2', 'Description2', 'Coordinates2', 'Location2', 2, 'Owner2', 'LastName2', 2, 2),
+(3, 'Property3', 'Address3', 'Description3', 'Coordinates3', 'Location3', 3, 'Owner3', 'LastName3', 3, 3),
+(4, 'Property4', 'Address4', 'Description4', 'Coordinates4', 'Location4', 4, 'Owner4', 'LastName4', 4, 4),
+(5, 'Property5', 'Address5', 'Description5', 'Coordinates5', 'Location5', 5, 'Owner5', 'LastName5', 5, 5),
+
+(6, 'Property6', 'Address6', 'Description6', 'Coordinates6', 'LONDINO', 1, 'Owner1', 'LastName1', 1, 1),
+
+(7, 'Property7', 'Address7', 'Description7', 'Coordinates7', 'Location7', 5, 'Owner1', 'LastName1', 4, 2);
+
+
+GO
+INSERT INTO PROPERTY_TYPE (Property_Type_ID, Property_Type_Name) VALUES
+(1, 'EPAULI TOU CHRIS'),
+(2, 'Type2'),
+(3, 'Type3'),
+(4, 'TESTARO TOUTO TWra!!!'),
+(5, 'Type5'),
+(6, 'KOLOSPITO TOU PETTER');
+
+GO
+INSERT INTO ROOM_TYPE (Room_Type_ID, Room_Type_Description, Bed_Type) VALUES
+(1, 'domatio polla striniariko', 'BedType1'),
+(2, 'Description2', 'BedType2'),
+(3, 'Description3', 'BedType3'),
+(4, 'Description4', 'BedType4'),
+(5, 'Description5', 'BedType5');
+
+
+
+
+
+

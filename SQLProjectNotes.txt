@@ -46,20 +46,9 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 
 	------- 28/11 Notes ---------
 
-	-Elegxos sto User register ean dothike username pou iparxei idi
-	-episis sto user login ean ta stoixeia pou dothikan einai sosta
-
-
-	-otan kano insert ena neo property zitao owner id , owner name and surname... 
-	stin periptosi pou o owner idi iparxei stin vasi kai apla kataxorei neo property??
-
-
 
 	PROPERTY -- isos na min xriazotan to ownerID, owen name and surname kai aplos me to USER_ID na perno oles tis plirofories  ???
 	(ekei afou tha kseroume an ine approved i oxi o user)
-
-	pos tha ksexorizoume ton administrator ean kano login me to email? tha exo desmeumeno email p.x administrator@gmail.com ?
-
 
 
 	----29/11 Notes------
@@ -69,36 +58,30 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 	Gia ekeina ta properties
 	exei kai ta analoga product IDs. Prepei se auton na mporei na kanei edit mono ta sigkekrimena products.
 
-	O ADMIN MPOREI NA KANEI TA PANTA!  
 
 
-	gia ta reviews --- otan kano book prepei na exo selida opou vlepo ta reservations mou-- ekei pera
-	tha prepei na exo tin ikanotita na mporo na kano kai review (gia ta proionta pou ekana book)
-
-
-
-
-
-	sto login/register an ime sto login na exei epilogi "not a member? register" opos episis sto login na pigenei sto register
 	
 
-	-----------------------------------------------------------------------------------------------
+
+
+	
+
 
  	------------------30/11---------------------------------
 
-	---------RESERVATIONS------ RESERVATION ID, RESERVATION DATES, PRODUCT NAME, ENA KOUTAKI POU THA MPOREI NA GRAPSEI MESA NA KANEI REVIEW, SUBMIT
+	---------RESERVATIONS------ 
+	RESERVATION ID, RESERVATION DATES, PRODUCT NAME, ENA KOUTAKI POU THA MPOREI NA GRAPSEI MESA NA KANEI REVIEW, SUBMIT
+
+	se periptosei pou tha kanei cancel reservation, tha yparxei poini 50%
 
 
 
 
 
 	--view reservations // cancel reservations    (+ ta html tous) + ta stored procedure
-
 	gia to product id 5, iparxoun ta reservations 2 kai 3, 
 
 	-- Meal plans ??????????????
-
-	(6) paragogi anaforwn????
 
 
 
@@ -108,12 +91,20 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 	-ola ta products, add edit delete, KOUMPI POU FTIAXNEI TA REPORTS, KOUMPI POU THA SE PERNEI STOUS UNAPPROVED PROPERTY OWNERS
 
 
-
+------------------ FOR 1/11: ---------------------------------------------------------------------------------------------------------
+	BULK INSERT FOR RESERVATIONS IS NOT WORKING!!!!
+	
+	
+	
+	
+	
+	
+	
+	
 	REPORTS PAGE:
 	-ta reports pou tha prepei na mporei na epileksei o admin tha einai ta ekseis:
 
 
------------------- FOR 1/11: ---------------------------------------------------------------------------------------------------------
 	GIA TA FILTRA:
 
 	-Filters for daily, weekly, monthly , yearly reports. 
@@ -183,11 +174,11 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 Κάνουν self-register χωρίς επιβεβέωση. 
 
 
-
 Λειτουργία 2-> Διαχείρηση καταλύματος. Για να βάλουμε νέα product στο σύστημα πρέπει πρώτα να βάλουμε ένα νέο κατάλυμα.
 
 
-Λειτουργία αναζήτησης-> κάνουμε search με διάφορα κριτήρια και εμφανίζονται καταλύματα(Hotel) αυτά που έχουν stock, μαζί με την ελάχιστη τιμή τους. Αν πατήσω πάνω θα μου δίξει products του εν λόγω property με την τιμή του κάθε Product, τα χαρακτηριστικά του (amenities), και θα δίχνει γενικά τα reviews και facilities.
+Λειτουργία αναζήτησης-> κάνουμε search με διάφορα κριτήρια και εμφανίζονται καταλύματα(Hotel) αυτά που έχουν stock, μαζί με την ελάχιστη τιμή τους. 
+Αν πατήσω πάνω θα μου δίξει products του εν λόγω property με την τιμή του κάθε Product, τα χαρακτηριστικά του (amenities), και θα δίχνει γενικά τα reviews και facilities.
 
 Λειτουργία κράτησης-> Μετά την αναζήτηση επιλέγω πιο product θέλω να κάνω book και αυτόματα αλλάζει το stock του.
 

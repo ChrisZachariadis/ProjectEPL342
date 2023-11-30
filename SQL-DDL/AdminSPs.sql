@@ -338,3 +338,37 @@ GO
 -- CREATE PROCEDURE spGetTotalRevenue
 
 
+CREATE PROCEDURE GenerateReport
+    @StartDate DATE = NULL,
+    @EndDate DATE = NULL,
+    @PropertyTypeID INT = NULL,
+    @RoomTypeID INT = NULL,
+    @PropertyLocation NVARCHAR(50) = NULL
+AS
+BEGIN
+    SELECT 
+        PT.Property_Type_Name, 
+        RT.Room_Type_Description, 
+        P.Property_Location, 
+        SUM(PR.Product_Price) AS TotalRevenue
+    FROM 
+        RESERVATIONS R
+    INNER JOIN 
+        PRODUCT PR ON R.Product_ID = PR.Product_ID
+    INNER JOIN 
+        PROPERTY P ON PR.Property_ID = P.Property_ID
+    INNER JOIN 
+        PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
+    INNER JOIN 
+        ROOM_TYPE RT ON PR.Room_Type_ID = RT.Room_Type_ID
+    WHERE 
+        (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
+        (@EndDate IS NULL OR R.Reservation_Date <= @EndDate) AND
+        (@PropertyTypeID IS NULL OR PT.Property_Type_ID = @PropertyTypeID) AND
+        (@RoomTypeID IS NULL OR RT.Room_Type_ID = @RoomTypeID) AND
+        (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation)
+    GROUP BY 
+        PT.Property_Type_Name, 
+        RT.Room_Type_Description, 
+        P.Property_Location
+END
