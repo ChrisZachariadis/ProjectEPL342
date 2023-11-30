@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title>EditProperty - Comfortable Favorite Mongoose</title>
     <meta
       property="og:title"
-      content="AdminFormProduct"
+      content="EditProperty - Comfortable Favorite Mongoose"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
@@ -54,41 +55,69 @@
   <body>
     <link rel="stylesheet" href="./css/style.css" />
     <div>
-      <link href="./css/admin-form-product.css" rel="stylesheet" />
+      <link href="./css/edit-property.css" rel="stylesheet" />
 
-      <div class="admin-form-product-container">
-        <div class="admin-form-product-form-container">
+      <div class="edit-property-container">
+        <div class="edit-property-form-container">
           <form
             id="stockadd"
             name="stockmanage"
             method="POST"
             enctype="multipart/form-data"
             autocomplete="on"
-            class="admin-form-product-form"
+            class="edit-property-form"
           >
             <select
-              id="Room_Type"
-              name="Room_Type"
-              class="admin-form-product-room-type"
+              id="Property Type"
+              name="Property Type"
+              class="edit-property-property-type"
             >
-              <option value="Room Type" selected="">Room Type</option>
-              <option value="Appartment">Appartment</option>
-              <option value="Suite">Suite</option>
-              <option value="pette room">pette room</option>
+              <option value="Property Type" selected="">Property Type</option>
+              <option value="Resort">Resort</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">Japanese Style Hotel</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+            </select>
+            <select
+              id="Location"
+              name="Location"
+              class="edit-property-location"
+            >
+              <option value="Location" selected="">Location</option>
+              <option value="Athens">Athens</option>
+              <option value="Rhodes">Rhodes</option>
+              <option value="Santorini">Santorini</option>
+              <option value="Thessaloniki">Thessaloniki</option>
               <option value="Mykonos">Mykonos</option>
             </select>
-            <span class="admin-form-product-login-header">
-              <span>-ADD PRODUCT-</span>
+            <span class="edit-property-login-header">
+              <span>-EDIT PROPERTY-</span>
               <br />
             </span>
             <input
               type="text"
-              name="Price"
+              name="OwnerName"
               enctype="Surname"
               required=""
-              placeholder="Price"
+              placeholder="Owner FirstName"
               autocomplete="family-name"
-              class="admin-form-product-price input"
+              class="edit-property-owner-first-name input"
+            />
+            <input
+              type="text"
+              name="OwnerName"
+              enctype="Surname"
+              required=""
+              placeholder="Owner LastName"
+              autocomplete="family-name"
+              class="edit-property-owner-last-name input"
             />
             <input
               type="text"
@@ -97,39 +126,54 @@
               required=""
               placeholder="Description"
               autocomplete="family-name"
-              class="admin-form-product-description input"
+              class="edit-property-description input"
             />
             <input
               type="text"
-              name="Max Guests"
+              name="Address"
               enctype="Surname"
               required=""
-              placeholder="Max Guests"
+              placeholder="Address"
               autocomplete="family-name"
-              class="admin-form-product-max-guests input"
+              class="edit-property-address input"
             />
-            <button
-              type="submit"
-              class="admin-form-product-submit-button button"
-            >
-              <span class="admin-form-product-text2">ADD</span>
-            </button>
             <input
               type="text"
-              id="PropertyID"
-              name="PropertyID"
+              name="Coordinates"
+              enctype="Surname"
               required=""
-              placeholder="Property ID"
-              autocomplete="name"
-              class="admin-form-product-property-id input"
+              placeholder="Coordinates"
+              autocomplete="family-name"
+              class="edit-property-coordinates input"
             />
+            <input
+              type="text"
+              name="Facilities"
+              enctype="Surname"
+              required=""
+              placeholder="Facilities"
+              autocomplete="family-name"
+              class="edit-property-coordinates1 input"
+            />
+            <input
+              type="text"
+              id="propertyname"
+              name="Property_Name"
+              required=""
+              placeholder="Property Name"
+              autocomplete="name"
+              class="edit-property-property-name input"
+            />
+            <button type="submit" class="edit-property-submit-button button">
+              <span class="edit-property-text2">ADD</span>
+            </button>
           </form>
         </div>
         <a
           href="https://HOME.php"
           target="_blank"
           rel="noreferrer noopener"
-          class="admin-form-product-login-header1"
+          class="edit-property-login-header1"
         >
           <span>GREECE BOOKING</span>
           <br />

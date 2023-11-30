@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AdminForm - Comfortable Favorite Mongoose</title>
+    <title>EditProduct - Comfortable Favorite Mongoose</title>
     <meta
       property="og:title"
-      content="AdminForm - Comfortable Favorite Mongoose"
+      content="EditProduct - Comfortable Favorite Mongoose"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta charset="utf-8" />
@@ -55,65 +55,44 @@
   <body>
     <link rel="stylesheet" href="./css/style.css" />
     <div>
-      <link href="./css/admin-form.css" rel="stylesheet" />
+      <link href="./css/edit-product.css" rel="stylesheet" />
 
-      <div class="admin-form-container">
-        <div class="admin-form-form-container">
+      <div class="edit-product-container">
+        <div class="edit-product-form-container">
           <form
             id="stockadd"
             name="stockmanage"
             method="POST"
             enctype="multipart/form-data"
             autocomplete="on"
-            class="admin-form-form"
+            class="edit-product-form"
           >
             <select
-              name="Property Type"
-              id="Property Type"
-              class="admin-form-property-type"
+              id="Room_Type"
+              name="Room_Type"
+              class="edit-product-room-type"
             >
-              <option value="Property Type" selected="">Property Type</option>
-              <option value="Resort">Resort</option>
-              <option value="Hostel">Hostel</option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">Japanese Style Hotel</option>
-              <option value="Apartment">Apartment</option>
-              <option value="Tent">Tent</option>
-              <option value="Villa">Villa</option>
-              <option value="Homestay">Homestay</option>
-            </select>
-            <select name="Location" id="Location" class="admin-form-location">
-              <option value="Location" selected="">Location</option>
-              <option value="Athens">Athens</option>
-              <option value="Rhodes">Rhodes</option>
-              <option value="Santorini">Santorini</option>
-              <option value="Thessaloniki">Thessaloniki</option>
+              <option value="Option 1">Option 1</option>
+              <option value="Option 2">Option 2</option>
+              <option value="Option 3">Option 3</option>
+              <option value="Room Type" selected="">Room Type</option>
+              <option value="Appartment">Appartment</option>
+              <option value="Suite">Suite</option>
+              <option value="pette room">pette room</option>
               <option value="Mykonos">Mykonos</option>
             </select>
-            <span class="admin-form-login-header">
-              <span>-ADD PROPERTY-</span>
+            <span class="edit-product-login-header">
+              <span>-EDIT PRODUCT-</span>
               <br />
             </span>
             <input
               type="text"
-              name="OwnerName"
+              name="Price"
               enctype="Surname"
               required=""
-              placeholder="Owner FirstName"
+              placeholder="Price"
               autocomplete="family-name"
-              class="admin-form-owner-first-name input"
-            />
-            <input
-              type="text"
-              name="OwnerName"
-              enctype="Surname"
-              required=""
-              placeholder="Owner LastName"
-              autocomplete="family-name"
-              class="admin-form-owner-last-name input"
+              class="edit-product-price input"
             />
             <input
               type="text"
@@ -122,41 +101,37 @@
               required=""
               placeholder="Description"
               autocomplete="family-name"
-              class="admin-form-description input"
+              class="edit-product-description input"
             />
             <input
               type="text"
-              name="Address"
+              name="Max Guests"
               enctype="Surname"
               required=""
-              placeholder="Address"
+              placeholder="Max Guests"
               autocomplete="family-name"
-              class="admin-form-address input"
+              class="edit-product-max-guests input"
             />
-            <input
-              type="text"
-              name="Coordinates"
-              enctype="Surname"
-              required=""
-              placeholder="Coordinates"
-              autocomplete="family-name"
-              class="admin-form-coordinates input"
-            />
-            <input
-              type="text"
-              id="propertyname"
-              name="Property_Name"
-              required=""
-              placeholder="Property Name"
-              autocomplete="name"
-              class="admin-form-property-name input"
-            />
-            <button type="submit" class="admin-form-submit-button button">
-              <span class="admin-form-text2">ADD</span>
+            <button type="submit" class="edit-product-submit-button button">
+              <span class="edit-product-text2">ADD</span>
             </button>
+            <input
+              type="text"
+              id="PropertyID"
+              name="PropertyID"
+              required=""
+              placeholder="Property ID"
+              autocomplete="name"
+              class="edit-product-property-id input"
+            />
           </form>
         </div>
-        <a href="home.html" class="admin-form-login-header1">
+        <a
+          href="https://HOME.php"
+          target="_blank"
+          rel="noreferrer noopener"
+          class="edit-product-login-header1"
+        >
           <span>GREECE BOOKING</span>
           <br />
         </a>
