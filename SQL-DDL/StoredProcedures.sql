@@ -733,7 +733,7 @@ BEGIN
     ELSE
     BEGIN
         -- Also return the user_id of the user who logged in
-        SELECT [user_id],[User_Type]
+        SELECT [user_id],[User_Type],[Approved]
         FROM [dbo].[USER]
         WHERE [Email] = @Email
         AND [Passwd] = @Passwd;

@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   overflow: auto;
-  box-shadow: 5px 5px 10px 0px #d4d4d4;
+  box-shadow: 5px 5px 10px 0px #0e0e0e;
   min-height: 100vh;
   align-items: center;
   flex-direction: column;
@@ -27,7 +27,7 @@
 }
 .unapproved-owners-list-container {
   top: 216px;
-  right: 20px;
+  right: 9px;
   width: 1650px;
   height: 500px;
   margin: auto;
@@ -38,7 +38,7 @@
 }
 .unapproved-owners-product {
   width: 100%;
-  height: 124px;
+  height: 104px;
   display: flex;
   position: relative;
   flex-wrap: wrap;
@@ -49,93 +49,78 @@
   border-radius: var(--dl-radius-radius-radius8);
   flex-direction: column;
   justify-content: center;
-  /* background-color: var(--dl-color-gray-900); */
-    background-color: rgba(0, 0, 0, 0.4); /* Add this line to set a non-transparent background color */
-    
-    
-  
+  background-color: var(--dl-color-gray-900);
+  background-color: rgba(0, 0, 0, 0.4); /* Add this line to set a non-transparent background color */
 }
 .unapproved-owners-user-id {
-  top: 20%;
-  left: 50px;
+  top: 20px;
+  left: 18px;
   position: absolute;
   font-size: 26px;
 }
 .unapproved-owners-date {
-  top: 20%;
-  left: 210px;
+  top: 20px;
+  left: 137px;
   position: absolute;
   font-size: 26px;
 }
 .unapproved-owners-fname {
-  top: 20%;
-  left: 417px;
+  top: 20px;
+  left: 315px;
   position: absolute;
   font-size: 26px;
 }
 .unapproved-owners-id-value {
-  top: 60%;
-  left: 70px;
+  top: 60px;
+  left: 40px;
   position: absolute;
   font-size: 24px;
 }
 .unapproved-owners-date-value {
-  top: 60%;
-  left: 214px;
+  top: 60px;
+  left: 144px;
   position: absolute;
   font-size: 24px;
 }
 .unapproved-owners-f-name-value {
-  top: 60%;
-  left: 410px;
+  top: 60px;
+  left: 315px;
   position: absolute;
   font-size: 24px;
 }
 .unapproved-owners-l-name-value {
-  top: 60%;
-  left: 592px;
+  top: 60px;
+  left: 494px;
   position: absolute;
   font-size: 24px;
 }
 .unapproved-owners-email-value {
-  top: 60%;
-  left: 790px;
-  position: absolute;
-  font-size: 24px;
-}
-.unapproved-owners-gender-value {
-  top: 60%;
-  left: 1130px;
+  top: 60px;
+  left: 691px;
   position: absolute;
   font-size: 24px;
 }
 .unapproved-owners-last-name {
-  top: 20%;
-  left: 592px;
+  top: 20px;
+  left: 489px;
   position: absolute;
   font-size: 26px;
 }
 .unapproved-owners-email {
-  top: 20%;
-  left: 900px;
-  position: absolute;
-  font-size: 26px;
-}
-.unapproved-owners-gender {
-  top: 20%;
-  left: 1100px;
+  top: 20px;
+  left: 768px;
   position: absolute;
   font-size: 26px;
 }
 .unapproved-owners-approve {
-  top: 34px;
-  right: 18px;
+  top: 20px;
+  right: 10px;
   width: 140px;
   height: 58px;
   position: absolute;
-  background-color: var(--dl-color-primary1-blue80);
+  background-color: rgba(81, 81, 81, 0.4); /* Add this line to set a non-transparent background color */
 }
-.unapproved-owners-text15 {
+.unapproved-owners-text11 {
   color: #ffffff;
   font-size: 24px;
 }

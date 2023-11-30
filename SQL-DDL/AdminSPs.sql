@@ -121,7 +121,7 @@ BEGIN
     ELSE
     BEGIN
         -- Also return the user_id of the user who logged in
-        SELECT [user_id],[User_Type]
+        SELECT [user_id],[User_Type],[Approved]
         FROM [dbo].[USER]
         WHERE [Email] = @Email
         AND [Passwd] = @Passwd;
@@ -296,11 +296,10 @@ GO
 CREATE PROCEDURE spViewUnapprovedPropertyOwners
 AS
 BEGIN
-    SELECT User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved
+    SELECT User_ID, Date_of_Birth, First_Name, Last_Name, Email, Approved
     FROM [dbo].[USER]
     WHERE User_Type = 'Property Owner' AND Approved = 'N'
 END;
-
 
 
 GO
@@ -330,4 +329,12 @@ BEGIN
     FROM [dbo].[Reservations]
     WHERE Product_ID = @Product_ID AND User_ID = @User_ID
 END;
+
+GO
+-- filter the properties based on the id and return them 
+
+-- get the total revenue for a given property id and date
+
+-- CREATE PROCEDURE spGetTotalRevenue
+
 
