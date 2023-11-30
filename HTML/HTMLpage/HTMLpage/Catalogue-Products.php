@@ -110,7 +110,7 @@ $serverName = $_SESSION["serverName"];
             <span class='Text2'><strong>Amenities: </strong>$Amenities</span>
             <span class='Text3'><strong>Policies: </strong>$Policies</span>
             <span class='Text4'>$$Price</span>
-            <form action='Booking.php' method='POST'>
+            <form action='Book.php' method='POST'>
             <input type='hidden' name='ID' value='$ID'/>
             <button type='submit' class='home-button button'>Book NOW!</button>
             </form>

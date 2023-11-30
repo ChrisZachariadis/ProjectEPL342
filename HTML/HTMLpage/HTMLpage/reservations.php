@@ -28,18 +28,24 @@ function display(){
           <br />
         </span>
         <span class=\"reservations-id-value\">
-          <span>10</span>
+          <span>$RID</span>
           <br />
         </span>
-        <span class=\"reservations-date-value\">08/09/1993</span>
-        <span class=\"reservations-l-name-value\">Zachariadis</span>
+        <span class=\"reservations-date-value\">$DOB</span>
+        <span class=\"reservations-l-name-value\">$Name</span>
         <span class=\"reservations-last-name\">
           <span>Product Name</span>
           <br />
         </span>
-        <button type=\"button\" class=\"reservations-approve button\">
+
+        <form method='POST'>
+        <input type=\"hidden\" name=\"RID\" value=\"$RID\">
+        <input type=\"hidden\" name=\"REVIEW\" value=1>
+        <button type=\"submit\" class=\"reservations-approve button\">
           <span class=\"reservations-text10\">Review</span>
         </button>
+        </form>
+
         <button type=\"button\" class=\"reservations-cancel button\">
           <span class=\"reservations-text10\">Cancel</span>
         </button>
@@ -49,6 +55,13 @@ function display(){
     </div>
   </div>";
   }
+
+  sqlsrv_free_stmt($getResults);
+  sqlsrv_close($conn);
+}
+
+if(isset($_POST['REVIEW'])){
+
 }
 ?>
 
