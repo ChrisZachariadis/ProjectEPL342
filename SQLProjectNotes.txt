@@ -84,27 +84,82 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 
 	-----------------------------------------------------------------------------------------------
 
- 	for 30/11 : 
+ 	------------------30/11---------------------------------
 
-	---approve property owners page
-
-	--add product page --- product price , max guests, description, room type, property id --- o xristis sto stored procedure dinete kai to USER_ID
-
-	edit product
-
-	--view reservations // cancel reservations    (+ ta html tous)
+	---------RESERVATIONS------ RESERVATION ID, RESERVATION DATES, PRODUCT NAME, ENA KOUTAKI POU THA MPOREI NA GRAPSEI MESA NA KANEI REVIEW, SUBMIT
 
 
 
 
 
+	--view reservations // cancel reservations    (+ ta html tous) + ta stored procedure
 
+	gia to product id 5, iparxoun ta reservations 2 kai 3, 
+
+	-- Meal plans ??????????????
+
+	(6) paragogi anaforwn????
+
+
+
+	-------------GIA TON ADMIN DASHBOARD----------------
+
+	MAIN ADMIN PAGE:
+	-ola ta products, add edit delete, KOUMPI POU FTIAXNEI TA REPORTS, KOUMPI POU THA SE PERNEI STOUS UNAPPROVED PROPERTY OWNERS
+
+
+
+	REPORTS PAGE:
+	-ta reports pou tha prepei na mporei na epileksei o admin tha einai ta ekseis:
+
+
+------------------ FOR 1/11: ---------------------------------------------------------------------------------------------------------
+	GIA TA FILTRA:
+
+	-Filters for daily, weekly, monthly , yearly reports. 
+
+
+	-filter for which properties to filter, (extra points to be able to select more than 1 property for filter)
+	-same as room type - filters
+	-same for location -- filters (and extra if we can select more than 1 property)
+
+
+	TA AKOLOUTHA FORMS POU THA MPORW NA KANW CREATE:
+
+(1)	-SINOLIKA ESODA POU PARAXTHEIKAN --- FILTER SE AUKSOUSA I FTHINOUSA SEIRA
+
+
+(2) -ARITHMOS KRATISEWN POU EGINAN - RESERVATIONS
+
+   -Σύγκριση των τάσεων κρατήσεων μεταξύ διαφορετικών τύπων
+	καταλυμάτων (ποσοστά ανά τύπο). 
+	Στη συγκεκριμένη αναφορά δεν μπορεί να εφαρμοστούν τα φίλτρα τύπου καταλυμάτων 
+	και δωματίων αλλά ούτε και οι ομαδοποιήσεις τύπου καταλυμάτων και δωματίων.
+
+
+
+   -PERCENTAGES AKIROMENWN KRATISEWN
+
+(3) -ypologismos posostou plirotitas
+
+-Αναγνώριση περιόδων υψηλής πληρότητας. Στη συγκεκριμένη
+αναφορά δεν μπορεί να εφαρμοστεί το φίλτρο περιόδου χρόνου και 
+οι ομαδοποιήσεις πέραν της περιόδου χρόνου η οποία είναι υποχρεωτική.
+.Πρέπει να ταξινομείται σε φθίνουσα σειρά.
+
+-sikgrisi posostou plirotitas metaksi diaforetikwn katigoriwn dwmatiwn
+
+(4) -mesi vathmologia for each property 
+    -find the property with the highest and lowest review
+
+(5) ANAFORA DIATHESIMWN DOMATIWN 
+	EPISKOPITI TOU APOTHEMATOS TYPWN DOMATIWN KAI THS KATASTASIS PLHROTITAS TOUS.
 	
 
 
 
 
-
+	
 
 
 
