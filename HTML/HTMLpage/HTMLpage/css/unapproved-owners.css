@@ -1,0 +1,143 @@
+.unapproved-owners-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  box-shadow: 5px 5px 10px 0px #0e0e0e;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  background-size: cover;
+  justify-content: center;
+  background-image: url('https://thewonderlusters.com/wp-content/uploads/2018/10/View-from-Oia-Castle.jpg');
+}
+.unapproved-owners-text {
+  top: 147px;
+  left: 28px;
+  color: #ffffff;
+  position: absolute;
+  font-size: 40px;
+}
+.unapproved-owners-navlink {
+  top: 19px;
+  left: 12px;
+  color: #ffffff;
+  position: absolute;
+  font-size: 40px;
+  text-decoration: none;
+}
+.unapproved-owners-list-container {
+  top: 216px;
+  padding-right: 9px;
+  padding-left: 9px;
+  width: 100%;
+  height: 500px;
+  margin: auto;
+  display: flex;
+  position: absolute;
+  align-self: center;
+  align-items: flex-start;
+}
+.unapproved-owners-product {
+  color: white;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 104px;
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  align-self: flex-start;
+  align-items: flex-start;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--dl-color-gray-900);
+  background-color: rgba(0, 0, 0, 0.4); /* Add this line to set a non-transparent background color */
+}
+.unapproved-owners-user-id {
+  top: 20px;
+  left: 18px;
+  position: absolute;
+  font-size: 26px;
+}
+.unapproved-owners-date {
+  top: 20px;
+  left: 137px;
+  position: absolute;
+  font-size: 26px;
+}
+.unapproved-owners-fname {
+  top: 20px;
+  left: 315px;
+  position: absolute;
+  font-size: 26px;
+}
+.unapproved-owners-id-value {
+  top: 60px;
+  left: 40px;
+  position: absolute;
+  font-size: 24px;
+}
+.unapproved-owners-date-value {
+  top: 60px;
+  left: 144px;
+  position: absolute;
+  font-size: 24px;
+}
+.unapproved-owners-f-name-value {
+  top: 60px;
+  left: 315px;
+  position: absolute;
+  font-size: 24px;
+}
+.unapproved-owners-l-name-value {
+  top: 60px;
+  left: 494px;
+  position: absolute;
+  font-size: 24px;
+}
+.unapproved-owners-email-value {
+  top: 60px;
+  left: 691px;
+  position: absolute;
+  font-size: 24px;
+}
+.unapproved-owners-last-name {
+  top: 20px;
+  left: 489px;
+  position: absolute;
+  font-size: 26px;
+}
+.unapproved-owners-email {
+  top: 20px;
+  left: 768px;
+  position: absolute;
+  font-size: 26px;
+}
+.unapproved-owners-approve {
+  top: 20px;
+  right: 10px;
+  width: 140px;
+  height: 58px;
+  position: absolute;
+  background-color: rgba(81, 81, 81, 0.4); /* Add this line to set a non-transparent background color */
+}
+.unapproved-owners-text11 {
+  color: #ffffff;
+  font-size: 24px;
+}
+@media(max-width: 767px) {
+  .unapproved-owners-product {
+    padding-left: var(--dl-space-space-twounits);
+    padding-right: var(--dl-space-space-twounits);
+  }
+}
+@media(max-width: 479px) {
+  .unapproved-owners-product {
+    padding-top: var(--dl-space-space-twounits);
+    padding-left: var(--dl-space-space-unit);
+    padding-right: var(--dl-space-space-unit);
+    padding-bottom: var(--dl-space-space-twounits);
+  }
+}
