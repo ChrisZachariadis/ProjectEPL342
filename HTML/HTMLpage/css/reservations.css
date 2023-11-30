@@ -97,6 +97,14 @@
 }
 .reservations-approve {
   top: 50px;
+  right: 200px;
+  width: 140px;
+  height: 58px;
+  position: absolute;
+  background-color: rgb(255, 255, 255,0.4);
+}
+.reservations-cancel {
+  top: 50px;
   right: 50px;
   width: 140px;
   height: 58px;
