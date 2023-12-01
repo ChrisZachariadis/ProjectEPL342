@@ -641,9 +641,13 @@ BEGIN
 END
 
 
+GO
 
+
+-- create PROCEDURE nicebro 
 
 GO
+
 
 -- Average rating and reviews for each property
 

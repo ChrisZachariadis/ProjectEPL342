@@ -1,0 +1,918 @@
+.create-reports-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  flex-direction: column;
+  background-size: cover;
+  justify-content: flex-end;
+  background-image: url('https://railrocker.com/playground/wp-content/uploads/2017/04/great-evening-view-of-antorini-island.jpg');
+}
+.create-reports-greece-booking-text {
+  top: 25px;
+  left: 36px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+  text-decoration: none;
+}
+.create-reports-create-report-header {
+  top: 171px;
+  left: 29px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-form-type-container {
+  top: 235px;
+  left: 13px;
+  width: 1175px;
+  height: 1684px;
+  margin: auto;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  border-color: #07282f;
+  border-style: solid;
+  border-width: 5px;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.create-reports-revenue-text {
+  top: 11px;
+  left: 8px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-container01 {
+  top: 67px;
+  left: 11px;
+  width: 1082px;
+  height: 85px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form {
+  width: 100%;
+  height: 80px;
+  display: flex;
+}
+.create-reports-revenue-report-button {
+  top: 0px;
+  right: 0px;
+  width: 274px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text07 {
+  font-size: 32px;
+}
+.create-reports-property-type {
+  top: 4px;
+  left: 335px;
+  width: 154px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-room-type {
+  top: 5px;
+  left: 496px;
+  width: 120px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-location {
+  top: 4px;
+  right: 320px;
+  width: 139px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-end-date {
+  top: 3px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date {
+  top: 2px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-booking-text {
+  top: 170px;
+  left: 9px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-container02 {
+  top: 227px;
+  left: 12px;
+  width: 1104px;
+  height: 86px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form01 {
+  top: -12px;
+  left: 0px;
+  width: 1125px;
+  height: 100px;
+  display: flex;
+  position: absolute;
+}
+.create-reports-analyze-number-of-reservations-button {
+  right: 5px;
+  width: 307px;
+  bottom: 3px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text13 {
+  font-size: 32px;
+}
+.create-reports-property-type1 {
+  top: 13px;
+  left: 330px;
+  width: 154px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-room-type1 {
+  top: 14px;
+  left: 491px;
+  width: 120px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-location1 {
+  top: 13px;
+  left: 639px;
+  width: 139px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-end-date1 {
+  top: 12px;
+  left: 167px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date1 {
+  top: 11px;
+  left: -5px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-container03 {
+  top: 336px;
+  left: 14px;
+  width: 1108px;
+  height: 82px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form02 {
+  width: 100%;
+  height: 100px;
+  display: flex;
+}
+.create-reports-compare-reservation-trends-button {
+  top: 0px;
+  right: 0px;
+  width: 313px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text15 {
+  font-size: 32px;
+}
+.create-reports-end-date2 {
+  top: 2px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date2 {
+  top: 1px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-container04 {
+  top: 445px;
+  left: 19px;
+  width: 1104px;
+  height: 85px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form03 {
+  width: 100%;
+  height: 101px;
+  display: flex;
+}
+.create-reports-calculate-cancellation-rate-button {
+  top: 5px;
+  right: 0px;
+  width: 313px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text16 {
+  font-size: 32px;
+}
+.create-reports-property-type2 {
+  top: 2px;
+  left: 335px;
+  width: 154px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-room-type2 {
+  top: 3px;
+  left: 496px;
+  width: 120px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-location2 {
+  top: 2px;
+  right: 342px;
+  width: 139px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-end-date3 {
+  top: 1px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date3 {
+  top: 0px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-occupancy-text {
+  top: 573px;
+  left: 26px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-container05 {
+  top: 634px;
+  left: 16px;
+  width: 1090px;
+  height: 84px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form04 {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+.create-reports-calculate-occupancy-rate-button {
+  top: 0px;
+  right: 0px;
+  width: 307px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text20 {
+  font-size: 32px;
+}
+.create-reports-property-type3 {
+  top: 3px;
+  left: 335px;
+  width: 154px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-room-type3 {
+  top: 4px;
+  left: 496px;
+  width: 120px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-location3 {
+  top: 3px;
+  right: 328px;
+  width: 139px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-end-date4 {
+  top: 2px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date4 {
+  top: 1px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-container06 {
+  top: 748px;
+  left: 17px;
+  width: 1089px;
+  height: 91px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form05 {
+  width: 200px;
+  height: 100px;
+  display: flex;
+}
+.create-reports-calculate-occupancy-rate-button1 {
+  top: 0px;
+  right: 0px;
+  width: 307px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text23 {
+  font-size: 32px;
+}
+.create-reports-end-date5 {
+  top: 11px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date5 {
+  top: 10px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-container07 {
+  top: 869px;
+  left: 18px;
+  width: 1094px;
+  height: 120px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form06 {
+  width: 100%;
+  height: 128px;
+  display: flex;
+}
+.create-reports-compare-reservation-trends-button1 {
+  top: 0px;
+  right: 0px;
+  width: 313px;
+  height: 120px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text25 {
+  font-size: 32px;
+}
+.create-reports-end-date6 {
+  top: 36px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date6 {
+  top: 35px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-rating-text {
+  top: 1033px;
+  left: 23px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-container08 {
+  top: 1118px;
+  left: 27px;
+  width: 1057px;
+  height: 80px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form07 {
+  width: 100%;
+  height: 85px;
+  display: flex;
+}
+.create-reports-no-filters-text {
+  top: 7px;
+  left: 0px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-calculate-occupancy-rate-button2 {
+  top: 0px;
+  right: 0px;
+  width: 307px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text32 {
+  font-size: 32px;
+}
+.create-reports-container09 {
+  top: 1208px;
+  left: 30px;
+  width: 1060px;
+  height: 88px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form08 {
+  width: 1105px;
+  height: 100%;
+  display: flex;
+}
+.create-reports-no-filters-text1 {
+  top: 0px;
+  left: 0px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-compare-reservation-trends-button2 {
+  top: 8px;
+  right: 0px;
+  width: 313px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text36 {
+  font-size: 32px;
+}
+.create-reports-room-availability-text {
+  top: 1313px;
+  left: 14px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-container10 {
+  top: 1372px;
+  left: 6px;
+  width: 1087px;
+  height: 111px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form09 {
+  width: 100%;
+  height: 121px;
+  display: flex;
+}
+.create-reports-compare-reservation-trends-button3 {
+  top: 0px;
+  right: 0px;
+  width: 313px;
+  height: 111px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text40 {
+  font-size: 32px;
+}
+.create-reports-property-type4 {
+  top: 14px;
+  left: 335px;
+  width: 154px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-room-type4 {
+  top: 15px;
+  left: 496px;
+  width: 120px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-location4 {
+  top: 14px;
+  right: 325px;
+  width: 139px;
+  height: 80px;
+  position: absolute;
+  border-color: var(--dl-color-gray-black);
+  border-width: 1px;
+  border-radius: var(--dl-radius-radius-radius8);
+}
+.create-reports-end-date7 {
+  top: 13px;
+  left: 172px;
+  width: 155px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-start-date7 {
+  top: 12px;
+  left: 0px;
+  width: 166px;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-performance-report-text {
+  top: 1930px;
+  left: 11px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-performance-reports-container {
+  top: 1982px;
+  left: 12px;
+  width: 1175px;
+  height: 528px;
+  margin: auto;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  border-color: #07282f;
+  border-style: solid;
+  border-width: 5px;
+  flex-direction: column;
+  justify-content: center;
+}
+.create-reports-filters-header {
+  top: 13px;
+  left: 16px;
+  color: rgb(255, 255, 255);
+  position: absolute;
+  font-size: 36px;
+  text-transform: capitalize;
+}
+.create-reports-container11 {
+  top: 97px;
+  left: 11px;
+  width: 1101px;
+  height: 83px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form10 {
+  width: 1125px;
+  height: 88px;
+  display: flex;
+}
+.create-reports-year-for-min-books {
+  top: 1px;
+  left: 252px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-min-books {
+  top: 3px;
+  left: 502px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-property-type-for-min-books {
+  top: 0px;
+  left: 0px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-compare-reservation-trends-button4 {
+  top: 1px;
+  right: 0px;
+  width: 313px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text45 {
+  font-size: 32px;
+}
+.create-reports-container12 {
+  top: 203px;
+  left: 12px;
+  width: 1102px;
+  height: 84px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form11 {
+  width: 1117px;
+  height: 100px;
+  display: flex;
+}
+.create-reports-compare-reservation-trends-button5 {
+  top: 0px;
+  right: 0px;
+  width: 313px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text46 {
+  font-size: 32px;
+}
+.create-reports-year-for-rooms-monthly-bookings {
+  top: 1px;
+  left: 252px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-property-typefor-room-monthly-bookings {
+  top: 4px;
+  left: 0px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-container13 {
+  top: 306px;
+  left: 14px;
+  width: 1099px;
+  height: 83px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+.create-reports-form12 {
+  top: -12px;
+  left: 4px;
+  width: 1091px;
+  height: 100px;
+  display: flex;
+  position: absolute;
+}
+.create-reports-year-for-min-books1 {
+  top: 9px;
+  left: 253px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-min-books1 {
+  top: 10px;
+  left: 498px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-end;
+  border-radius: var(--dl-radius-radius-radius8);
+  padding-right: var(--dl-space-space-oneandhalfunits);
+}
+.create-reports-property-type-for-min-books1 {
+  top: 8px;
+  left: -1px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+.create-reports-compare-reservation-trends-button6 {
+  top: 11px;
+  right: 1px;
+  width: 313px;
+  height: 80px;
+  position: absolute;
+  padding-left: 0px;
+  padding-right: 0px;
+  text-decoration: none;
+  background-color: #e8e8e8;
+}
+.create-reports-text47 {
+  font-size: 32px;
+}
