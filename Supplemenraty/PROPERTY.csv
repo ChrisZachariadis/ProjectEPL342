@@ -1,11 +1,11 @@
 Property_ID,Property_Name,Property_Address,Property_Description,Property_Coordinates,Property_Location,Owner_ID,Owner_First_Name,Owner_Last_Name,Property_Type_ID,User_ID
-1,Hotel Maria,123 maria street,,56.1343878,Rhodes,1,Maria,Nikolaou,3,1
-2,Apartments George,345 George street,,38.8478071,Santorini,2,George,Pettemerides,9,2
-3,Marios Villa,678 Marios street,,43.4750998,Thessaloniki,3,Marios,Demetriou,11,3
-4,George's Tent,mixail 35,,40.2715286,Athens,4,George,Nikolaou,10,4
-5,Christos House,karolos darvinos 3,,34.554624,Thessaloniki,5,Christos,Zachariades,13,5
-6,Athens Apartments,syntagma square,,123.456,Athens,2,Nikolas,Georgiou,9,2
-7,Ajax,california 8,,123.456,Naxos,6,Andreas,Avraam,5,2
-8,Four Seasons,winter street 5,,123.456,Mykonos,7,Sakis,Karpas,14,2
-9,Bungalow Limassol,larnaka street 6,,123.456,Aridea,8,Dimosthenis,Fesatoglou,6,2
-10,The Farm, xorafia kokkinotrimithia,,123.456,Salamina,9,Nikolaos,Oinoxoos,15,2
+1,Hotel Maria,123 maria street,,56.1343878,Rhodes,1,Maria,Nikolaou,3,11
+2,Apartments George,345 George street,,38.8478071,Santorini,2,George,Pettemerides,9,12
+3,Marios Villa,678 Marios street,,43.4750998,Thessaloniki,3,Marios,Demetriou,11,11
+4,George's Tent,mixail 35,,40.2715286,Athens,4,George,Nikolaou,10,12
+5,Christos House,karolos darvinos 3,,34.554624,Thessaloniki,5,Christos,Zachariades,13,13
+6,Athens Apartments,syntagma square,,123.456,Athens,2,Nikolas,Georgiou,9,11
+7,Ajax,california 8,,123.456,Naxos,6,Andreas,Avraam,5,12
+8,Four Seasons,winter street 5,,123.456,Mykonos,7,Sakis,Karpas,14,13
+9,Bungalow Limassol,larnaka street 6,,123.456,Aridea,8,Dimosthenis,Fesatoglou,6,11
+10,The Farm, xorafia kokkinotrimithia,,123.456,Salamina,9,Nikolaos,Oinoxoos,15,13

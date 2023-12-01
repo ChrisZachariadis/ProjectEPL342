@@ -1,11 +1,16 @@
 User_ID,Date_of_Birth,User_Type,First_Name,Last_Name,Email,Passwd,Gender,Approved
-,04/05/2002,Property Owner,Lynnea,Bowstead,lbowstead0@bbc.co.uk,28916965033762317437,F,N
-,08/18/2002,Customer,Steffen,Toffler,stoffler1@shop-pro.jp,15320267378481813729,M,N
-,01/22/2001,Admin,Admin,Admin,admin@admin.com,admin,F,N
-,02/15/2002,Customer,Amandie,Stegell,astegell3@chicagotribune.com,19617533097290032930,F,N
-,11/06/2001,Customer,Garfield,Featenby,gfeatenby4@army.mil,15830422865982700720,M,N
-,12/12/2002,Property Owner,Marios,Demetriou,marios@gmail.com,15830422865982700720,M,N
-,01/02/2003,Customer,George,Pettemerides,george@gmail.com,18830422865982700720,M,N
-,03/13/1999,Property Owner,Christos,Zachariades,christos@gmail.com,16830422865982700720,F,N
-,07/28/1989,Customer,Marios,Stylianou,marmar@gmail.com,17830422865982700720,F,N
-,08/08/1990,Property Owner,Andreas,Andreas,andreas@gmail.com,18830422865982700720,M,N
+1,02/15/2002,Customer,Natasa,Markou,natasa@gmail.com,11223344,F,N
+2,03/15/2002,Customer,Michael,De Santa,michael@gmail.com,2223,M,N
+3,04/15/2002,Customer,Franklin,Clinton,Franklin@gmail.com,3333,M,N
+4,02/15/2002,Customer,Amandie,Stegell,astegell3@chicagotribune.com,19617533097290032930,F,N
+5,11/06/2001,Customer,Garfield,Featenby,gfeatenby4@army.mil,15830422865982700720,M,N
+6,12/12/2002,Customer,Marios,Demetriou,marios@gmail.com,15830422865982700720,M,N
+7,01/02/2003,Customer,George,Pettemerides,george@gmail.com,18830422865982700720,M,N
+8,03/13/1999,Customer,Christos,Zachariades,christos@gmail.com,16830422865982700720,F,N
+9,07/28/1989,Customer,Marios,Stylianou,marmar@gmail.com,17830422865982700720,F,N
+10,08/08/1990,Customer,Andreas,Andreas,andreas@gmail.com,18830422865982700720,M,N
+11,09/09/1991,Property Owner,Luigi,Luigi,char2@gmail.com,17830422865982700720,M,Y
+12,04/05/2002,Property Owner,Lynnea,Bowstead,lbowstead0@bbc.co.uk,28916965033762317437,F,Y
+13,08/18/2002,Property Owner,Steffen,Toffler,stoffler1@shop-pro.jp,15320267378481813729,M,Y
+14,09/19/2002,Property Owner,Alfie,McGillivray,alfie@gmail.com,15320267378481813729,M,N
+15,01/22/2001,Admin,Admin,Admin,admin@admin.com,admin,F,N

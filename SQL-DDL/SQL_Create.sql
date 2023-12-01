@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[PRODUCT] (
     Product_Price FLOAT NOT NULL,
     Max_Guests INT NOT NULL,
     CHECK (Max_Guests > 0),
-    Product_Description VARCHAR(200) NOT NULL,
+    Product_Description VARCHAR(100) NOT NULL,
     --FKeys
     Room_Type_ID INT NOT NULL,
     Property_ID INT NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE [dbo].[PROPERTY] (
     Property_ID INT IDENTITY (1,1),
     Property_Name VARCHAR(50) NOT NULL,
     Property_Address VARCHAR(50) NOT NULL,
-    Property_Description VARCHAR(15) NOT NULL,
+    Property_Description VARCHAR(100) NOT NULL,
     Property_Coordinates VARCHAR(20) NOT NULL,
     Property_Location VARCHAR(20) NOT NULL,
     Owner_ID INT NOT NULL,

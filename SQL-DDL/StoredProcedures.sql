@@ -416,7 +416,7 @@ GO
 CREATE PROCEDURE spInsert_Property
     @Property_Name VARCHAR(50),
     @Property_Address VARCHAR(50),
-    @Property_Description VARCHAR(15),
+    @Property_Description VARCHAR(100),
     @Property_Coordinates VARCHAR(20),
     @Property_Location VARCHAR(20),
     @Owner_ID INT,
@@ -462,7 +462,7 @@ CREATE PROCEDURE spEdit_Property
 	@Property_ID INT,
     @Property_Name VARCHAR(50),
     @Property_Address VARCHAR(50),
-    @Property_Description VARCHAR(15),
+    @Property_Description VARCHAR(100),
     @Property_Coordinates VARCHAR(20),
     @Property_Location VARCHAR(20),
     @Owner_First_Name VARCHAR(15),
@@ -736,7 +736,7 @@ BEGIN
     BEGIN
         SET @Approved = 'Y';
     END
-    ELSE IF @User_Type = 'Property_Owner'
+    ELSE IF @User_Type = 'Property Owner'
     BEGIN
         SET @Approved = 'N';
     END
