@@ -78,9 +78,7 @@ CREATE TABLE [dbo].[FACILITIES] (
 CREATE TABLE [dbo].[STOCK] (
     Stock_ID INT NOT NULL,
 	--FK
-	Product_ID INT NOT NULL,
-
-
+	  Product_ID INT NOT NULL,
     Stock_Date DATE NOT NULL,
     Stock_Amount INT NOT NULL,
     CHECK (Stock_Amount >= 0),
@@ -90,10 +88,17 @@ CREATE TABLE [dbo].[STOCK] (
 CREATE TABLE [dbo].[RESERVATIONS] (
     Reservation_ID INT IDENTITY (1,1),
     Reservation_Date DATE NOT NULL,
+    
     --FKeys
     Review_ID INT,
     User_ID INT NOT NULL,
     Product_ID INT NOT NULL,
+    --
+    Reservation_Status VARCHAR(15) NOT NULL,
+     CHECK (
+        Reservation_Status IN ('Finished', 'Cancelled', 'Upcoming')
+    ),
+    Reservation_Fine FLOAT DEFAULT(0.0) ,
     CONSTRAINT Reservation_ID PRIMARY KEY (Reservation_ID)
 );
 

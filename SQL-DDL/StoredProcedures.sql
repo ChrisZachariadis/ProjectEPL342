@@ -609,14 +609,45 @@ CREATE PROCEDURE spViewReservations
     @User_ID INT
 AS
 BEGIN
+    ;WITH RankedReservations AS (
+        SELECT 
+            R.Reservation_ID,
+            R.Product_ID,
+            R.Reservation_Date,
+            R.Review_ID,
+            R.Reservation_Status,
+            R.Reservation_Fine,
+            ROW_NUMBER() OVER (PARTITION BY R.Product_ID ORDER BY R.Reservation_Date) AS rn,
+            DATEDIFF(DAY, '2000-01-01', R.Reservation_Date) - ROW_NUMBER() OVER (PARTITION BY R.Product_ID ORDER BY R.Reservation_Date) AS grp
+        FROM [dbo].[Reservations] R
+        WHERE R.User_ID = @User_ID
+    ),
+    GroupedReservations AS (
+        SELECT 
+            Product_ID,
+            STRING_AGG(CAST(Reservation_ID AS VARCHAR), ', ') AS Reservation_IDs,
+            MIN(Reservation_Date) AS Start_Date,
+            MAX(Reservation_Date) AS End_Date,
+            STRING_AGG(ISNULL(CAST(Review_ID AS VARCHAR), 'NULL'), ', ') AS Review_IDs,
+            STRING_AGG(Reservation_Status, ', ') AS Reservation_Statuses,
+            STRING_AGG(ISNULL(CAST(Reservation_Fine AS VARCHAR), 'NULL'), ', ') AS Reservation_Fines,
+            grp
+        FROM RankedReservations
+        GROUP BY Product_ID, grp
+    )
     SELECT 
-        R.Product_ID,
-        STRING_AGG(R.Reservation_Date, ', ') AS Reservation_Dates , (SELECT Product_Name FROM [dbo].[PRODUCT] WHERE Product_ID = R.Product_ID) AS Product_Name
-    FROM [dbo].[Reservations] R
-    WHERE R.User_ID = @User_ID
-    GROUP BY R.Product_ID;
-END
+        (SELECT P.Property_Name FROM [dbo].[PROPERTY] P, [dbo].[PRODUCT] A WHERE A.Product_ID=G.Product_ID AND P.Property_ID=A.Property_ID) AS Property_Name,
+        G.Reservation_IDs,
+        CASE 
+            WHEN G.Start_Date = G.End_Date THEN CAST(G.Start_Date AS VARCHAR)
+            ELSE CAST(G.Start_Date AS VARCHAR) + ' to ' + CAST(G.End_Date AS VARCHAR)
+        END AS Reservation_Dates,
+        G.Reservation_Statuses,
+        G.Reservation_Fines
+    FROM GroupedReservations G
+END;
 GO
+
 ------------------------------------------------------------------------------------------------------------
 --(25)Cancel Reservation
 CREATE PROCEDURE spCancelReservation
