@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[USER] (
     Last_Name VARCHAR(15) NOT NULL,
     Email VARCHAR(50) NOT NULL UNIQUE,
     CHECK (Email LIKE '%@%.%'),
-    Passwd VARCHAR(20) NOT NULL,
+    Passwd VARCHAR(256) NOT NULL,
     Gender CHAR(1) NOT NULL,
     Approved CHAR(1) NOT NULL,
     CONSTRAINT PK_USER PRIMARY KEY (User_ID)
@@ -129,6 +129,9 @@ WITH (
     ROWTERMINATOR = '\n',
     FIRSTROW = 2
 );
+
+UPDATE [dbo].[USER] 
+SET Passwd = HASHBYTES('SHA2_256', Passwd);
 GO
 
 USE DB

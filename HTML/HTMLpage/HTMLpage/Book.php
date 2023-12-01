@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if($_SESSION['Logedin'] == false){
+if($_SESSION['LoggedIn'] == false){
     echo '<script type="text/javascript">',
     'window.onload = function() {',
     '  alert("You need to Log In to book.");',
@@ -27,21 +27,16 @@ if ($conn === false) {
 }
 
 $tsql = "{call makeReservation (?, ?, ?, ?)}";
-$ID=5;
-$UserID=1;
-$date_from='2023-01-22';
-$date_to='2023-01-22';
 $params = array($ID, $UserID, $date_from, $date_to);
-sqlsrv_query($conn, $tsql, $params);
 
-$tsql ="{call getID}";
-$getResults = sqlsrv_query($conn, $tsql);
-var_dump($getResults);
+$getResults = sqlsrv_query($conn, $tsql, $params);
 if ($getResults === false) {
     die(print_r(sqlsrv_errors(), true));
 }
+
 sqlsrv_free_stmt($getResults);
 sqlsrv_close($conn);
 
 
+header('Location: reservations.php');
 ?>

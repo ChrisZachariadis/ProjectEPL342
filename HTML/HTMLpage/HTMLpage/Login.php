@@ -32,7 +32,6 @@ echo "<script type='text/javascript'>",
   }
 
   $row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC);
-  var_dump($row);
   $_SESSION['UserID'] = $row['user_id'];
   $_SESSION['UserType'] = $row['User_Type'];
   $_SESSION['LoggedIn'] = true;
@@ -55,10 +54,10 @@ if($row['User_Type'] == 'Property Owner' && $row['Approved'] == 'Y'){
     '};',
     '</script>';
     exit;
-}else if($row['Approved'] == 'N'){
+}else if($row['User_Type'] == 'Property Owner' && $row['Approved'] == 'N'){
   echo '<script type="text/javascript">',
     'window.onload = function() {',
-    '  alert("Not Approved ");',
+    '  alert("Not Approved.(Owner)");',
     '  window.location.href = "Login.php";',
     '};',
     '</script>';
@@ -67,7 +66,7 @@ if($row['User_Type'] == 'Property Owner' && $row['Approved'] == 'Y'){
 
 echo '<script type="text/javascript">',
     'window.onload = function() {',
-    '  alert("Not Approved ");',
+    '  alert("Succesfully Logged In.(Customer)");',
     '  window.location.href = "BookSearch.php";',
     '};',
     '</script>';

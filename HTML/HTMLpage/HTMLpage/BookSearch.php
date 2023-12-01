@@ -28,6 +28,10 @@ session_start();
 if($_SESSION['LoggedIn'] == false)
 echo     "<button onclick=\"location.href='login.php'\" type='button' class='log' style=''>Log in</button>
 <button onclick=\"location.href='register.php'\" type='button' class='reg'>Register</button>";
+if($_SESSION['LoggedIn'] == true)
+echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' style=''>Log Out</button>
+<button onclick=\"location.href='reservations.php'\" type='button' class='reg'>View Reservations</button>";
+
 ?>
 </hreader>
 <body>
@@ -44,7 +48,7 @@ echo     "<button onclick=\"location.href='login.php'\" type='button' class='log
                     <div class="form-destination">
                         <label for="destination">Destination</label>
                         <select type="text" id="destination" name="destination">
-                            <option value="empty">Select a Destination</option>
+                            <option value="empty" selected>Select a Destination</option>
                             <option value="Rhodes">Rhodes</option>
                             <option value="Santorini">Santorini</option>
                             <option value="Thessaloniki">Thessaloniki</option>
@@ -60,12 +64,12 @@ echo     "<button onclick=\"location.href='login.php'\" type='button' class='log
                     <div class="form-date-from form-icon">
                         <label for="date_from">From</label>
                         <input type="text" id="date_from" class="date_from" name="date_from" placeholder="Pick a date"
-                            required readonly/>
+                            required onkeydown="return false"/>
                     </div>
                     <div class="form-date-to form-icon">
                         <label for="date_to">To</label>
                         <input type="text" id="date_to" class="date_to" name="date_to" placeholder="Pick a date"
-                            required readonly/>
+                        required onkeydown="return false"/>
                     </div>
 
                     <!-- <div class="form-submit">
@@ -83,7 +87,7 @@ echo     "<button onclick=\"location.href='login.php'\" type='button' class='log
                     <div class="form-date-from" style="width: 230px;">
                         <label for="Rooms">Room Type</label>
                         <select id="Rooms" name="Rooms">
-                            <option value="empty">Select a room type</option>
+                            <option value="empty" selected>Select a room type</option>
                             <option value="Apartment">Apartment</option>
                             <option value="Quadruple">Quadruple</option>
                             <option value="Suite">Suite</option>
@@ -109,7 +113,7 @@ echo     "<button onclick=\"location.href='login.php'\" type='button' class='log
                     <div class="form-date-from form-icon2">
                         <label for="date_from">Property Type</label>
                         <select id="Property" name="Property">
-                            <option value="empty">Select a property type</option>
+                            <option value="empty" selected>Select a property type</option>
                             <option value="Resort">Resort</option>
                             <option value="Hostel">Hostel</option>
                             <option value="Hotel">Hotel</option>

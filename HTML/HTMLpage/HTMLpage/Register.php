@@ -22,6 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $getResults = sqlsrv_query($conn, $tsql, $params);
   var_dump($getResults);
   if ($getResults === false) {
+    die(print_r(sqlsrv_errors(), true));
     echo '<script type="text/javascript">',
      'window.onload = function() {',
      '  alert("Email already exists. ");',
@@ -95,12 +96,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <option value="">Type</option>
         <option value="Property Owner">Owner</option>
         <option value="Customer">Customer</option>
-        <option value="Admin">Admin</option>
     </select>
   </div>
 
     <div class="form-field LoginButton">
-      <button class="btn" type="submit">Log in</button>
+      <button class="btn" type="submit">Register</button>
     </div>
 
     <div class="form-field Login">

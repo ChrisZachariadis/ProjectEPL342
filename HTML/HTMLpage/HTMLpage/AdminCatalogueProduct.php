@@ -256,9 +256,12 @@ function products($ID)
         data-tag="font" />
 </head>
 
-<body>
+<body style="background-image: url('./images/bg1.jpg'); background-repeat: no-repeat; background-size: cover;">
 
     <?php
+    if($_SESSION['LoggedIn'] == true)
+    echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' style=''>Log Out</button>";
+
     if($_SESSION['UserType'] == 'Admin'){
         echo "<a href='unapproved-owners.php'><button type='submit' class='home-button5 button'>View Unapproved Owners</button></a>";
         echo "<a href=''><button type='submit' class='home-button3 button'>View Reports</button></a>";

@@ -6,12 +6,13 @@
     align-items: center;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: #D9D9D9;
   }
+  
   .home-text {
     margin-top: var(--dl-space-space-halfunit);
     margin-bottom: 10px;
   }
+
   .home-container1 {
     width: 100%;
     margin-bottom: 0.5em;
@@ -23,6 +24,7 @@
     flex-direction: column;
     justify-content: center;
   }
+
   .home-container2 {
     width: 100%;
     height: auto;
@@ -101,7 +103,6 @@
   }
   
   .facilities{
-    background-color: #D9D9D9;
   }
 
     
