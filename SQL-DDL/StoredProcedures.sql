@@ -760,7 +760,7 @@ BEGIN
         INSERT INTO [dbo].[USER] 
             (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
         VALUES 
-            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, HASHBYTES('SHA2_256',@Passwd), @Gender, @Approved);
     END
 END
 GO
@@ -779,7 +779,7 @@ BEGIN
         SELECT *
         FROM [dbo].[USER]
         WHERE [Email] = @Email
-          AND [Passwd] = @Passwd
+          AND [Passwd] = HASHBYTES ('SHA2_256',@Passwd)
     )
     BEGIN 
         PRINT 'Error: Invalid Email or password';
@@ -793,7 +793,7 @@ BEGIN
         SELECT [user_id],[User_Type],[Approved]
         FROM [dbo].[USER]
         WHERE [Email] = @Email
-        AND [Passwd] = @Passwd;
+        AND [Passwd] = HASHBYTES ('SHA2_256',@Passwd);
     END
 END
 GO
