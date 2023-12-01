@@ -659,7 +659,7 @@ END;
 GO
 
 ------------------------------------------------------------------------------------------------------------
---(25)Cancel Reservation (Alters the status and also applies 50% fine).
+--(25)Cancel Reservation (Alters the status and also applies 50% fine and also updates Stock).
 CREATE PROCEDURE spCancelReservation
     @Reservation_IDs VARCHAR(MAX)
 AS
@@ -671,36 +671,43 @@ BEGIN
     FROM STRING_SPLIT(@Reservation_IDs, ',')
 
     DECLARE @Reservation_ID INT
+    DECLARE @Product_ID INT
+    DECLARE @Reservation_Date DATE
     
     DECLARE reservationCursor CURSOR FOR
-    SELECT Reservation_ID
-    FROM @ReservationIDList
+    SELECT R.Reservation_ID, R.Product_ID, R.Reservation_Date
+    FROM @ReservationIDList RL
+    INNER JOIN [dbo].[RESERVATIONS] R ON RL.Reservation_ID = R.Reservation_ID
     
     OPEN reservationCursor
     
-    FETCH NEXT FROM reservationCursor INTO @Reservation_ID
+    FETCH NEXT FROM reservationCursor INTO @Reservation_ID, @Product_ID, @Reservation_Date
     
     WHILE @@FETCH_STATUS = 0                                    
     BEGIN
+        -- Update the reservation status and fine
         UPDATE R
         SET R.Reservation_Status = 'Cancelled',
             R.Reservation_Fine = P.Product_Price * 0.5
         FROM [dbo].[RESERVATIONS] R
         INNER JOIN [dbo].[PRODUCT] P ON R.Product_ID = P.Product_ID
         WHERE R.Reservation_ID = @Reservation_ID
+
+        -- Update the stock amount
+        UPDATE S
+        SET S.Stock_Amount = S.Stock_Amount + 1
+        FROM [dbo].[STOCK] S
+        WHERE S.Product_ID = @Product_ID AND S.Stock_Date = @Reservation_Date
     
-        FETCH NEXT FROM reservationCursor INTO @Reservation_ID
+        FETCH NEXT FROM reservationCursor INTO @Reservation_ID, @Product_ID, @Reservation_Date
     END
     
     CLOSE reservationCursor
     DEALLOCATE reservationCursor
 END
 GO
--- THIS MUST UPDATE THE STOCK FOR EVERY DATE. 
+
 ------------------------------------------------------------------------------------------------------------
-
-
-
 
 
 ------------------------------------------------------------------------------------------------------------

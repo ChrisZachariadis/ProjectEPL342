@@ -94,7 +94,7 @@ CREATE TABLE [dbo].[RESERVATIONS] (
     User_ID INT NOT NULL,
     Product_ID INT NOT NULL,
     --
-    Reservation_Status VARCHAR(15) NOT NULL,
+    Reservation_Status VARCHAR(15) DEFAULT 'Upcoming' ,
      CHECK (
         Reservation_Status IN ('Finished', 'Cancelled', 'Upcoming')
     ),
