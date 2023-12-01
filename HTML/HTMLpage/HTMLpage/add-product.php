@@ -220,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </button>
         </form>
       </div>
-      <a href="HOME.php" rel="noreferrer noopener" class="add-product-login-header1">
+      <a href="AdminCataloguePropertis.php" rel="noreferrer noopener" class="add-product-login-header1">
         <span>GREECE BOOKING</span>
         <br />
       </a>

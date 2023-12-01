@@ -54,7 +54,6 @@ echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' sty
                             <option value="Thessaloniki">Thessaloniki</option>
                             <option value="Athens">Athens</option>
                             <option value="Thessaloniki">Thessaloniki</option>
-                            <option value="Athens">Athens</option>
                             <option value="Naxos">Naxos</option>
                             <option value="Mykonos">Mykonos</option>
                             <option value="Aridea">Aridea</option>

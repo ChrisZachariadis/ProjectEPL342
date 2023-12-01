@@ -223,7 +223,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             autocomplete="family-name" class="add-property-description input" style="resize: none;" required></textarea>
           <input type="text" name="Address" enctype="Surname" required="" placeholder="Address"
             autocomplete="family-name" class="add-property-address input" required/>
-          <input type="text" name="Coordinates" enctype="Surname" required="" placeholder="Coordinates"
+          <input type="number" name="Coordinates" enctype="Surname" required="" placeholder="Coordinates"
             autocomplete="family-name" class="add-property-coordinates input" required/>
           <input type="text" name="Facilities" enctype="Surname" required="" placeholder="Facilities"
             autocomplete="family-name" class="add-property-coordinates1 input" required/>
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </button>
         </form>
       </div>
-      <a href="https://HOME.php" target="_blank" rel="noreferrer noopener" class="add-property-login-header1">
+      <a href="AdminCatalogueProperties.php" rel="noreferrer noopener" class="add-property-login-header1">
         <span>GREECE BOOKING</span>
         <br />
       </a>

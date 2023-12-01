@@ -77,7 +77,7 @@ function display(){
     class="edit-product-property-id input"
   />
   <button type="submit" class="edit-product-submit-button button">
-    <span class="edit-product-text2">ADD</span>
+    <span class="edit-product-text2">SUBMIT</span>
   </button>
   </form>';
   sqlsrv_free_stmt($getResults);

@@ -273,7 +273,7 @@ function products($ID)
     }
     ?>
     <link rel="stylesheet" href="./css/Style2.css" />
-    <div style="background-color: #D9D9D9">
+    <div>
         <link href="./css/AdminCatalogueProducts.css" rel="stylesheet" />
         <div class="facilities">
             <h2>Facilities</h2>
