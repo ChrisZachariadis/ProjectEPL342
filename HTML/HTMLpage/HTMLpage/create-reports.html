@@ -78,18 +78,14 @@
           </span>
           <div class="create-reports-container01">
             <form class="create-reports-form">
-              <a
-                href="edit-property.html"
-                name="ButtonRevenueReport"
-                class="create-reports-revenue-report-button button"
-              >
+              <button type="submit" name="ButtonRevenueReport" class="create-reports-revenue-report-button button">
                 <span>
-                  <span class="create-reports-text07">Revenue Report</span>
-                  <br />
+                    <span class="create-reports-text07">Revenue Report</span>
+                    <br />
                 </span>
-              </a>
+            </button>
               <select name="Property Type" class="create-reports-property-type">
-                <option value="Property Type" selected="">Property Type</option>
+                <option value="empty" selected="">Property Type</option>
                 <option value="Resort">Resort</option>
                 <option value="Hostel">Hostel</option>
                 <option value="Hotel">Hotel</option>
@@ -115,7 +111,7 @@
                 <option value="Chalet">New Option</option>
               </select>
               <select name="RoomType" class="create-reports-room-type">
-                <option value="Room Type" selected="">Room Type</option>
+                <option value="empty" selected="">Room Type</option>
                 <option value="Apartment">Apartment</option>
                 <option value="Quadruple">Quadruple</option>
                 <option value="Suite">Suite</option>
@@ -572,15 +568,13 @@
           </div>
           <div class="create-reports-container07">
             <form class="create-reports-form06">
-              <a
-                href="edit-property.html"
-                name="ButtonCompareORByRT"
-                class="create-reports-compare-reservation-trends-button1 button"
-              >
-                <span class="create-reports-text25">
-                  Compare Occupancy Rates By Room Type
-                </span>
-              </a>
+              <form action="edit-property.html" method="post">
+                <button type="submit" name="ButtonCompareORByRT" class="create-reports-compare-reservation-trends-button1 button">
+                    <span class="create-reports-text25">
+                        Compare Occupancy Rates By Room Type
+                    </span>
+                </button>
+            </form>
               <input
                 type="text"
                 name="EndDate"
