@@ -145,6 +145,29 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 
 (5) ANAFORA DIATHESIMWN DOMATIWN 
 	EPISKOPITI TOU APOTHEMATOS TYPWN DOMATIWN KAI THS KATASTASIS PLHROTITAS TOUS.
+
+---------------------------------1/12-------------------------------------------------
+
+-----gia ta filtra, den elegxo pollapla location opos episis stis imerominies dino range kai oxi daily,weekly,klp
+
+
+---Σύγκριση των τάσεων κρατήσεων μεταξύ διαφορετικών... DEN TO ELEKSA / DEN KSERO TI KANEI
+
+
+
+CHECK AGAIN RELATIONAL KAI ER --------
+
+
+
+-------!!!!!!!!!!!!!!!!!!	Αναγνώριση περιόδων υψηλής πληρότητας ---NA TIN KSANAKANO EPIDI DEN TIN KATALAVA
+-------!!!!!!!!!!!!!!!!!!	OPOS EPISIS KAI TO EPOMENO IPOEROTIMA
+
+--------den prepei na tou dinoume tin periodo xronou ws omadopoihsi alla na mas ta omadopoihei me ton xrono-----------
+
+
+Αναγνώριση των καταλυμάτων με τις υψηλότερες και χαμηλότερες
+βαθμολογίες.
+------NA TO KSANAELEKSO AFOU DEN MPORO NA KANO BULK INSERT TA RESERVATIONS!!!!!!
 	
 
 
@@ -188,3 +211,14 @@ cascade delete- no action ( gia na min ginonte kikloi) ????????
 
 
 
+
+
+
+							<option value="Rhodes">Rhodes</option>
+                            <option value="Santorini">Santorini</option>
+                            <option value="Thessaloniki">Thessaloniki</option>
+                            <option value="Athens">Athens</option>
+                            <option value="Naxos">Naxos</option>
+                            <option value="Mykonos">Mykonos</option>
+                            <option value="Aridea">Aridea</option>
+                            <option value="Salamina">Salamina</option>
