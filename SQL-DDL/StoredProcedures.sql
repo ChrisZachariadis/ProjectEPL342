@@ -680,7 +680,7 @@ BEGIN
     
     FETCH NEXT FROM reservationCursor INTO @Reservation_ID
     
-    WHILE @@FETCH_STATUS = 0
+    WHILE @@FETCH_STATUS = 0                                    
     BEGIN
         UPDATE R
         SET R.Reservation_Status = 'Cancelled',
@@ -696,7 +696,7 @@ BEGIN
     DEALLOCATE reservationCursor
 END
 GO
-
+-- THIS MUST UPDATE THE STOCK FOR EVERY DATE. 
 ------------------------------------------------------------------------------------------------------------
 
 
