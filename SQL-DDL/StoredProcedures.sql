@@ -246,10 +246,11 @@ FROM [dbo].[TempResultsFinal] T, [dbo].[PRODUCT] O
 WHERE T.Property_ID = @Property_ID  AND T.Product_ID = O.Product_ID
 END
 GO
+------------------------------------------------------------------------------------------------------------
 
-------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
      --   USED TO GET FACILITIES / GET REVIEWS / MAKE RESERVATION / MAKE REVIEW    --
-------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------------------------------------------
 --(8)Get Facilities of a product based on Product_ID
@@ -318,33 +319,47 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
---(11)Create a new Review and also alter the table RESERVATIONS to include the Review ID.
+--(11)Create a new Review and also alter the table RESERVATIONS to include the Review ID. (Review Status must be finished).
 CREATE PROCEDURE makeReview
     @Reservation_ID INT,
     @Review_Description VARCHAR(170),
     @Review_Rating INT
 AS
 BEGIN
-    -- Table variable to store the generated Review_ID
-    DECLARE @Generated_Review_IDs TABLE (Review_ID INT);
+    -- Check if the Reservation Status is 'Finished'
+    IF EXISTS (
+        SELECT 1 
+        FROM [dbo].[RESERVATIONS]
+        WHERE Reservation_ID = @Reservation_ID AND Reservation_Status = 'Finished'
+    )
+    BEGIN
+        -- Table variable to store the generated Review_ID
+        DECLARE @Generated_Review_IDs TABLE (Review_ID INT);
 
-    -- Insert the review and capture the Review_ID
-    INSERT INTO [dbo].[REVIEWS] (Review_Description, Review_Rating)
-    OUTPUT INSERTED.Review_ID INTO @Generated_Review_IDs
-    VALUES (@Review_Description, @Review_Rating);
+        -- Insert the review and capture the Review_ID
+        INSERT INTO [dbo].[REVIEWS] (Review_Description, Review_Rating)
+        OUTPUT INSERTED.Review_ID INTO @Generated_Review_IDs
+        VALUES (@Review_Description, @Review_Rating);
 
-    -- Extract the generated Review_ID
-    DECLARE @Generated_Review_ID INT;
-    SELECT @Generated_Review_ID = Review_ID FROM @Generated_Review_IDs;
+        -- Extract the generated Review_ID
+        DECLARE @Generated_Review_ID INT;
+        SELECT @Generated_Review_ID = Review_ID FROM @Generated_Review_IDs;
 
-    -- Update the reservation with the new Review_ID
-    UPDATE [dbo].[RESERVATIONS]
-    SET Review_ID = @Generated_Review_ID
-    WHERE Reservation_ID = @Reservation_ID;
+        -- Update the reservation with the new Review_ID
+        UPDATE [dbo].[RESERVATIONS]
+        SET Review_ID = @Generated_Review_ID
+        WHERE Reservation_ID = @Reservation_ID;
+    END
+    ELSE
+    BEGIN
+        -- Optionally, handle the case where the reservation is not 'Finished'
+        -- For example, you might want to raise an error or just skip the update
+        RAISERROR('Cannot leave a review for a reservation that is not finished.', 16, 1);
+    END
 END
 GO
 ------------------------------------------------------------------------------------------------------------
---(12)Get Reviews for a specific Property
+--(12)Get Reviews for a specific Property.
 CREATE PROCEDURE getReviews
     @Property_ID INT
 AS
@@ -358,14 +373,10 @@ END
 GO
 ------------------------------------------------------------------------------------------------------------
 
-
-
-
-
 ------------------------------------------------------------------------------------------------------------
 -- USED FOR ADMIN AND MANAGER TO GET PROPERTIES / PRODUCTS / EDIT
 ------------------------------------------------------------------------------------------------------------
---(13)Insert a new product on a specific property
+--(13)Insert a new product on a specific property.
 CREATE PROCEDURE spInsert_Product
     @User_ID INT,
     @Product_Price DECIMAL(10, 2),
@@ -600,11 +611,10 @@ GO
 ------------------------------------------------------------------------------------------------------------
 
 
-
 ------------------------------------------------------------------------------------------------------------
 -- USED TO VIEW RESERVATIONS AND CANCEL THEM
 ------------------------------------------------------------------------------------------------------------
---(24)View Reservations based on User ID.
+--(24)View Reservations based on User ID. (Grouped by Product_ID and Reservation_Dates)
 CREATE PROCEDURE spViewReservations
     @User_ID INT
 AS
@@ -649,7 +659,7 @@ END;
 GO
 
 ------------------------------------------------------------------------------------------------------------
---(25)Cancel Reservation
+--(25)Cancel Reservation (Alters the status and also applies 50% fine).
 CREATE PROCEDURE spCancelReservation
     @Reservation_IDs VARCHAR(MAX)
 AS
@@ -672,8 +682,12 @@ BEGIN
     
     WHILE @@FETCH_STATUS = 0
     BEGIN
-        DELETE FROM [dbo].[RESERVATIONS]
-        WHERE Reservation_ID = @Reservation_ID
+        UPDATE R
+        SET R.Reservation_Status = 'Cancelled',
+            R.Reservation_Fine = P.Product_Price * 0.5
+        FROM [dbo].[RESERVATIONS] R
+        INNER JOIN [dbo].[PRODUCT] P ON R.Product_ID = P.Product_ID
+        WHERE R.Reservation_ID = @Reservation_ID
     
         FETCH NEXT FROM reservationCursor INTO @Reservation_ID
     END
@@ -682,6 +696,7 @@ BEGIN
     DEALLOCATE reservationCursor
 END
 GO
+
 ------------------------------------------------------------------------------------------------------------
 
 
