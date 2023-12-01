@@ -1,214 +1,142 @@
-
--- -- USER REGISTRATION. ONLY CUSTOMERS CAN REGISTER (PROPERTY OWNER IS ADDED BY THE ADMIN)
 -- CREATE PROCEDURE spRegister_User
---     @User_ID INT,
+--     -- @User_ID INT,
 --     @Date_of_Birth DATE,
+--     @User_Type VARCHAR(15),
 --     @First_Name VARCHAR(15),
 --     @Last_Name VARCHAR(15),
 --     @Email VARCHAR(50),
 --     @Passwd VARCHAR(20),
---     @Gender CHAR(1),
---     @Approved CHAR(1)
+--     @Gender CHAR(1)
 -- AS
 -- BEGIN
 --     SET @First_Name = RTRIM(@First_Name);
 --     SET @Last_Name = RTRIM(@Last_Name);
 --     SET @Email = RTRIM(@Email);
 --     SET @Passwd = RTRIM(@Passwd);
+--     SET @User_Type = RTRIM(@User_Type);
 
+--     DECLARE @Approved CHAR(1);
+--     IF @User_Type = 'Customer' 
+--     BEGIN
+--         SET @Approved = 'Y';
+--     END
+--     ELSE IF @User_Type = 'Property_Owner'
+--     BEGIN
+--         SET @Approved = 'N';
+--     END
 --     -- Check if the Email format is valid
 --     IF @Email NOT LIKE '%@%.%'
 --     BEGIN
 --         RAISERROR ('Invalid Email format', 16, 1);
 --         RETURN;
 --     END
--- ELSE IF EXISTS (
---   SELECT *
---   FROM [dbo].[USER]
---   WHERE [Email] = @Email
--- ) BEGIN PRINT 'Error: Email already exists'
--- END
--- ELSE BEGIN
---     -- Insert customer data into the table with User_Type set to 'Customer'
---     INSERT INTO [dbo].[USER] 
---         (User_ID, Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
---     VALUES 
---         (@User_ID, @Date_of_Birth, 'Customer', @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
--- END
--- END
-
-
-GO
-
-CREATE PROCEDURE spRegister_User
-    -- @User_ID INT,
-    @Date_of_Birth DATE,
-    @User_Type VARCHAR(15),
-    @First_Name VARCHAR(15),
-    @Last_Name VARCHAR(15),
-    @Email VARCHAR(50),
-    @Passwd VARCHAR(20),
-    @Gender CHAR(1)
-AS
-BEGIN
-    SET @First_Name = RTRIM(@First_Name);
-    SET @Last_Name = RTRIM(@Last_Name);
-    SET @Email = RTRIM(@Email);
-    SET @Passwd = RTRIM(@Passwd);
-    SET @User_Type = RTRIM(@User_Type);
-
-    DECLARE @Approved CHAR(1);
-    IF @User_Type = 'Customer' 
-    BEGIN
-        SET @Approved = 'Y';
-    END
-    ELSE IF @User_Type = 'Property_Owner'
-    BEGIN
-        SET @Approved = 'N';
-    END
-    -- Check if the Email format is valid
-    IF @Email NOT LIKE '%@%.%'
-    BEGIN
-        RAISERROR ('Invalid Email format', 16, 1);
-        RETURN;
-    END
-    ELSE IF EXISTS (
-        SELECT *
-        FROM [dbo].[USER]
-        WHERE [Email] = @Email
-    )
-    BEGIN 
-        PRINT 'Error: Email already exists';
-    END
-    ELSE
-    BEGIN
-        -- Insert user data into the table with dynamic User_Type
-        INSERT INTO [dbo].[USER] 
-            (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
-        VALUES 
-            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
-    END
-END;
-
-
-
-
-GO
-
-------------------USER LOGIN--------------------------------
-
-CREATE PROCEDURE spLOGIN 
-    @Email VARCHAR(50),
-    @Passwd VARCHAR(20) 
-AS 
-BEGIN
-    SET @Email = LTRIM(RTRIM(@Email));
-    SET @Passwd = LTRIM(RTRIM(@Passwd));
-
-    -- Check if the credentials exist in the database
-    IF NOT EXISTS (
-        SELECT *
-        FROM [dbo].[USER]
-        WHERE [Email] = @Email
-          AND [Passwd] = @Passwd
-    )
-    BEGIN 
-        PRINT 'Error: Invalid Email or password';
-        -- It's generally not a good practice to print the hash of the password.
-        -- The below line can be commented out or removed if not required.
-        -- PRINT HASHBYTES('SHA2_256', @Passwd);
-    END
-    ELSE
-    BEGIN
-        -- Also return the user_id of the user who logged in
-        SELECT [user_id],[User_Type],[Approved]
-        FROM [dbo].[USER]
-        WHERE [Email] = @Email
-        AND [Passwd] = @Passwd;
-    END
-END;
-
-GO
-
-CREATE PROCEDURE spGetUserType
-    @User_ID INT
-AS
-BEGIN
-    -- Select User_Type for the given user_id
-    SELECT User_Type
-    FROM [dbo].[USER]
-    WHERE user_id = @User_ID;
-END;
-
-
-
--- GO
--- ---ADMIN LOGIN--------
-
--- CREATE PROCEDURE spADMINLOGIN @UserName VARCHAR(30),
---   @Passwd VARCHAR(20),
---   @Email VARCHAR(50) 
---   AS 
---   BEGIN
---   IF NOT EXISTS (
---     SELECT *
---     FROM [dbo].[USER]
---     WHERE [Email] = @Email AND @Email = 'administrator@gmail.com'
---       AND [Passwd] = @Passwd
---   )  BEGIN 
---     PRINT 'Error: Invalid email or password' 
---     PRINT HASHBYTES('SHA2_256', @Passwd)
+--     ELSE IF EXISTS (
+--         SELECT *
+--         FROM [dbo].[USER]
+--         WHERE [Email] = @Email
+--     )
+--     BEGIN 
+--         PRINT 'Error: Email already exists';
 --     END
 --     ELSE
 --     BEGIN
---         PRINT 'Admin Login successful';
+--         -- Insert user data into the table with dynamic User_Type
+--         INSERT INTO [dbo].[USER] 
+--             (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+--         VALUES 
+--             (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
 --     END
 -- END;
 
 
+-- GO
 
-GO
+-- ------------------USER LOGIN--------------------------------
+
+-- CREATE PROCEDURE spLOGIN 
+--     @Email VARCHAR(50),
+--     @Passwd VARCHAR(20) 
+-- AS 
+-- BEGIN
+--     SET @Email = LTRIM(RTRIM(@Email));
+--     SET @Passwd = LTRIM(RTRIM(@Passwd));
+
+--     -- Check if the credentials exist in the database
+--     IF NOT EXISTS (
+--         SELECT *
+--         FROM [dbo].[USER]
+--         WHERE [Email] = @Email
+--           AND [Passwd] = @Passwd
+--     )
+--     BEGIN 
+--         PRINT 'Error: Invalid Email or password';
+--         -- It's generally not a good practice to print the hash of the password.
+--         -- The below line can be commented out or removed if not required.
+--         -- PRINT HASHBYTES('SHA2_256', @Passwd);
+--     END
+--     ELSE
+--     BEGIN
+--         -- Also return the user_id of the user who logged in
+--         SELECT [user_id],[User_Type],[Approved]
+--         FROM [dbo].[USER]
+--         WHERE [Email] = @Email
+--         AND [Passwd] = @Passwd;
+--     END
+-- END;
+
+-- GO
+
+-- CREATE PROCEDURE spGetUserType
+--     @User_ID INT
+-- AS
+-- BEGIN
+--     -- Select User_Type for the given user_id
+--     SELECT User_Type
+--     FROM [dbo].[USER]
+--     WHERE user_id = @User_ID;
+-- END;
+
 
 -------ADMIN DASHBOARD // CAN ADD AND EDIT PRODUCTS USING PRODUCT_ID.--------
 
 --Add a product with a new product_ID.
-CREATE PROCEDURE spInsert_Product
-    @Product_ID INT,
-    @Product_Price DECIMAL(10, 2),
-    @Max_Guests INT,
-    @Product_Description NVARCHAR(MAX),
-    @Room_Type_ID INT,
-    @Property_ID INT
-AS
-BEGIN
+-- CREATE PROCEDURE spInsert_Product
+--     @Product_ID INT,
+--     @Product_Price DECIMAL(10, 2),
+--     @Max_Guests INT,
+--     @Product_Description NVARCHAR(MAX),
+--     @Room_Type_ID INT,
+--     @Property_ID INT
+-- AS
+-- BEGIN
 
-    INSERT INTO [dbo].[PRODUCT] (Product_ID,Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
-    VALUES (@Product_ID, @Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
-END
+--     INSERT INTO [dbo].[PRODUCT] (Product_ID,Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
+--     VALUES (@Product_ID, @Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);
+-- END
 
 
 
-GO
---Edit the product based on product_ID
-CREATE PROCEDURE spEdit_Product
-    @Product_ID INT,
-    @Product_Price DECIMAL(10, 2),
-    @Max_Guests INT,
-    @Product_Description NVARCHAR(MAX),
-    @Room_Type_ID INT,
-    @Property_ID INT
-AS
-BEGIN
-    UPDATE [dbo].[PRODUCT]
-    SET Product_Price = @Product_Price,
-        Max_Guests = @Max_Guests,
-        Product_Description = @Product_Description,
-        Room_Type_ID = @Room_Type_ID,
-        Property_ID = @Property_ID
-    WHERE Product_ID = @Product_ID;
-END
+-- GO
+-- --Edit the product based on product_ID
+-- CREATE PROCEDURE spEdit_Product
+--     @Product_ID INT,
+--     @Product_Price DECIMAL(10, 2),
+--     @Max_Guests INT,
+--     @Product_Description NVARCHAR(MAX),
+--     @Room_Type_ID INT,
+--     @Property_ID INT
+-- AS
+-- BEGIN
+--     UPDATE [dbo].[PRODUCT]
+--     SET Product_Price = @Product_Price,
+--         Max_Guests = @Max_Guests,
+--         Product_Description = @Product_Description,
+--         Room_Type_ID = @Room_Type_ID,
+--         Property_ID = @Property_ID
+--     WHERE Product_ID = @Product_ID;
+-- END
 
-GO
+-- GO
 
 
 -- PROPERTY MANAGER // CAN ADD PROPERTY AND EDIT THE AVAILABILITY / PRICE  -- AN ADMIN NEEDS TO APPROVE HIS CHANGES 
@@ -216,135 +144,143 @@ GO
 
 -- GET properties that belong to the property owner with the given user_id. (property owner) 
 
-CREATE PROCEDURE spGetPropertyOwnerProperties
-    @User_ID INT
-AS
-BEGIN
-    -- Select properties that belong to the user
-    SELECT Property_ID, Property_Name, Property_Address, Property_Description, 
-           Property_Coordinates, Property_Location, Owner_ID, Owner_First_Name, 
-           Owner_Last_Name, Property_Type_ID
-    FROM [dbo].[PROPERTY]
-    WHERE User_ID = @User_ID;
-END;
+-- CREATE PROCEDURE spGetPropertyOwnerProperties
+--     @User_ID INT
+-- AS
+-- BEGIN
+--     -- Select properties that belong to the user
+--     SELECT Property_ID, Property_Name, Property_Address, Property_Description, 
+--            Property_Coordinates, Property_Location, Owner_ID, Owner_First_Name, 
+--            Owner_Last_Name, Property_Type_ID
+--     FROM [dbo].[PROPERTY]
+--     WHERE User_ID = @User_ID;
+-- END;
 
-GO
-
-
-CREATE PROCEDURE spInsert_Property
-    @Property_ID INT,  
-    @Property_Name VARCHAR(50),
-    @Property_Address VARCHAR(50),
-    @Property_Description VARCHAR(15),
-    @Property_Coordinates VARCHAR(20),
-    @Property_Location VARCHAR(20),
-    @Owner_ID INT,
-    @Owner_First_Name VARCHAR(15),
-    @Owner_Last_Name VARCHAR(15),
-    @Property_Type_ID INT,
-    @User_ID INT
-AS
-BEGIN
-    INSERT INTO [dbo].[PROPERTY] (
-        Property_ID, Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location,
-        Owner_ID, Owner_First_Name, Owner_Last_Name, Property_Type_ID, User_ID
-    )
-    VALUES (
-        @Property_ID, @Property_Name, @Property_Address, @Property_Description, @Property_Coordinates,
-        @Property_Location, @Owner_ID, @Owner_First_Name, @Owner_Last_Name, @Property_Type_ID, @User_ID
-    );
-END;
+-- GO
 
 
-GO
+-- CREATE PROCEDURE spInsert_Property
+--     @Property_ID INT,  
+--     @Property_Name VARCHAR(50),
+--     @Property_Address VARCHAR(50),
+--     @Property_Description VARCHAR(15),
+--     @Property_Coordinates VARCHAR(20),
+--     @Property_Location VARCHAR(20),
+--     @Owner_ID INT,
+--     @Owner_First_Name VARCHAR(15),
+--     @Owner_Last_Name VARCHAR(15),
+--     @Property_Type_ID INT,
+--     @User_ID INT
+-- AS
+-- BEGIN
+--     INSERT INTO [dbo].[PROPERTY] (
+--         Property_ID, Property_Name, Property_Address, Property_Description, Property_Coordinates, Property_Location,
+--         Owner_ID, Owner_First_Name, Owner_Last_Name, Property_Type_ID, User_ID
+--     )
+--     VALUES (
+--         @Property_ID, @Property_Name, @Property_Address, @Property_Description, @Property_Coordinates,
+--         @Property_Location, @Owner_ID, @Owner_First_Name, @Owner_Last_Name, @Property_Type_ID, @User_ID
+--     );
+-- END;
+
+
+-- GO
 -- EDIT PROPERTY BASED ON THE PROPERTY_ID 
 
-CREATE PROCEDURE spUpdate_Property
-    @Property_ID INT,
-    @Property_Name VARCHAR(50),
-    @Property_Address VARCHAR(50),
-    @Property_Description VARCHAR(15),
-    @Property_Coordinates VARCHAR(20),
-    @Property_Location VARCHAR(20),
-    @Owner_ID INT,
-    @Owner_First_Name VARCHAR(15),
-    @Owner_Last_Name VARCHAR(15),
-    @Property_Type_ID INT,
-    @User_ID INT
-AS
-BEGIN
-    UPDATE [dbo].[PROPERTY]
-    SET 
-        Property_Name = @Property_Name,
-        Property_Address = @Property_Address,
-        Property_Description = @Property_Description,
-        Property_Coordinates = @Property_Coordinates,
-        Property_Location = @Property_Location,
-        Owner_ID = @Owner_ID,
-        Owner_First_Name = @Owner_First_Name,
-        Owner_Last_Name = @Owner_Last_Name,
-        Property_Type_ID = @Property_Type_ID,
-        User_ID = @User_ID
-    WHERE Property_ID = @Property_ID;
-END;
+-- CREATE PROCEDURE spUpdate_Property
+--     @Property_ID INT,
+--     @Property_Name VARCHAR(50),
+--     @Property_Address VARCHAR(50),
+--     @Property_Description VARCHAR(15),
+--     @Property_Coordinates VARCHAR(20),
+--     @Property_Location VARCHAR(20),
+--     @Owner_ID INT,
+--     @Owner_First_Name VARCHAR(15),
+--     @Owner_Last_Name VARCHAR(15),
+--     @Property_Type_ID INT,
+--     @User_ID INT
+-- AS
+-- BEGIN
+--     UPDATE [dbo].[PROPERTY]
+--     SET 
+--         Property_Name = @Property_Name,
+--         Property_Address = @Property_Address,
+--         Property_Description = @Property_Description,
+--         Property_Coordinates = @Property_Coordinates,
+--         Property_Location = @Property_Location,
+--         Owner_ID = @Owner_ID,
+--         Owner_First_Name = @Owner_First_Name,
+--         Owner_Last_Name = @Owner_Last_Name,
+--         Property_Type_ID = @Property_Type_ID,
+--         User_ID = @User_ID
+--     WHERE Property_ID = @Property_ID;
+-- END;
 
 
 
 --- FOR OWNER --- VIEW THE REGISTERED PROPERTY OWNERS AND IF HE WANT HE CAN APPROVE THEM.
-GO
+-- GO
 
-CREATE PROCEDURE spViewUnapprovedPropertyOwners
-AS
-BEGIN
-    SELECT User_ID, Date_of_Birth, First_Name, Last_Name, Email, Approved
-    FROM [dbo].[USER]
-    WHERE User_Type = 'Property Owner' AND Approved = 'N'
-END;
+-- CREATE PROCEDURE spViewUnapprovedPropertyOwners
+-- AS
+-- BEGIN
+--     SELECT User_ID, Date_of_Birth, First_Name, Last_Name, Email, Approved
+--     FROM [dbo].[USER]
+--     WHERE User_Type = 'Property Owner' AND Approved = 'N'
+-- END;
 
 
-GO
+-- GO
 
 -- FOR OWNER --- APPROVE THE PROPERTY OWNER BASED ON THE USER_ID
 
-CREATE PROCEDURE spApproveUnapprovedOwnersByID
-    @User_ID INT
-AS
-BEGIN
-    UPDATE [dbo].[USER]
-    SET Approved = 'Y'
-    WHERE User_ID = @User_ID
-END;
+-- CREATE PROCEDURE spApproveUnapprovedOwnersByID
+--     @User_ID INT
+-- AS
+-- BEGIN
+--     UPDATE [dbo].[USER]
+--     SET Approved = 'Y'
+--     WHERE User_ID = @User_ID
+-- END;
 
-GO
+-- GO
 
 -- View reservations --- FOR OWNER --- Edit reservations.
 
 
-CREATE PROCEDURE spViewReservations
-    @Product_ID INT,
-    @User_ID INT
-AS
-BEGIN
-    SELECT Reservation_ID, Reservation_Date, Review_ID, User_ID, Product_ID
-    FROM [dbo].[Reservations]
-    WHERE Product_ID = @Product_ID AND User_ID = @User_ID
-END;
 
-GO
+-- CREATE PROCEDURE spViewReservations
+--     @Product_ID INT,
+--     @User_ID INT
+-- AS
+-- BEGIN
+--     SELECT Reservation_ID, Reservation_Date, Review_ID, User_ID, Product_ID
+--     FROM [dbo].[Reservations]
+--     WHERE Product_ID = @Product_ID AND User_ID = @User_ID
+-- END;
 
-
------------------------------------FORMS------------------------
------------------------------------FORMS------------------------
------------------------------------FORMS------------------------
------------------------------------FORMS------------------------
+-- GO
 
 
--- get the total revenue for given filters
+------ THE ABOVE ARE DUPLICATES-- CAN BE REMOVED IF NOT NECESSARY ------------------------------
+
+---------------------------------------------------------------------------------------
+     --                             REPORTS                                      --
+---------------------------------------------------------------------------------------
+
+
+-------------------------------------
+     --       REVENUE REPORT       --
+-------------------------------------
+
+
+-- Get the total revenue with the given filters applied.
+
 CREATE PROCEDURE RevenueReport
     @StartDate DATE = NULL,
     @EndDate DATE = NULL,
-    @PropertyTypeID INT = NULL,
-    @RoomTypeID INT = NULL,
+    @PropertyTypeName NVARCHAR(50) = NULL, 
+    @RoomTypeDescription NVARCHAR(50) = NULL, 
     @PropertyLocation NVARCHAR(50) = NULL
 AS
 BEGIN
@@ -366,8 +302,8 @@ BEGIN
     WHERE 
         (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
         (@EndDate IS NULL OR R.Reservation_Date <= @EndDate) AND
-        (@PropertyTypeID IS NULL OR PT.Property_Type_ID = @PropertyTypeID) AND
-        (@RoomTypeID IS NULL OR RT.Room_Type_ID = @RoomTypeID) AND
+        (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+        (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
         (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation)
     GROUP BY 
         PT.Property_Type_Name, 
@@ -376,6 +312,14 @@ BEGIN
 END
 
 GO
+
+-----------------------------------------
+     --  BOOKING STATISTICS REPORTS    --
+-----------------------------------------
+
+
+
+-- Stored procedure that for the specified property,room and location returns the total number of reservations
 
 CREATE PROCEDURE AnalyzeNumberOfReservations
     @StartDate DATE = NULL,
@@ -419,18 +363,19 @@ GO
 
 -- STORED PROCEDURE FOR THE COMPARISON OF RESERVATION TRENDS-----
 
+-- For each property, count the number of reservations and the percentage of total reservations for each property type.
+-- reservation count by the total reservation count and then * 100.
+
 CREATE PROCEDURE CompareReservationTrends
     @StartDate DATE = NULL,
     @EndDate DATE = NULL
 AS
 BEGIN
-    -- Temporary table to store the count of reservations for each property type
     CREATE TABLE #ReservationCounts (
         Property_Type_ID INT,
         ReservationCount INT
     );
 
-    -- Insert the reservation count for each property type
     INSERT INTO #ReservationCounts (Property_Type_ID, ReservationCount)
     SELECT 
         PT.Property_Type_ID, 
@@ -449,11 +394,9 @@ BEGIN
     GROUP BY 
         PT.Property_Type_ID;
 
-    -- Total reservations for the calculation of percentages
     DECLARE @TotalReservations INT;
     SELECT @TotalReservations = SUM(ReservationCount) FROM #ReservationCounts;
 
-    -- Select percentages for each property type
     SELECT 
         PT.Property_Type_Name,
         RC.ReservationCount,
@@ -472,22 +415,28 @@ END
 
 GO
 
--- STORED PROCEDURE FOR THE CALCULATION OF CANCELLATION RATE-----
+
+-- Based on the filters, we count the total number of reservations and the total number of cancelled reservations, 
+-- then we calculate the cancellation rate.
+
+
+
+--THIS IS NOT WORKING--------
+--THIS IS NOT WORKING--------
+--THIS IS NOT WORKING--------
 
 CREATE PROCEDURE CalculateCancellationRate
     @StartDate DATE = NULL,
     @EndDate DATE = NULL,
-    @PropertyTypeID INT = NULL,
-    @RoomTypeID INT = NULL,
+    @PropertyTypeName NVARCHAR(50) = NULL, -- Replacing PropertyTypeID
+    @RoomTypeDescription NVARCHAR(50) = NULL, -- Replacing RoomTypeID
     @PropertyLocation NVARCHAR(50) = NULL
 AS
 BEGIN
-    -- Assuming 'Status' column in RESERVATIONS indicates cancellation status
-
     DECLARE @TotalReservations INT;
     DECLARE @CancelledReservations INT;
 
-    -- FIND THE TOTAL NUMBER OF RESERVATIONS FOR THE GIVEN FILTERS
+    -- Find the total number of reservations for the given filters
     SELECT @TotalReservations = COUNT(*)
     FROM RESERVATIONS R
     INNER JOIN PRODUCT PR ON R.Product_ID = PR.Product_ID
@@ -497,11 +446,11 @@ BEGIN
     WHERE 
         (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
         (@EndDate IS NULL OR R.Reservation_Date <= @EndDate) AND
-        (@PropertyTypeID IS NULL OR PT.Property_Type_ID = @PropertyTypeID) AND
-        (@RoomTypeID IS NULL OR RT.Room_Type_ID = @RoomTypeID) AND
+        (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+        (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
         (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation);
 
-    -- FIND THE TOTAL NUMBER OF CANCELLED RESERVATIONS FOR THE GIVEN FILTERS.
+    -- Find the total number of cancelled reservations for the given filters
     SELECT @CancelledReservations = COUNT(*)
     FROM RESERVATIONS R
     INNER JOIN PRODUCT PR ON R.Product_ID = PR.Product_ID
@@ -512,8 +461,8 @@ BEGIN
         R.Status = 'Cancelled' AND
         (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
         (@EndDate IS NULL OR R.Reservation_Date <= @EndDate) AND
-        (@PropertyTypeID IS NULL OR PT.Property_Type_ID = @PropertyTypeID) AND
-        (@RoomTypeID IS NULL OR RT.Room_Type_ID = @RoomTypeID) AND
+        (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+        (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
         (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation);
 
     -- Calculate the percentage of cancellations
@@ -530,8 +479,12 @@ END
 
 GO
 
--- STORED PROCEDURE FOR THE CALCULATION OF OCCUPANCY RATE-----
+-----------------------------------------
+     --    OCCUPATION REPORTS          --
+-----------------------------------------
+
 -- based on the filters, we count the total available rooms and the total booked rooms, then we calculate the occupancy rate
+
 CREATE PROCEDURE CalculateOccupancyRate
     @StartDate DATE,
     @EndDate DATE,
@@ -585,7 +538,7 @@ END
 
 GO
 
------NOT CHECKED!!!!!!!!!!!!!------------
+-- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
 
 CREATE PROCEDURE IdentifyHighOccupancyPeriods
     @StartDate DATE,
@@ -649,6 +602,11 @@ GO
 GO
 
 
+-----------------------------------------------
+ --     RATING AND EVALUATION REPORTS        --
+-----------------------------------------------
+
+
 -- Average rating and reviews for each property
 
 CREATE PROCEDURE GetAverageRatingAndReviews
@@ -668,7 +626,7 @@ BEGIN
     LEFT JOIN 
         REVIEWS R ON RV.Review_ID = R.Review_ID
     WHERE 
-        R.Review_ID IS NOT NULL  -- To consider only reservations with reviews
+        R.Review_ID IS NOT NULL 
     GROUP BY 
         P.Property_ID, 
         P.Property_Name
@@ -676,6 +634,7 @@ END
 
 GO
 
+-- Stored procedure that returns the highest and lowest rated properties
 
 CREATE PROCEDURE IdentifyPropertiesByRating
 AS
@@ -733,6 +692,11 @@ END
 
 GO
 
+-----------------------------------------------
+ --     ROOM AVAILABILITY REPORT             --
+-----------------------------------------------
+
+-- Stored procedure that returns the total stock, the occupied stock, and the occupancy rate with the applied filters.
 
 CREATE PROCEDURE OverviewOfRoomTypeInventoryAndOccupancy
     @StartDate DATE = NULL,
@@ -789,9 +753,9 @@ END
 GO
 
 
--------------ANAFORES APODOSIS------------------------------
-
-
+-----------------------------------------------
+ --     PERFORMANCE REPORTS                  --
+-----------------------------------------------
 
 -- this store procedure returns rooms that where BOOKED EVERY DAY IN THE SPECIFIC PERIOD AS "FULLY BOOKED"
 -- it also returns rooms that where NEVER BOOKED IN THE SPECIFIC PERIOD AS "NEVER BOOKED"
@@ -841,8 +805,8 @@ END
 
 GO
 
--- stored procedure for generating a report of all rooms in a specific property that had at least ONE BOOKING EACH MONTH of a given calendar year
---cannot have null property id (diladi na tiponei gia ola ta ids)
+-- Stored procedure for generating a report of all rooms in a specific property that had at least ONE BOOKING EACH MONTH of a given calendar year
+-- cannot have null property id (diladi na tiponei gia ola ta ids)
 
 CREATE PROCEDURE GetRoomsWithMonthlyBookings
     @PropertyID INT,
@@ -893,7 +857,7 @@ END
 
 
 
---alternative to the previous one but now we have minimum number of booking per month
+-- Alternative to the previous one but now we have minimum number of booking per month
 
 GO
 
