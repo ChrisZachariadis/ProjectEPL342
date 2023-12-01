@@ -138,7 +138,7 @@ EXEC spViewReservations @Product_ID = 1, @User_ID = 1;
 
 
 GO
-EXEC GenerateReport
+EXEC RevenueReport
     @StartDate = '1/1/2023', 
     @EndDate = '12/30/2023',   
     -- anti id tha prepei na dinoume property_type_description kai roomtypeDescription
@@ -150,7 +150,7 @@ GO
 
 -- mou dinei ta total revenue gia to property 1,gia to 2023, gia ola ta diaforetika room_types kai gia ola ta diaforetika locations!!!!!!!!!!!!
 
-EXEC GenerateReport
+EXEC RevenueReport
     @StartDate = '1/1/2023',  
     @EndDate = '12/30/2023',    
     @PropertyTypeID = 1,    
@@ -218,7 +218,67 @@ INSERT INTO ROOM_TYPE (Room_Type_ID, Room_Type_Description, Bed_Type) VALUES
 (4, 'Description4', 'BedType4'),
 (5, 'Description5', 'BedType5');
 
+GO
 
+INSERT INTO STOCK (Stock_Date, Product_ID, Stock_Amount) VALUES
+('1/1/2023', 1, 10),
+('1/1/2023', 2, 8),
+('1/1/2023', 3, 6),
+('1/1/2023', 4, 7),
+('1/1/2023', 5, 5),
+('1/1/2023', 6, 9),
+('1/2/2023', 1, 11),
+('1/2/2023', 2, 7),
+('1/2/2023', 3, 8),
+('1/2/2023', 4, 6);
+
+
+
+--EXEC for reservations report---
+
+EXEC AnalyzeNumberOfReservations @StartDate = '1/1/2023', @EndDate = '12/31/2023', @PropertyTypeID = NULL, @RoomTypeID = NULL, @PropertyLocation = 'Athens';
+
+
+GO
+
+
+--EXEC for reservation trends report---
+EXEC CompareReservationTrends @StartDate = '1/1/2023', @EndDate = '12/31/2023';
+
+GO
+
+-- EXEC for cancellation rate report---
+
+EXEC CalculateCancellationRate 
+    @StartDate = '1/1/2023', 
+    @EndDate = '12/31/2023', 
+    @PropertyTypeID = NULL, 
+    @RoomTypeID = NULL, 
+    -- @PropertyLocation = 'Athens';
+    @PropertyLocation = NULL;
+
+    GO
+
+    -- EXEC for occupancy rate report---
+
+    EXEC CalculateOccupancyRate 
+    @StartDate = '1/1/2023', 
+    @EndDate = '12/31/2023', 
+    @PropertyTypeID = NULL, 
+    @RoomTypeID = NULL, 
+    @PropertyLocation = NULL;
+
+GO
+
+EXEC IdentifyHighOccupancyPeriods @StartDate = '1/1/2023', @EndDate = '12/31/2023';
+
+GO
+
+
+EXEC GetRoomsWithMinBookings 
+    @PropertyID = 6,  -- Replace with the actual property ID
+    @Year = 2023,
+    @MinBookings = 1;  -- Replace with the desired minimum number of bookings
 
 
 
