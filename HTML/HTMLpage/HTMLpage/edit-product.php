@@ -47,7 +47,7 @@ function display(){
   <input type="hidden" name="add"  value=1>
   <input type="hidden" name="ID" value="'.$productID.'">
   <input
-    type="text"
+    type="number"
     name="Price"
     value="'.$price.'"
     enctype="Surname"

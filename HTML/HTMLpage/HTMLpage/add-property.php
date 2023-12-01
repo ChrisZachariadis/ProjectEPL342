@@ -180,8 +180,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <div class="add-property-form-container">
         <form id="stockadd" name="stockmanage" method="POST" enctype="multipart/form-data" autocomplete="on"
           class="add-property-form">
-          <select id="Property Type" name="PropertyType" class="add-property-property-type">
-            <option value="empty">Select a property type</option>
+          <select id="Property Type" name="PropertyType" class="add-property-property-type" required>
+            <option value="">Select a property type</option>
             <option value="Resort">Resort</option>
             <option value="Hostel">Hostel</option>
             <option value="Hotel">Hotel</option>
@@ -198,8 +198,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Chalet">Chalet</option>
             <option value="Xartokouto">Kashia</option>
           </select>
-          <select id="Location" name="Location" class="add-property-location">
-            <option value="empty" selected>Location</option>
+          <select id="Location" name="Location" class="add-property-location" required>
+            <option value="" selected>Location</option>
             <option value="Rhodes">Rhodes</option>
             <option value="Santorini">Santorini</option>
             <option value="Thessaloniki">Thessaloniki</option>
@@ -216,19 +216,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br />
           </span>
           <input type="text" name="OwnerFirstName" enctype="Surname" required="" placeholder="Owner FirstName"
-            autocomplete="family-name" class="add-property-owner-first-name input" />
+            autocomplete="family-name" class="add-property-owner-first-name input" required/>
           <input type="text" name="OwnerLastName" enctype="Surname" required="" placeholder="Owner LastName"
-            autocomplete="family-name" class="add-property-owner-last-name input" />
+            autocomplete="family-name" class="add-property-owner-last-name input" required/>
           <textarea name="Description" enctype="Surname" required="" placeholder="Description"
-            autocomplete="family-name" class="add-property-description input" style="resize: none;"></textarea>
+            autocomplete="family-name" class="add-property-description input" style="resize: none;" required></textarea>
           <input type="text" name="Address" enctype="Surname" required="" placeholder="Address"
-            autocomplete="family-name" class="add-property-address input" />
+            autocomplete="family-name" class="add-property-address input" required/>
           <input type="text" name="Coordinates" enctype="Surname" required="" placeholder="Coordinates"
-            autocomplete="family-name" class="add-property-coordinates input" />
+            autocomplete="family-name" class="add-property-coordinates input" required/>
           <input type="text" name="Facilities" enctype="Surname" required="" placeholder="Facilities"
-            autocomplete="family-name" class="add-property-coordinates1 input" />
+            autocomplete="family-name" class="add-property-coordinates1 input" required/>
           <input type="text" id="propertyname" name="Property_Name" required="" placeholder="Property Name"
-            autocomplete="name" class="add-property-property-name input" />
+            autocomplete="name" class="add-property-property-name input" required/>
           <button type="submit" class="add-property-submit-button button">
             <span class="add-property-text2">ADD</span>
           </button>

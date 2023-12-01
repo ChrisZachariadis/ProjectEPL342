@@ -45,7 +45,7 @@ function display()
     <select
       id="Property Type"
       name="PropertyType"
-      class="edit-property-property-type"
+      class="edit-property-property-type" required
     >';
 
   foreach ($propertyArray as $propertyType) {
@@ -57,7 +57,7 @@ function display()
     <select
       id="Location"
       name="Location"
-      class="edit-property-location"
+      class="edit-property-location" required
     >';
 
   foreach ($locationsArray as $location) {
@@ -77,7 +77,7 @@ function display()
       placeholder="Owner FirstName"
       autocomplete="family-name"
       class="edit-property-owner-first-name input"
-      value="' . $OwnerFirstName . '"
+      value="' . $OwnerFirstName . '" required
     />
     <input
       type="text"
@@ -86,7 +86,7 @@ function display()
       placeholder="Owner LastName"
       autocomplete="family-name"
       class="edit-property-owner-last-name input"
-      value="' . $OwnerLastName . '"
+      value="' . $OwnerLastName . '" required
     />
     <textarea
       name="Description"
@@ -95,7 +95,7 @@ function display()
       value="' . $Desc . '"
       autocomplete="family-name"
       class="edit-property-description input"
-      style="resize: none;"
+      style="resize: none;" required
     ></textarea>
     <input
       type="text"
@@ -104,16 +104,16 @@ function display()
       placeholder="Address"
       autocomplete="family-name"
       class="edit-property-address input"
-      value="' . $Address . '"
+      value="' . $Address . '" required
     />
     <input
-      type="text"
+      type="number"
       name="Coordinates"
       required=""
       placeholder="Coordinates"
       autocomplete="family-name"
       class="edit-property-coordinates input"
-      value="' . $Coordinates . '"
+      value="' . $Coordinates . '" required
     />
     <input
       type="text"
@@ -123,7 +123,7 @@ function display()
       placeholder="Property Name"
       autocomplete="name"
       class="edit-property-property-name input"
-      value="' . $Name . '"
+      value="' . $Name . '" required
     />
     <button type="submit" class="edit-property-submit-button button">
       <span class="edit-property-text2">SUBMIT</span>

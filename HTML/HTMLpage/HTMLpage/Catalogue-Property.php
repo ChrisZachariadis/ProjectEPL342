@@ -9,7 +9,6 @@ $date_from = $_POST['date_from'];
 $date_to = $_POST['date_to'];
 $Room = $_POST['Rooms'];
 $Property = $_POST['Property'];
-
 $_SESSION['date_from'] = $date_from;
 $_SESSION['date_to'] = $date_to;
 

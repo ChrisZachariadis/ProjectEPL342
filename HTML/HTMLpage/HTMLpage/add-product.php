@@ -184,8 +184,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form id="stockadd" name="stockmanage" method="POST" enctype="multipart/form-data" autocomplete="on"
           class="add-product-form">
         <input type="hidden" name="ID" value="<?php echo $ID; ?>">
-          <select id="Room_Type" name="Room_Type" class="add-product-room-type">
-            <option value="empty">Select a room type</option>
+          <select id="Room_Type" name="Room_Type" class="add-product-room-type" required>
+            <option value="">Select a room type</option>
             <option value="Apartment">Apartment</option>
             <option value="Quadruple">Quadruple</option>
             <option value="Suite">Suite</option>
@@ -210,11 +210,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <br />
           </span>
           <input type="number" name="Price" enctype="Surname" required="" placeholder="Price" autocomplete="family-name"
-            class="add-product-price input" />
+            class="add-product-price input" required />
           <textarea name="Description" enctype="Surname" required="" placeholder="Description"
-            autocomplete="family-name" class="add-product-description input" style="resize: none;"></textarea>
+            autocomplete="family-name" class="add-product-description input" style="resize: none;" required ></textarea>
           <input type="number" name="MaxGuests" enctype="Surname" required="" placeholder="Max Guests"
-            autocomplete="family-name" class="add-product-property-id input" />
+            autocomplete="family-name" class="add-product-property-id input" required />
           <button type="submit" class="add-product-submit-button button">
             <span class="add-product-text2">ADD</span>
           </button>

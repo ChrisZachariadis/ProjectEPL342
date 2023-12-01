@@ -64,12 +64,12 @@ echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' sty
                     <div class="form-date-from form-icon">
                         <label for="date_from">From</label>
                         <input type="text" id="date_from" class="date_from" name="date_from" placeholder="Pick a date"
-                            required readonly/>
+                            required onkeydown="return false"/>
                     </div>
                     <div class="form-date-to form-icon">
                         <label for="date_to">To</label>
                         <input type="text" id="date_to" class="date_to" name="date_to" placeholder="Pick a date"
-                            required readonly/>
+                        required onkeydown="return false"/>
                     </div>
 
                     <!-- <div class="form-submit">
