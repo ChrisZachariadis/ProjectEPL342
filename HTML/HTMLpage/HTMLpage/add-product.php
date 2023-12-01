@@ -209,11 +209,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <span>-ADD PRODUCT-</span>
             <br />
           </span>
-          <input type="text" name="Price" enctype="Surname" required="" placeholder="Price" autocomplete="family-name"
+          <input type="number" name="Price" enctype="Surname" required="" placeholder="Price" autocomplete="family-name"
             class="add-product-price input" />
-          <input type="text" name="Description" enctype="Surname" required="" placeholder="Description"
-            autocomplete="family-name" class="add-product-description input" />
-          <input type="text" name="MaxGuests" enctype="Surname" required="" placeholder="Max Guests"
+          <textarea name="Description" enctype="Surname" required="" placeholder="Description"
+            autocomplete="family-name" class="add-product-description input" style="resize: none;"></textarea>
+          <input type="number" name="MaxGuests" enctype="Surname" required="" placeholder="Max Guests"
             autocomplete="family-name" class="add-product-property-id input" />
           <button type="submit" class="add-product-submit-button button">
             <span class="add-product-text2">ADD</span>

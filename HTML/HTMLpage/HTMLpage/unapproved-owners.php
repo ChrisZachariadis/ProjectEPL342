@@ -241,7 +241,7 @@ function display()
 
     <div class="unapproved-owners-container">
       <span class="unapproved-owners-text">UNAPPROVED PROPERTY OWNERS</span>
-      <a href="home.html" class="unapproved-owners-navlink">GREECE BOOKING</a>
+      <a href="AdminCatalogueProperties.php" class="unapproved-owners-navlink">GREECE BOOKING</a>
       <div class="unapproved-owners-list-container">
         <div class="container-fluid">
 

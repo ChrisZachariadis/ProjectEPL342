@@ -1,3 +1,75 @@
+div.stars {
+
+  width: 270px;
+  position: absolute;
+  left: 369px;
+  top: 50px;
+
+  display: inline-block;
+
+}
+
+ .mt-200{
+     margin-top:200px;  
+ }
+
+input.star { display: none; }
+
+ 
+
+label.star {
+
+  float: right;
+
+  padding: 2px;
+
+  font-size: 20px;
+
+  color: #ffffff;
+
+  transition: all .2s;
+
+}
+
+ 
+
+input.star:checked ~ label.star:before {
+
+  content: '\f005';
+
+  color: #FD4;
+
+  transition: all .25s;
+
+}
+
+ 
+input.star-5:checked ~ label.star:before {
+
+  color: #FE7;
+
+  text-shadow: 0 0 20px #952;
+
+}
+
+ 
+
+input.star-1:checked ~ label.star:before { color: #F62; }
+
+    
+
+label.star:hover { transform: rotate(-15deg) scale(1.3); }
+
+ 
+
+label.star:before {
+
+  content: '\f006';
+
+  font-family: FontAwesome;
+
+}
+
 .reservations-container {
   width: 100%;
   display: flex;
@@ -8,7 +80,6 @@
   flex-direction: column;
   background-size: cover;
   justify-content: center;
-  background-image: url('https://thewonderlusters.com/wp-content/uploads/2018/10/View-from-Oia-Castle.jpg');
 }
 .reservations-text {
   top: 147px;
@@ -67,51 +138,51 @@
 }
 .reservations-user-id {
   top: 20px;
-  left: 18px;
+  left: 1%;
   position: absolute;
-  font-size: 26px;
-  color:#ffffff
+  font-size: 24px;
+  color:#ffffff;
 
 }
 .reservations-fname {
   top: 20px;
-  left: 220px;
+  left: 10%;
   position: absolute;
-  font-size: 26px;
+  font-size: 24px;
   color:#ffffff
 }
 .reservations-id-value {
   top: 70px;
-  left: 40px;
+  left: 0.6%;
   position: absolute;
-  font-size: 24px;
+  font-size: 19px;
   color:#ffffff
 }
 .reservations-date-value {
   top: 70px;
-  left: 250px;
+  left: 9%;
   position: absolute;
-  font-size: 24px;
+  font-size: 19px;
   color:#ffffff
 }
 .reservations-l-name-value {
   top: 70px;
-  left: 450px;
+  left: 29%;
   position: absolute;
-  font-size: 24px;
+  font-size: 19px;
   color:#ffffff
 }
 .reservations-last-name {
   top: 20px;
-  left: 480px;
+  left: 27%;
   position: absolute;
-  font-size: 26px;
+  font-size: 24px;
   color:#ffffff
 }
 .reservations-approve {
   top: 50px;
-  right: 200px;
-  width: 140px;
+  right: 145px;
+  width: 85px;
   height: 58px;
   position: absolute;
   background-color: rgb(255, 255, 255,0.4);
@@ -119,20 +190,20 @@
 .reservations-cancel {
   top: 50px;
   right: 50px;
-  width: 140px;
+  width: 85px;
   height: 58px;
   position: absolute;
   background-color: rgb(255, 255, 255,0.4);
 }
 .reservations-text10 {
   color: rgb(255, 255, 255);
-  font-size: 24px;
+  font-size: 19px;
 }
 .reservations-description {
   top: 22px;
   left: 677px;
   color: #000000;
-  width: 815px;
+  width: 15%;
   height: 100px;
   position: absolute;
   align-self: flex-end;
@@ -140,6 +211,23 @@
   padding-right: var(--dl-space-space-oneandhalfunits);
   background-color: rgb(233, 233, 233);
 }
+
+ .Fine{
+  top: 20px;
+  left: 74%;
+  position: absolute;
+  font-size: 24px;
+  color:#ffffff;
+ }
+
+ .FineValue{
+  top: 70px;
+  left: 74.6%;
+  position: absolute;
+  font-size: 19px;
+  color:#ffffff
+ }
+
 
 @media(max-width: 767px) {
   .reservations-product {

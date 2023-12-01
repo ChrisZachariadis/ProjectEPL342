@@ -42,7 +42,6 @@ $serverName = $_SESSION["serverName"];
        die(print_r(sqlsrv_errors(), true));
     }
     $ID=$_POST['id'];
-
     $tsql = "{call getReviews (?)}";
     $params = array($ID);
     $getResults = sqlsrv_query($conn, $tsql, $params);
@@ -53,7 +52,7 @@ $serverName = $_SESSION["serverName"];
 
    while($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)){
     // echo "<span>{$row['Review_Rating']} </span>";
-     echo "<span>{$row['Review_Description']} </span>";
+     echo "<span>{$row['Review_Rating']}:{$row['Review_Description']} |</span>";
    }
 
 
@@ -164,14 +163,16 @@ $serverName = $_SESSION["serverName"];
       data-tag="font"
     />
   </head>
-  <body>
+  <body style="background-image: url('./images/bg1.jpg'); background-repeat: no-repeat; background-size: cover;">
 
     <link rel="stylesheet" href="./css/Style2.css" />
-    <div style="background-color: #D9D9D9">
+    <div style="background-image: url('./images/bg1.jpg'); background-repeat: no-repeat; background-size: cover;">
     <?php 
 if($_SESSION['LoggedIn'] == false)
 echo "<button onclick=\"location.href='login.php'\" type='button' class='log'>Log in</button>
 <button onclick=\"location.href='register.php'\" type='button' class='reg'>Register</button>";
+if($_SESSION['LoggedIn'] == true)
+echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' style=''>Log Out</button>";
 ?>
       <link href="./css/Catalogue-Products.css" rel="stylesheet" />
       <div class="facilities">
@@ -182,7 +183,7 @@ echo "<button onclick=\"location.href='login.php'\" type='button' class='log'>Lo
       </div>
 
       <div class="home-container">
-        <h1 id="TITLE" class="home-text">Heading</h1>
+        <h1 id="TITLE" class="home-text">Available Products</h1>
         <div class="container">
           <?php products($_POST['id']); ?>
         </div>

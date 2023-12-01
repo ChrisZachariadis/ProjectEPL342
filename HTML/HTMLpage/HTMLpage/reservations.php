@@ -1,25 +1,39 @@
 <?php
 session_start();
-function display(){
+function display()
+{
   $serverName = $_SESSION["serverName"];
   $connectionOptions = $_SESSION["connectionOptions"];
   $conn = sqlsrv_connect($serverName, $connectionOptions);
 
-    if($conn === false) {
-     die(print_r(sqlsrv_errors(), true));
+  if ($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
   }
-  $ID=$_SESSION['ID'];
+  $ID = $_SESSION['UserID'];
 
-  $tsql = "{call getReservations (?)}";
+  $tsql = "{call spViewReservations (?)}";
   $params = array($ID); // replace 'Electronics' with the category you want
   $getResults = sqlsrv_query($conn, $tsql, $params);
 
-  while($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)){
-  echo "<div class=\"row\">
+  if ($getResults === false) {
+    die(print_r(sqlsrv_errors(), true));
+  }
+$counter = 0;
+  while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+    $Status = $row['Reservation_Statuses'];
+    $Status = strtok($Status, ",");
+    $Date = $row['Reservation_Dates'];
+    $PropertyN = $row['Property_Name'];
+    $Fine = $row['Reservation_Fines'];
+    $Fine = strtok($Fine, ",");
+    //$Name = $row['Product_Name'];
+    $RID = $row['Reservation_IDs'];
+
+    echo "<div class=\"row\">
     <div class=\"col-md-12\">
       <div class=\"reservations-product\">
         <span class=\"reservations-user-id\">
-          <span>Reservation ID</span>
+          <span>Status</span>
           <br />
         </span>
         <span class=\"reservations-fname\">
@@ -28,29 +42,74 @@ function display(){
           <br />
         </span>
         <span class=\"reservations-id-value\">
-          <span>$RID</span>
+          <span>$Status</span>
           <br />
         </span>
-        <span class=\"reservations-date-value\">$DOB</span>
-        <span class=\"reservations-l-name-value\">$Name</span>
+        <span class=\"reservations-date-value\">$Date</span>
+        <span class=\"reservations-l-name-value\">$PropertyN</span>
         <span class=\"reservations-last-name\">
-          <span>Product Name</span>
+          <span>Property Name</span>
           <br />
-        </span>
-
+        </span>";
+    if ($Status == "Finished") {
+      $counter = $counter+1;
+      echo "
         <form method='POST'>
         <input type=\"hidden\" name=\"RID\" value=\"$RID\">
         <input type=\"hidden\" name=\"REVIEW\" value=1>
         <button type=\"submit\" class=\"reservations-approve button\">
           <span class=\"reservations-text10\">Review</span>
         </button>
-        </form>
+        
+        <div class=\"stars\">
+    <input class=\"star star-5\" id=\"star-5-{$counter}\" type=\"radio\" name=\"star\" value=\"5\"/>
 
-        <button type=\"button\" class=\"reservations-cancel button\">
-          <span class=\"reservations-text10\">Cancel</span>
-        </button>
-        <input type=\"text\" name=\"Description\" enctype=\"Surname\" required=\"\" placeholder=\"Description\"
-          autocomplete=\"family-name\" class=\"reservations-description input\" />
+    <label class=\"star star-5\" for=\"star-5-{$counter}\"></label>
+
+    <input class=\"star star-4\" id=\"star-4-{$counter}\" type=\"radio\" name=\"star\" value=\"4\"/>
+
+    <label class=\"star star-4\" for=\"star-4-{$counter}\"></label>
+
+    <input class=\"star star-3\" id=\"star-3-{$counter}\" type=\"radio\" name=\"star\" value=\"3\"/>
+
+    <label class=\"star star-3\" for=\"star-3-{$counter}\"></label>
+
+    <input class=\"star star-2\" id=\"star-2-{$counter}\" type=\"radio\" name=\"star\" value=\"2\"/>
+
+    <label class=\"star star-2\" for=\"star-2-{$counter}\"></label>
+
+    <input class=\"star star-1\" id=\"star-1-{$counter}\" type=\"radio\" name=\"star\" value=\"1\"/>
+
+    <label class=\"star star-1\" for=\"star-1-{$counter}\"></label>
+</div>
+
+        <textarea name=\"Description\" enctype=\"Surname\" required=\"\" placeholder=\"Description\"
+          autocomplete=\"family-name\" class=\"reservations-description input\"> </textarea>
+</form>";
+    }
+    if ($Status == 'Cancelled') {
+      echo "      <span class=\"Fine\">
+          <span>FINE</span>
+          <br />
+        </span>
+
+        <span class=\"FineValue\">
+          <span>$Fine</span>
+          <br />
+        </span>";
+    }
+    if ($Status == "Upcoming") {
+      echo "
+        <form method='POST'>
+        <input type=\"hidden\" name=\"RID\" value=\"$RID\">
+        <input type=\"hidden\" name=\"CANCEL\" value=1>
+        <button type=\"submit\" class=\"reservations-cancel button\">
+        <span class=\"reservations-text10\">Cancel</span>
+      </button>
+      </form>";
+    }
+    echo "
+      
       </div>
     </div>
   </div>";
@@ -60,8 +119,66 @@ function display(){
   sqlsrv_close($conn);
 }
 
-if(isset($_POST['REVIEW'])){
+if (isset($_POST['REVIEW'])) {
+  $RID = $_POST['RID'];
+  $RID = strtok($RID, ",");
 
+  if(isset($_POST['star']))
+    $star = $_POST['star'];
+  else
+    $star = 0;
+
+  $Desc = $_POST['Description'];
+
+  $serverName = $_SESSION["serverName"];
+  $connectionOptions = $_SESSION["connectionOptions"];
+  $conn = sqlsrv_connect($serverName, $connectionOptions);
+
+  if ($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
+  }
+
+  $tsql = "{call makeReview (?, ?, ?)}";
+  $params = array($RID, $Desc, $star); // replace 'Electronics' with the category you want
+  $getResults = sqlsrv_query($conn, $tsql, $params);
+
+  if ($getResults === false) {
+    error_log(print_r(sqlsrv_errors(), true));
+    // Redirect to error page
+    header('Location: reservations.php');
+    // Stop script execution
+    exit;
+  }
+
+  sqlsrv_free_stmt($getResults);
+  sqlsrv_close($conn);
+
+}
+
+if (isset($_POST['CANCEL'])) {
+  $RID = $_POST['RID'];
+
+  $serverName = $_SESSION["serverName"];
+  $connectionOptions = $_SESSION["connectionOptions"];
+  $conn = sqlsrv_connect($serverName, $connectionOptions);
+
+  if ($conn === false) {
+    die(print_r(sqlsrv_errors(), true));
+  }
+
+  $tsql = "{call spCancelReservation (?)}";
+  $params = array($RID); // replace 'Electronics' with the category you want
+  $getResults = sqlsrv_query($conn, $tsql, $params);
+
+  if ($getResults === false) {
+    // Redirect to error page
+    header('Location: reservations.php');
+    // Stop script execution
+    exit;
+  }
+
+  sqlsrv_free_stmt($getResults);
+  sqlsrv_close($conn);
 }
 ?>
 
@@ -69,11 +186,13 @@ if(isset($_POST['REVIEW'])){
 <html lang="en">
 
 <head>
+
   <title>Reservations - Comfortable Favorite Mongoose</title>
   <meta property="og:title" content="Reservations - Comfortable Favorite Mongoose" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta charset="utf-8" />
   <meta property="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <style data-tag="reset-style-sheet">
     html {
@@ -182,6 +301,9 @@ if(isset($_POST['REVIEW'])){
       line-height: 1.15;
       color: var(--dl-color-gray-black);
       background-color: var(--dl-color-gray-white);
+      background-image: url('https://thewonderlusters.com/wp-content/uploads/2018/10/View-from-Oia-Castle.jpg');
+      background-repeat: repeat;
+      background-size: cover;
 
     }
   </style>
@@ -200,24 +322,28 @@ if(isset($_POST['REVIEW'])){
 </head>
 
 <body>
-  
+
   <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
   <div>
     <link href="./css/reservations.css" rel="stylesheet" />
 
+
+
     <div class="reservations-container">
       <span class="reservations-text">RESERVATIONS</span>
-      <a href="home.html" class="reservations-navlink">GREECE BOOKING</a>
-      
+      <a href="BookSearch.php" class="reservations-navlink">GREECE BOOKING</a>
+
       <div class="reservations-list-container" style="color: white">
         <div class="container-fluid">
 
-        <?php display(); ?>
+        
+
+          <?php display(); ?>
 
 
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </body>
 

@@ -88,15 +88,15 @@ function display()
       class="edit-property-owner-last-name input"
       value="' . $OwnerLastName . '"
     />
-    <input
-      type="text"
+    <textarea
       name="Description"
       required=""
       placeholder="Description"
       value="' . $Desc . '"
       autocomplete="family-name"
       class="edit-property-description input"
-    />
+      style="resize: none;"
+    ></textarea>
     <input
       type="text"
       name="Address"
@@ -305,7 +305,7 @@ if(isset($_POST['add'])){
       <div class="edit-property-form-container">
         <?php display(); ?>
       </div>
-      <a href="https://HOME.php" target="_blank" rel="noreferrer noopener" class="edit-property-login-header1">
+      <a href="AdminCatalogueProperties.php" rel="noreferrer noopener" class="edit-property-login-header1">
         <span>GREECE BOOKING</span>
         <br />
       </a>

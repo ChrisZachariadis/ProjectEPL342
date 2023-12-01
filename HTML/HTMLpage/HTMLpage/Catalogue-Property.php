@@ -13,6 +13,7 @@ $Property = $_POST['Property'];
 $_SESSION['date_from'] = $date_from;
 $_SESSION['date_to'] = $date_to;
 
+
 // Print all variables
 $serverName = $_SESSION["serverName"];
 $connectionOptions = $_SESSION["connectionOptions"];
@@ -71,8 +72,8 @@ function products()
               alt='image'
               class='home-image'
             />
-            <span class='Text1'>ID:$ID:     Location:$Location  Type:$Type</span>
-            <span class='Text2'>$Desc</span>
+            <span class='Text1'><strong>ID:</strong>$ID     <strong>Location:</strong>$Location   <strong>Type:</strong>$Type</span>
+            <span class='Text2'><strong>Description:</strong> $Desc</span>
             <span class='Text3'>$$MinPrice</span>
             <form action='Catalogue-Products.php' method='POST'>
             <input type='hidden' name='id' value='$ID'>
@@ -92,7 +93,7 @@ function products()
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
   <title>Cheap Overjoyed Ape</title>
@@ -219,11 +220,13 @@ function products()
     data-tag="font" />
 </head>
 
-<body>
+<body style="background-image: url('./images/bg1.jpg'); background-repeat: no-repeat; background-size: cover;">
 <?php 
 if($_SESSION['LoggedIn'] == false)
 echo "<button onclick=\"location.href='login.php'\" type='button' class='log'>Log in</button>
 <button onclick=\"location.href='register.php'\" type='button' class='reg'>Register</button>";
+if($_SESSION['LoggedIn'] == true)
+echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' style=''>Log Out</button>";
 ?>
     <link rel="stylesheet" href="./css/Style2.css" />
   <div>
@@ -231,7 +234,7 @@ echo "<button onclick=\"location.href='login.php'\" type='button' class='log'>Lo
     <link href="./css/Catalogue-Property.css" rel="stylesheet" />
 
     <div class="home-container">
-      <h1 id="TITLE" class="home-text">Heading</h1>
+      <h1 id="TITLE" class="home-text">Available Properties</h1>
       <div class="container">
         
         <?php products(); ?>

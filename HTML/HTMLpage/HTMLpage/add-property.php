@@ -219,8 +219,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             autocomplete="family-name" class="add-property-owner-first-name input" />
           <input type="text" name="OwnerLastName" enctype="Surname" required="" placeholder="Owner LastName"
             autocomplete="family-name" class="add-property-owner-last-name input" />
-          <input type="text" name="Description" enctype="Surname" required="" placeholder="Description"
-            autocomplete="family-name" class="add-property-description input" />
+          <textarea name="Description" enctype="Surname" required="" placeholder="Description"
+            autocomplete="family-name" class="add-property-description input" style="resize: none;"></textarea>
           <input type="text" name="Address" enctype="Surname" required="" placeholder="Address"
             autocomplete="family-name" class="add-property-address input" />
           <input type="text" name="Coordinates" enctype="Surname" required="" placeholder="Coordinates"

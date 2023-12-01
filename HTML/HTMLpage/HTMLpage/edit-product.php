@@ -6,7 +6,6 @@ function display(){
   $connectionOptions = $_SESSION["connectionOptions"];
   $conn = sqlsrv_connect($serverName, $connectionOptions);
   $productID = $_POST['ID'];
-  var_dump($productID);
   if ($conn === false) {
     die(print_r(sqlsrv_errors(), true));
   }
@@ -57,8 +56,7 @@ function display(){
     autocomplete="family-name"
     class="edit-product-price input"
   />
-  <input
-    type="text"
+  <textarea
     name="Description"
     value="'.$Desc.'"
     enctype="Surname"
@@ -66,7 +64,8 @@ function display(){
     placeholder="Description"
     autocomplete="family-name"
     class="edit-product-description input"
-  />
+    style="resize: none;"
+  ></textarea>
   <input
     type="number"
     name="MaxGuests"
@@ -175,8 +174,7 @@ if(isset($_POST['add'])){
           <?php display(); ?>
         </div>
         <a
-          href="https://HOME.php"
-          target="_blank"
+          href="AdminCatalogueProperties.php"
           rel="noreferrer noopener"
           class="edit-product-login-header1"
         >
