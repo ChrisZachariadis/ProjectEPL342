@@ -263,9 +263,7 @@ FROM [dbo].[FACILITIES] F
 WHERE F.[Facility_ID] IN ( 
 SELECT PF.[MFacility_ID] 
 FROM [dbo].[PROPERTY_FACILITIES] PF
-WHERE PF.[MProperty_ID] IN (SELECT P.[Property_ID]
-                            FROM [dbo].[PRODUCT] P
-                            WHERE P.[Product_ID] =@Property_ID) )
+WHERE PF.[MProperty_ID] = @Property_ID )
 END
 GO
 ------------------------------------------------------------------------------------------------------------
@@ -293,10 +291,6 @@ BEGIN
         -- Move to the next day
         SET @Current_Date = DATEADD(DAY, 1, @Current_Date)
     END
-
-    
-
-    -- Return the inserted reservation IDs
 END
 GO
 ------------------------------------------------------------------------------------------------------------
@@ -352,8 +346,6 @@ BEGIN
     END
     ELSE
     BEGIN
-        -- Optionally, handle the case where the reservation is not 'Finished'
-        -- For example, you might want to raise an error or just skip the update
         RAISERROR('Cannot leave a review for a reservation that is not finished.', 16, 1);
     END
 END
@@ -584,7 +576,6 @@ GO
 ------------------------------------------------------------------------------------------------------------
 
 
-
 ------------------------------------------------------------------------------------------------------------
 -- USED TO VIEW NOT APPROVE MANAGERS AND APPROVE THEM
 ------------------------------------------------------------------------------------------------------------
@@ -609,7 +600,6 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
-
 
 ------------------------------------------------------------------------------------------------------------
 -- USED TO VIEW RESERVATIONS AND CANCEL THEM
@@ -706,9 +696,7 @@ BEGIN
     DEALLOCATE reservationCursor
 END
 GO
-
 ------------------------------------------------------------------------------------------------------------
-
 
 ------------------------------------------------------------------------------------------------------------
 -- REGISTER / LOGIN 
@@ -756,15 +744,11 @@ BEGIN
     END
     ELSE
     BEGIN
-        -- Insert user data into the table with dynamic User_Type
-        -- INSERT INTO [dbo].[USER] 
-        --     (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
-        -- VALUES 
-        --     (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, HASHBYTES('SHA1',@Passwd), @Gender, @Approved);
-           INSERT INTO [dbo].[USER] 
+        --Insert user data into the table with dynamic User_Type
+        INSERT INTO [dbo].[USER] 
             (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
         VALUES 
-            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
+            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, CONVERT(VARCHAR(256),HASHBYTES('SHA2_256',@Passwd),2), @Gender, @Approved);
     END
 END
 GO
@@ -783,14 +767,11 @@ BEGIN
         SELECT *
         FROM [dbo].[USER]
         WHERE [Email] = @Email
-        AND [Passwd] = @Passwd
-          --AND [Passwd] = HASHBYTES ('SHA1',@Passwd)
+          AND [Passwd] = CONVERT(VARCHAR(256),HASHBYTES ('SHA2_256',@Passwd),2)
     )
     BEGIN 
         PRINT 'Error: Invalid Email or password';
-        -- It's generally not a good practice to print the hash of the password.
-        -- The below line can be commented out or removed if not required.
-        -- PRINT HASHBYTES('SHA2_256', @Passwd);
+
     END
     ELSE
     BEGIN
@@ -798,25 +779,11 @@ BEGIN
         SELECT [user_id],[User_Type],[Approved]
         FROM [dbo].[USER]
         WHERE [Email] = @Email
-        AND [Passwd] = @Passwd
-        -- AND [Passwd] = HASHBYTES ('SHA1',@Passwd);
+          AND [Passwd] = CONVERT(VARCHAR(256),HASHBYTES ('SHA2_256',@Passwd),2)
     END
 END
 GO
 ------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

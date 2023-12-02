@@ -322,16 +322,12 @@ BEGIN
         RT.Room_Type_Description, 
         P.Property_Location
 END
-
 GO
 
 
 -----------------------------------------
      --  BOOKING STATISTICS REPORTS    --
 -----------------------------------------
-
-
-
 -- Checked and working
 -- Stored procedure that for the specified property,room and location returns the total number of reservations
 
@@ -377,7 +373,6 @@ BEGIN
         RT.Room_Type_Description, 
         P.Property_Location
 END
-
 GO
 
 -----------------------------------------
@@ -419,8 +414,6 @@ BEGIN
         RT.Room_Type_Description, 
         P.Property_Location
 END
-
-
 GO
 
 --ELEGXEI TO POSOSTO TON RESERVATIONS TOY KATHE PROPERTY TYPE SE SXESI ME TA TOTAL RESERVATION. 
@@ -430,54 +423,91 @@ GO
 
 -- For each property, count the number of reservations and the percentage of total reservations for each property type.
 -- reservation count by the total reservation count and then * 100.
-
 CREATE PROCEDURE CompareReservationTrends
     @StartDate DATE,
     @EndDate DATE
 AS
 BEGIN
-    CREATE TABLE #ReservationCounts (
-        Property_Type_ID INT,
-        ReservationCount INT
-    );
-
-    INSERT INTO #ReservationCounts (Property_Type_ID, ReservationCount)
-    SELECT 
-        PT.Property_Type_ID, 
-        COUNT(R.Reservation_ID) 
-    FROM 
-        PROPERTY_TYPE PT
-    JOIN 
-        PROPERTY P ON PT.Property_Type_ID = P.Property_Type_ID
-    JOIN 
-        PRODUCT PR ON P.Property_ID = PR.Property_ID
-    JOIN 
-        RESERVATIONS R ON PR.Product_ID = R.Product_ID
-    WHERE 
-        (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
-        (@EndDate IS NULL OR R.Reservation_Date <= @EndDate)
-    GROUP BY 
-        PT.Property_Type_ID;
-
-    DECLARE @TotalReservations INT;
-    SELECT @TotalReservations = SUM(ReservationCount) FROM #ReservationCounts;
-
+    -- Common Table Expression to calculate reservation counts
+    WITH ReservationCounts AS (
+        SELECT 
+            PT.Property_Type_ID, 
+            COUNT(R.Reservation_ID) AS ReservationCount
+        FROM 
+            PROPERTY_TYPE PT
+        JOIN 
+            PROPERTY P ON PT.Property_Type_ID = P.Property_Type_ID
+        JOIN 
+            PRODUCT PR ON P.Property_ID = PR.Property_ID
+        JOIN 
+            RESERVATIONS R ON PR.Product_ID = R.Product_ID
+        WHERE 
+            (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
+            (@EndDate IS NULL OR R.Reservation_Date <= @EndDate)
+        GROUP BY 
+            PT.Property_Type_ID
+    )
+    -- Select final result set with percentages
     SELECT 
         PT.Property_Type_Name,
         RC.ReservationCount,
-        CAST((RC.ReservationCount * 100.0) / @TotalReservations AS DECIMAL(5, 2)) AS Percentage
+        CAST((RC.ReservationCount * 100.0) / (SELECT SUM(ReservationCount) FROM ReservationCounts) AS DECIMAL(5, 2)) AS Percentage
     FROM 
-        #ReservationCounts RC
+        ReservationCounts RC
     JOIN 
         PROPERTY_TYPE PT ON RC.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-        @TotalReservations > 0;
-
-    DROP TABLE #ReservationCounts;
+        (SELECT SUM(ReservationCount) FROM ReservationCounts) > 0;
 END
-
-
 GO
+
+-- CREATE PROCEDURE CompareReservationTrends
+--     @StartDate DATE,
+--     @EndDate DATE
+-- AS
+-- BEGIN
+--     CREATE TABLE #ReservationCounts (
+--         Property_Type_ID INT,
+--         ReservationCount INT
+--     );
+
+--     DECLARE #ReservationCounts ReservationCountType;
+
+--     INSERT INTO #ReservationCounts (Property_Type_ID, ReservationCount)
+--     SELECT 
+--         PT.Property_Type_ID, 
+--         COUNT(R.Reservation_ID) 
+--     FROM 
+--         PROPERTY_TYPE PT
+--     JOIN 
+--         PROPERTY P ON PT.Property_Type_ID = P.Property_Type_ID
+--     JOIN 
+--         PRODUCT PR ON P.Property_ID = PR.Property_ID
+--     JOIN 
+--         RESERVATIONS R ON PR.Product_ID = R.Product_ID
+--     WHERE 
+--         (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
+--         (@EndDate IS NULL OR R.Reservation_Date <= @EndDate)
+--     GROUP BY 
+--         PT.Property_Type_ID;
+
+--     DECLARE @TotalReservations INT;
+--     SELECT @TotalReservations = SUM(ReservationCount) FROM #ReservationCounts;
+
+--     SELECT 
+--         PT.Property_Type_Name,
+--         RC.ReservationCount,
+--         CAST((RC.ReservationCount * 100.0) / @TotalReservations AS DECIMAL(5, 2)) AS Percentage
+--     FROM 
+--         #ReservationCounts RC
+--     JOIN 
+--         PROPERTY_TYPE PT ON RC.Property_Type_ID = PT.Property_Type_ID
+--     WHERE 
+--         @TotalReservations > 0;
+
+--     DROP TABLE #ReservationCounts;
+-- END
+-- GO
 
 
 -- Based on the filters, we count the total number of reservations and the total number of cancelled reservations, 
@@ -538,9 +568,6 @@ BEGIN
             ELSE 0
         END AS CancellationRate;
 END
-
-
-
 GO
 
 -----------------------------------------
@@ -551,6 +578,8 @@ GO
 
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
 GO
+-- DEN FENONTAI TA PROPERTIES KLP,, TIPONEI MONO MIA STILI ME TO OCCUPANCY RATE!!!!
+
 CREATE PROCEDURE CalculateOccupancyRate
     @StartDate DATE,
     @EndDate DATE,
@@ -604,7 +633,6 @@ BEGIN
             ELSE 0
         END AS OccupancyRateForAppliedFilters;
 END
-
 GO
 
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
@@ -658,7 +686,6 @@ BEGIN
 
     DROP TABLE #DailyOccupancyRates;
 END
-
 GO
 
 -- This stored procedure compares how full are each room type in a specific time period.
@@ -702,16 +729,12 @@ BEGIN
     -- Cleanup
     DROP TABLE #RoomTypeOccupancy;
 END
-
-
-
 GO
 
 
 -----------------------------------------------
  --     RATING AND EVALUATION REPORTS        --
 -----------------------------------------------
-
 
 -- Average rating and reviews for each property
 
@@ -737,7 +760,6 @@ BEGIN
         P.Property_ID, 
         P.Property_Name
 END
-
 GO
 
 -- Stored procedure that returns the highest and lowest rated properties
@@ -795,7 +817,6 @@ BEGIN
     -- Cleanup
     DROP TABLE #PropertyRatings;
 END
-
 GO
 
 -----------------------------------------------
@@ -864,9 +885,6 @@ BEGIN
     -- Cleanup
     DROP TABLE #InventoryAndOccupancyData;
 END
-
-
-
 GO
 
 
@@ -928,8 +946,6 @@ BEGIN
             WHERE R.Product_ID = PR.Product_ID AND R.Reservation_Date BETWEEN @StartDate AND @EndDate
         )
 END
-
-
 GO
 
 -- Stored procedure for generating a report of all rooms in a specific property that had at least ONE BOOKING EACH MONTH of a given calendar year
@@ -984,8 +1000,6 @@ END
 
 
 -- Alternative to the previous one but now we have minimum number of booking per month
-
-
 GO
 
 CREATE PROCEDURE GetRoomsWithMinBookings
