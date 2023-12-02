@@ -241,6 +241,33 @@ EXEC AnalyzeNumberOfReservations @StartDate = '1/1/2023', @EndDate = '12/31/2023
 
 GO
 
+EXEC CompareOccupancyRatesByRoomType 
+    @StartDate = '2023-01-01', 
+    @EndDate = '2023-01-31';
+
+
+
+GO
+
+
+EXEC CalculateOccupancyRate 
+    @StartDate = '2023-01-01', 
+    @EndDate = '2023-12-31',
+    @PropertyTypeName = 'Hotel',  -- Replace with the desired property type name
+    @RoomTypeDescription = 'Suite',  -- Replace with the desired room type description
+    @PropertyLocation = 'Downtown';  -- Replace with the desired location
+GO
+
+
+EXEC CalculateCancellationRate 
+    @StartDate = '2023-01-01', 
+    @EndDate = '2023-12-31',
+    @PropertyTypeName = 'Hotel', 
+    @RoomTypeDescription = 'Suite', 
+    @PropertyLocation = 'Downtown';
+
+GO
+
 
 --EXEC for reservation trends report---
 EXEC CompareReservationTrends @StartDate = '1/1/2023', @EndDate = '12/31/2023';
