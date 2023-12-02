@@ -58,7 +58,6 @@ BEGIN
 END
 GO
 
-
 -----------------------------------------
      --  BOOKING STATISTICS REPORTS    --
 -----------------------------------------
@@ -150,6 +149,7 @@ BEGIN
 END
 GO
 
+
 --ELEGXEI TO POSOSTO TON RESERVATIONS TOY KATHE PROPERTY TYPE SE SXESI ME TA TOTAL RESERVATION. 
 --Diladi to pososto ton reservations gia kathe property type.
 
@@ -194,54 +194,6 @@ BEGIN
         (SELECT SUM(ReservationCount) FROM ReservationCounts) > 0;
 END
 GO
-
--- CREATE PROCEDURE CompareReservationTrends
---     @StartDate DATE,
---     @EndDate DATE
--- AS
--- BEGIN
---     CREATE TABLE #ReservationCounts (
---         Property_Type_ID INT,
---         ReservationCount INT
---     );
-
---     DECLARE #ReservationCounts ReservationCountType;
-
---     INSERT INTO #ReservationCounts (Property_Type_ID, ReservationCount)
---     SELECT 
---         PT.Property_Type_ID, 
---         COUNT(R.Reservation_ID) 
---     FROM 
---         PROPERTY_TYPE PT
---     JOIN 
---         PROPERTY P ON PT.Property_Type_ID = P.Property_Type_ID
---     JOIN 
---         PRODUCT PR ON P.Property_ID = PR.Property_ID
---     JOIN 
---         RESERVATIONS R ON PR.Product_ID = R.Product_ID
---     WHERE 
---         (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
---         (@EndDate IS NULL OR R.Reservation_Date <= @EndDate)
---     GROUP BY 
---         PT.Property_Type_ID;
-
---     DECLARE @TotalReservations INT;
---     SELECT @TotalReservations = SUM(ReservationCount) FROM #ReservationCounts;
-
---     SELECT 
---         PT.Property_Type_Name,
---         RC.ReservationCount,
---         CAST((RC.ReservationCount * 100.0) / @TotalReservations AS DECIMAL(5, 2)) AS Percentage
---     FROM 
---         #ReservationCounts RC
---     JOIN 
---         PROPERTY_TYPE PT ON RC.Property_Type_ID = PT.Property_Type_ID
---     WHERE 
---         @TotalReservations > 0;
-
---     DROP TABLE #ReservationCounts;
--- END
--- GO
 
 
 -- Based on the filters, we count the total number of reservations and the total number of cancelled reservations, 
@@ -432,8 +384,6 @@ BEGIN
     ORDER BY 
         OccupancyRate DESC;
 END
-
-
 GO
 
 
@@ -467,6 +417,7 @@ BEGIN
     GROUP BY 
         P.Property_ID, 
         P.Property_Name
+    ORDER BY Property_ID
 END
 GO
 
@@ -494,9 +445,6 @@ BEGIN
     ORDER BY 
         AverageRating DESC;
 END
-
-
-
 GO
 
 -----------------------------------------------
@@ -511,7 +459,6 @@ CREATE PROCEDURE OverviewOfRoomTypeInventoryAndOccupancy
     @PropertyTypeName NVARCHAR(50),
     @RoomTypeDescription NVARCHAR(50),
     @PropertyLocation NVARCHAR(50)
-    
 AS
 BEGIN
 
@@ -522,17 +469,7 @@ BEGIN
     IF (@PropertyLocation = 'empty')
         SET @PropertyLocation = NULL;
 
-    -- Temporary table to store inventory and occupancy data
-    CREATE TABLE #InventoryAndOccupancyData (
-        Room_Type_ID INT,
-        Room_Type_Description NVARCHAR(255),
-        TotalStock INT,
-        OccupiedStock INT,
-        OccupancyRate DECIMAL(5, 2)
-    );
-
-    -- Calculate total stock, occupied stock, and occupancy rate for each room type within the date range
-    INSERT INTO #InventoryAndOccupancyData (Room_Type_ID, Room_Type_Description, TotalStock, OccupiedStock, OccupancyRate)
+    -- Directly select the inventory and occupancy data
     SELECT 
         RT.Room_Type_ID, 
         RT.Room_Type_Description, 
@@ -552,25 +489,26 @@ BEGIN
     LEFT JOIN 
         RESERVATIONS RV ON PR.Product_ID = RV.Product_ID AND RV.Reservation_Date BETWEEN @StartDate AND @EndDate
     WHERE 
-        (@PropertyTypeName IS NULL OR P.Property_Type_Name = @PropertyTypeName) AND
+        (@PropertyTypeName IS NULL OR  (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE Property_Type_ID=P.Property_Type_ID)= @PropertyTypeName) AND
         (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
         (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation)
     GROUP BY 
         RT.Room_Type_ID, 
-        RT.Room_Type_Description;
-
-    -- Select the inventory and occupancy data
-    SELECT * FROM #InventoryAndOccupancyData;
-
-    -- Cleanup
-    DROP TABLE #InventoryAndOccupancyData;
-END
+        RT.Room_Type_Description
+	ORDER BY RT.Room_Type_ID
+END;
 GO
-
 
 -----------------------------------------------
  --     PERFORMANCE REPORTS                  --
 -----------------------------------------------
+
+CREATE PROCEDURE spGetProperties
+    AS
+    BEGIN
+    SELECT Property_ID, Property_Name
+    FROM [dbo].[PROPERTY]
+    END
 
 -- THE FIRLTERS HERE DONT APPLY AS THE PREVIOUS ONES. PROPERTY TYPE NAME IS MANDATORY.
 
@@ -578,15 +516,22 @@ GO
 -- it also returns rooms that where NEVER BOOKED IN THE SPECIFIC PERIOD AS "NEVER BOOKED"
 
 CREATE PROCEDURE GetPropertyRoomBookingStatus
+<<<<<<< Updated upstream
     @PropertyTypeName NVARCHAR(255),
+=======
+    @Property_ID INT,
+>>>>>>> Stashed changes
     @StartDate DATE,
     @EndDate DATE
 AS
 BEGIN
+<<<<<<< Updated upstream
     -- Check for 'empty' input and set to NULL
     IF (@PropertyTypeName = 'empty')
         SET @PropertyTypeName = NULL;
 
+=======
+>>>>>>> Stashed changes
     -- Select rooms that were booked every day within the specified period
     SELECT 
         PR.Product_ID, 
@@ -597,7 +542,11 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
+<<<<<<< Updated upstream
         PT.Property_Type_Name = @PropertyTypeName AND
+=======
+        P.Property_ID = @Property_ID AND
+>>>>>>> Stashed changes
         NOT EXISTS (
             SELECT DISTINCT S.Stock_Date
             FROM STOCK S
@@ -620,7 +569,11 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
+<<<<<<< Updated upstream
         PT.Property_Type_Name = @PropertyTypeName AND
+=======
+        P.Propert_ID = @Property_ID AND
+>>>>>>> Stashed changes
         NOT EXISTS (
             SELECT 1
             FROM RESERVATIONS R
@@ -669,7 +622,7 @@ END
 GO
 
 CREATE PROCEDURE GetRoomsWithMinBookings
-    @PropertyName NVARCHAR(255),
+    @Property_Type_Name NVARCHAR(255),
     @Year INT,
     @MinBookings INT
 AS
@@ -685,7 +638,7 @@ BEGIN
     LEFT JOIN 
         RESERVATIONS RV ON PR.Product_ID = RV.Product_ID AND YEAR(RV.Reservation_Date) = @Year
     WHERE 
-        P.Property_Name = @PropertyName
+        (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE Property_Type_ID = P.Property_Type_ID) = @Property_Type_Name
     GROUP BY 
         PR.Product_ID, 
         PR.Product_Description
