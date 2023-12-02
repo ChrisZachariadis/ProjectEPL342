@@ -22,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $getResults = sqlsrv_query($conn, $tsql, $params);
   var_dump($getResults);
   if ($getResults === false) {
-    die(print_r(sqlsrv_errors(), true));
     echo '<script type="text/javascript">',
      'window.onload = function() {',
      '  alert("Email already exists. ");',
