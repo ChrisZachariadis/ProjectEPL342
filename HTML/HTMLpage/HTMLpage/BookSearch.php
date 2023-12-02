@@ -127,7 +127,6 @@ echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' sty
                             <option value="Homestay">Homestay</option>
                             <option value="Country House">Country House</option>
                             <option value="Chalet">Chalet</option>
-                            <option value="Xartokouto">Kashia</option>
                         </select>
                     </div>
 

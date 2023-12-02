@@ -17,144 +17,141 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   switch ($postedVar) {
     case 'ButtonRevenueReport':
 
-      $tsql = "RevenueReport";
+      $tsql = "{call RevenueReport(?, ?, ?, ?, ?)}";
       $params = [];
-      
+
       $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonAnalyzeNoOfReservations':
 
-      $tsql = "AnalyzeNumberOfReservations";
+      $tsql = "{call AnalyzeNumberOfReservations(?, ?, ?, ?, ?)}";
       $params = [];
 
       $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonCompareRTrends':
 
-      $tsql = "CompareReservationTrends";
+      $tsql = "{call CompareReservationTrends(?, ?)}";
       $params = [];
-      
+
       $order = array('StartDate', 'EndDate');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonCalculateCancRate':
 
-      $tsql = "CalculateCancellationRate";
+      $tsql = "{call CalculateCancellationRate(?, ?, ?, ?, ?)}";
       $params = [];
-     
+
       $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
 
       break;
     case 'ButtonCalcOccRate':
 
-      $tsql = "CalculateOccupancyRate";
+      $tsql = "{call CalculateOccupancyRate(?, ?, ?, ?, ?)}";
       $params = [];
 
       $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonIDHighOccPeriods':
 
-      $tsql = "IdentifyHighOccupancyPeriods";
+      $tsql = "{call IdentifyHighOccupancyPeriods(?, ?)}";
       $params = [];
-      
+
       $order = array('StartDate', 'EndDate');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonCompareORByRT':
 
-      $tsql = "";
+      $tsql = "{call CompareOccupancyRatesByRoomType(?, ?)}";
       $params = [];
-      
+
       $order = array('StartDate', 'EndDate');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonAverageRatingAndR':
 
-      $tsql = "GetAverageRatingAndReviews";
+      $tsql = "{call GetAverageRatingAndReviews}";
       $params = [];
-
-
-
 
       break;
     case 'ButtonIdentifyPByR':
 
-      $tsql = "IdentifyPropertiesByRating";
+      $tsql = "{call IdentifyPropertiesByRating}";
       $params = [];
 
 
       break;
     case 'ButtonOverviewOfRTInvAndOcc':
 
-      $tsql = "OverviewOfRoomTypeInventoryAndOccupancy";
+      $tsql = "{call OverviewOfRoomTypeInventoryAndOccupancy(?, ?, ?, ?, ?)}";
       $params = [];
-      
-      $order = array('StartDate', 'EndDate');
+
+      $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
     case 'ButtonGetPropertyRoomBookingStatus':
 
-      $tsql = "";
+      $tsql = "{call GetPropertyRoomBookingStatus(?, ?, ?)}";
       $params = [];
-      
-      $order = array('StartDate', 'EndDate');
+
+      $order = array('PropertyType', 'StartDate', 'EndDate');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
@@ -162,13 +159,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       $tsql = "";
       $params = [];
-      
-      $order = array('StartDate', 'EndDate');
+
+      $order = array('PropertyType', 'Year');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
       break;
@@ -176,13 +173,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       $tsql = "";
       $params = [];
-      
-      $order = array('StartDate', 'EndDate');
+
+      $order = array('PrepertyType', 'Year', 'MinBooks');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
-            array_push($params, $_POST[$key]);
+          array_push($params, $_POST[$key]);
         }
-    }
+      }
 
 
 
@@ -190,19 +187,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Add more cases as needed
   }
   $tableData = [];
+  var_dump($tsql, $params);
   $getResults = sqlsrv_query($conn, $tsql, $params);
-
+  var_dump($getResults);
   if ($getResults === false) {
     die(print_r(sqlsrv_errors(), true));
   }
 
 
   $metadata = sqlsrv_field_metadata($getResults);
+  var_dump($metadata);
   foreach ($metadata as $field) {
     $tableHeaders[] = $field['Name'];
   }
 
+  var_dump(sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC));
+
   while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+    var_dump($row);
     $tableData[] = $row;
   }
 
@@ -846,11 +848,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Get Property Room Booking Status
               </span>
             </button>
-            <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
-              class="create-reports-year-for-min-books input" />
-            <input type="number" name="Min Books" enctype="Surname" required="" placeholder="Minimum Books"
+            <input type="text" name="EndDate" enctype="Surname" required="" placeholder="End Date"
               autocomplete="family-name" class="create-reports-min-books input" />
-              <select name="PropertyType" class="create-reports-property-type-for-min-books input">
+            <input type="text" name="StartDate" required="" placeholder="Start Date" autocomplete="name"
+              class="create-reports-year-for-min-books input" />
+
+            <select name="PropertyType" class="create-reports-property-type-for-min-books input">
               <option value="empty" selected="">Property Type</option>
               <option value="Resort">Resort</option>
               <option value="Hostel">Hostel</option>
@@ -888,7 +891,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-rooms-monthly-bookings input" />
-              <select name="PropertyType" class="create-reports-property-typefor-room-monthly-bookings input">
+            <select name="PropertyType" class="create-reports-property-typefor-room-monthly-bookings input">
               <option value="empty" selected="">Property Type</option>
               <option value="Resort">Resort</option>
               <option value="Hostel">Hostel</option>
@@ -926,33 +929,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <input type="number" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-min-books1 input" />
-            <input type="number" name="Min Books" enctype="Surname" required="" placeholder="Minimum Books"
+            <input type="number" name="MinBooks" enctype="Surname" required="" placeholder="Minimum Books"
               autocomplete="family-name" class="create-reports-min-books1 input" />
-              <select name="PropertyType" class="create-reports-property-type-for-min-books1 input">
-              <option value="empty" selected="">Property Type</option>
-              <option value="Resort">Resort</option>
-              <option value="Hostel">Hostel</option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Love Hotel">Love Hotel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">
-                Japanese Style Hotel
-              </option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">
-                Japanese Style Hotel
-              </option>
-              <option value="Apartment">Apartment</option>
-              <option value="Tent">Tent</option>
-              <option value="Villa">Villa</option>
-              <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+            <select name="PropertyType" class="create-reports-property-type-for-min-books1 input" required>
+              <option value="" selected="">Property Name</option>
+              <?php
+
+
+              $serverName = $_SESSION["serverName"];
+              $connectionOptions = $_SESSION["connectionOptions"];
+              $conn = sqlsrv_connect($serverName, $connectionOptions);
+
+              $tsql = "{call RevenueReport}";
+              $getResults = sqlsrv_query($conn, $tsql);
+
+              if ($conn === false) {
+                die(print_r(sqlsrv_errors(), true));
+              }
+
+              while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+                $ID = $row['ID'];
+                $Name = $row['Name'];
+                echo "<option value='$ID'>$Name</option>";
+              }
+
+              sqlsrv_free_stmt($getResults);
+              sqlsrv_close($conn);
+
+              // 
+              ?>
             </select>
           </form>
         </div>
@@ -972,7 +977,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <tr>
               <?php foreach ($row as $cell): ?>
                 <td>
-                  <?php echo $cell; ?>
+                  <?php
+                  if ($cell instanceof DateTime) {
+                    echo $cell->format('Y-m-d');
+                  } else {
+                    echo $cell;
+                  }
+                  ?>
                 </td>
               <?php endforeach; ?>
             </tr>

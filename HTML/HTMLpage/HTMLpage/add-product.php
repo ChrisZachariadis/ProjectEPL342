@@ -26,7 +26,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $tsql = "{call spInsert_Product(?, ?, ?, ? ,? ,?)}";
     $params = array($UserID, $price, $maxGuests, $description, $roomType, $propertyID);
-    var_dump($params);
     $getResults = sqlsrv_query($conn, $tsql, $params);
     if ($getResults === false) {
       die(print_r(sqlsrv_errors(), true));
@@ -220,7 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </button>
         </form>
       </div>
-      <a href="AdminCataloguePropertis.php" rel="noreferrer noopener" class="add-product-login-header1">
+      <a href="AdminCatalogueProperties.php" rel="noreferrer noopener" class="add-product-login-header1">
         <span>GREECE BOOKING</span>
         <br />
       </a>

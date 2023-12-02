@@ -29,7 +29,7 @@ function display()
   $Address = $row['Property_Address'];
   $Coordinates = $row['Property_Coordinates'];
 
-  $propertyArray = array("Resort", "Hostel", "Hotel", "Lodge", "Motel", "Love Hotel", "Capsule Hotel", "Japanese Style Hotel", "Apartment", "Tent", "Villa", "Homestay", "Country House", "Chalet", "Kashia");
+  $propertyArray = array("Resort", "Hostel", "Hotel", "Lodge", "Motel", "Love Hotel", "Capsule Hotel", "Japanese Style Hotel", "Apartment", "Tent", "Villa", "Homestay", "Country House", "Chalet");
   $locationsArray = array("Athens", "Rhodes", "Santorini", "Thessaloniki", "Mykonos");
 
   echo '<form

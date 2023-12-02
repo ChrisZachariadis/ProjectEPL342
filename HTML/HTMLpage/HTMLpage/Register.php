@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="form-field">
-      <input type="email" name="email" placeholder="Email / Username" required />
+      <input type="email" name="email" placeholder="Email" required />
     </div>
 
     <div class="form-field">
@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="form-field half center">
     <select name="type" required>
         <option value="">Type</option>
-        <option value="Property Owner">Owner</option>
+        <option value="Property Owner">Manager</option>
         <option value="Customer">Customer</option>
     </select>
   </div>

@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $description = $_POST['Description'];
     $address = $_POST['Address'];
     $coordinates = $_POST['Coordinates'];
-    $facilities = $_POST['Facilities'];
     $propertyName = $_POST['Property_Name'];
     $UserID = $_SESSION['UserID']; 
 
@@ -196,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <option value="Homestay">Homestay</option>
             <option value="Country House">Country House</option>
             <option value="Chalet">Chalet</option>
-            <option value="Xartokouto">Kashia</option>
+            
           </select>
           <select id="Location" name="Location" class="add-property-location" required>
             <option value="" selected>Location</option>
@@ -225,8 +224,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             autocomplete="family-name" class="add-property-address input" required/>
           <input type="number" name="Coordinates" enctype="Surname" required="" placeholder="Coordinates"
             autocomplete="family-name" class="add-property-coordinates input" required/>
-          <input type="text" name="Facilities" enctype="Surname" required="" placeholder="Facilities"
-            autocomplete="family-name" class="add-property-coordinates1 input" required/>
           <input type="text" id="propertyname" name="Property_Name" required="" placeholder="Property Name"
             autocomplete="name" class="add-property-property-name input" required/>
           <button type="submit" class="add-property-submit-button button">
