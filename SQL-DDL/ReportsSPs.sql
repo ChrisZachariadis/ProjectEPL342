@@ -1,8 +1,6 @@
 ---------------------------------------------------------------------------------------
      --                             REPORTS                                      --
 ---------------------------------------------------------------------------------------
-
-
 -------------------------------------
      --       REVENUE REPORT       --
 -------------------------------------
@@ -500,7 +498,7 @@ END;
 GO
 
 -----------------------------------------------
- --     PERFORMANCE REPORTS                  --
+ --          PERFORMANCE REPORTS             --
 -----------------------------------------------
 
 CREATE PROCEDURE spGetProperties
@@ -508,7 +506,7 @@ CREATE PROCEDURE spGetProperties
     BEGIN
     SELECT Property_ID, Property_Name
     FROM [dbo].[PROPERTY]
-    END
+END
 
 -- THE FIRLTERS HERE DONT APPLY AS THE PREVIOUS ONES. PROPERTY TYPE NAME IS MANDATORY.
 
@@ -557,29 +555,23 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-        P.Propert_ID = @Property_ID AND
+        P.Property_ID = @Property_ID AND
         NOT EXISTS (
             SELECT 1
             FROM RESERVATIONS R
             WHERE R.Product_ID = PR.Product_ID AND R.Reservation_Date BETWEEN @StartDate AND @EndDate
         )
 END
-
-
-
 GO
 
 -- Stored procedure for generating a report of all rooms in a specific property that had at least ONE BOOKING EACH MONTH of a given calendar year
 -- cannot have null property id (diladi na tiponei gia ola ta ids)
 
 CREATE PROCEDURE GetRoomsWithMonthlyBookings
-    @PropertyTypeName NVARCHAR(255),
+    @Property_ID INT,
     @Year INT
 AS
 BEGIN
-    IF (@PropertyTypeName = 'empty')
-        SET @PropertyTypeName = NULL;
-
     -- Select rooms that were booked at least once every month
     SELECT 
         PR.Product_ID, 
@@ -588,10 +580,8 @@ BEGIN
         PRODUCT PR
     INNER JOIN 
         PROPERTY P ON PR.Property_ID = P.Property_ID
-    INNER JOIN 
-        PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-        PT.Property_Type_Name = @PropertyTypeName AND
+        PR.Property_ID = @Property_ID AND
         12 = ( -- Check if the room was booked in all 12 months of the year
             SELECT COUNT(DISTINCT MONTH(RV.Reservation_Date))
             FROM RESERVATIONS RV
@@ -600,10 +590,8 @@ BEGIN
                 YEAR(RV.Reservation_Date) = @Year
         )
 END
-
-
--- Alternative to the previous one but now we have minimum number of booking per month
 GO
+
 
 CREATE PROCEDURE GetRoomsWithMinBookings
     @PropertyID INT,

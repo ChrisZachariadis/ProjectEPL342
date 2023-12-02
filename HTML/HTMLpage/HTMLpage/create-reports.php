@@ -157,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       break;
     case 'ButtonGetRoomsWithMonthlyBookings':
 
-      $tsql = "";
+      $tsql = "{call GetRoomsWithMonthlyBookings(?, ?)}";
       $params = [];
 
       $order = array('PropertyType', 'Year');
@@ -171,10 +171,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       break;
     case 'ButtonGetRoomsWithMinimumBookings':
 
-      $tsql = "";
+      $tsql = "{call GetRoomsWithMinBookings(?, ?, ?)}";
       $params = [];
 
-      $order = array('PrepertyType', 'Year', 'MinBooks');
+      $order = array('PropertyType', 'Year', 'MinBooks');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
           array_push($params, $_POST[$key]);
@@ -354,7 +354,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="./css/create-reports.css" rel="stylesheet" />
 
     <div class="create-reports-container">
-      <a href="https://HOME.php" target="_blank" rel="noreferrer noopener" class="create-reports-greece-booking-text">
+      <a href="AdminCatalogueProperties.php" rel="noreferrer noopener" class="create-reports-greece-booking-text">
         <span>GREECE BOOKING</span>
         <br />
       </a>
@@ -854,30 +854,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               class="create-reports-year-for-min-books input" />
 
             <select name="PropertyType" class="create-reports-property-type-for-min-books input">
-              <option value="empty" selected="">Property Type</option>
-              <option value="Resort">Resort</option>
-              <option value="Hostel">Hostel</option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Love Hotel">Love Hotel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">
-                Japanese Style Hotel
-              </option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">
-                Japanese Style Hotel
-              </option>
-              <option value="Apartment">Apartment</option>
-              <option value="Tent">Tent</option>
-              <option value="Villa">Villa</option>
-              <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="" selected="">Property Name</option>
+              <?php
+
+
+              $serverName = $_SESSION["serverName"];
+              $connectionOptions = $_SESSION["connectionOptions"];
+              $conn = sqlsrv_connect($serverName, $connectionOptions);
+
+              $tsql = "{call spGetProperties}";
+              $getResults = sqlsrv_query($conn, $tsql);
+
+              if ($conn === false) {
+                die(print_r(sqlsrv_errors(), true));
+              }
+
+              while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+                $ID = $row['Property_ID'];
+                $Name = $row['Property_Name'];
+                var_dump($row);
+                echo "<option value='$ID'>$Name</option>";
+              }
+
+              sqlsrv_free_stmt($getResults);
+              sqlsrv_close($conn);
+
+              // 
+              ?>
             </select>
           </form>
         </div>
@@ -892,30 +895,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-rooms-monthly-bookings input" />
             <select name="PropertyType" class="create-reports-property-typefor-room-monthly-bookings input">
-              <option value="empty" selected="">Property Type</option>
-              <option value="Resort">Resort</option>
-              <option value="Hostel">Hostel</option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Love Hotel">Love Hotel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">
-                Japanese Style Hotel
-              </option>
-              <option value="Hotel">Hotel</option>
-              <option value="Lodge">Lodge</option>
-              <option value="Motel">Motel</option>
-              <option value="Capsule Hotel">Capsule Hotel</option>
-              <option value="Japanese Style Hotel">
-                Japanese Style Hotel
-              </option>
-              <option value="Apartment">Apartment</option>
-              <option value="Tent">Tent</option>
-              <option value="Villa">Villa</option>
-              <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="" selected="">Property Name</option>
+              <?php
+
+
+              $serverName = $_SESSION["serverName"];
+              $connectionOptions = $_SESSION["connectionOptions"];
+              $conn = sqlsrv_connect($serverName, $connectionOptions);
+
+              $tsql = "{call spGetProperties}";
+              $getResults = sqlsrv_query($conn, $tsql);
+
+              if ($conn === false) {
+                die(print_r(sqlsrv_errors(), true));
+              }
+
+              while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+                $ID = $row['Property_ID'];
+                $Name = $row['Property_Name'];
+                var_dump($row);
+                echo "<option value='$ID'>$Name</option>";
+              }
+
+              sqlsrv_free_stmt($getResults);
+              sqlsrv_close($conn);
+
+              // 
+              ?>
             </select>
           </form>
         </div>
@@ -940,7 +946,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               $connectionOptions = $_SESSION["connectionOptions"];
               $conn = sqlsrv_connect($serverName, $connectionOptions);
 
-              $tsql = "{call RevenueReport}";
+              $tsql = "{call spGetProperties}";
               $getResults = sqlsrv_query($conn, $tsql);
 
               if ($conn === false) {
@@ -948,8 +954,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               }
 
               while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-                $ID = $row['ID'];
-                $Name = $row['Name'];
+                $ID = $row['Property_ID'];
+                $Name = $row['Property_Name'];
+                var_dump($row);
                 echo "<option value='$ID'>$Name</option>";
               }
 
