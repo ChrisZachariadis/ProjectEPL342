@@ -515,23 +515,15 @@ CREATE PROCEDURE spGetProperties
 -- this store procedure returns rooms that where BOOKED EVERY DAY IN THE SPECIFIC PERIOD AS "FULLY BOOKED"
 -- it also returns rooms that where NEVER BOOKED IN THE SPECIFIC PERIOD AS "NEVER BOOKED"
 
+
+GO
+
 CREATE PROCEDURE GetPropertyRoomBookingStatus
-<<<<<<< Updated upstream
-    @PropertyTypeName NVARCHAR(255),
-=======
     @Property_ID INT,
->>>>>>> Stashed changes
     @StartDate DATE,
     @EndDate DATE
 AS
 BEGIN
-<<<<<<< Updated upstream
-    -- Check for 'empty' input and set to NULL
-    IF (@PropertyTypeName = 'empty')
-        SET @PropertyTypeName = NULL;
-
-=======
->>>>>>> Stashed changes
     -- Select rooms that were booked every day within the specified period
     SELECT 
         PR.Product_ID, 
@@ -542,11 +534,7 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-<<<<<<< Updated upstream
-        PT.Property_Type_Name = @PropertyTypeName AND
-=======
         P.Property_ID = @Property_ID AND
->>>>>>> Stashed changes
         NOT EXISTS (
             SELECT DISTINCT S.Stock_Date
             FROM STOCK S
@@ -569,11 +557,7 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-<<<<<<< Updated upstream
-        PT.Property_Type_Name = @PropertyTypeName AND
-=======
         P.Propert_ID = @Property_ID AND
->>>>>>> Stashed changes
         NOT EXISTS (
             SELECT 1
             FROM RESERVATIONS R
@@ -622,23 +606,22 @@ END
 GO
 
 CREATE PROCEDURE GetRoomsWithMinBookings
-    @Property_Type_Name NVARCHAR(255),
+    @PropertyID INT,
     @Year INT,
     @MinBookings INT
 AS
 BEGIN
+    -- Select rooms that meet or exceed the minimum booking threshold for a specific property
     SELECT 
         PR.Product_ID, 
         PR.Product_Description, 
         COUNT(DISTINCT RV.Reservation_ID) AS NumberOfBookings
     FROM 
         PRODUCT PR
-    INNER JOIN 
-        PROPERTY P ON PR.Property_ID = P.Property_ID
     LEFT JOIN 
         RESERVATIONS RV ON PR.Product_ID = RV.Product_ID AND YEAR(RV.Reservation_Date) = @Year
     WHERE 
-        (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE Property_Type_ID = P.Property_Type_ID) = @Property_Type_Name
+        PR.Property_ID = @PropertyID
     GROUP BY 
         PR.Product_ID, 
         PR.Product_Description
