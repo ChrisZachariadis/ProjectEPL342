@@ -607,102 +607,70 @@ END
 
 GO
 
+
+--CHECKED AND WORKING
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
+
+
+-- sort the date start by the date with the highest number of reservation following by the occupation rate.
+-- fthinousa seira
+
 CREATE PROCEDURE IdentifyHighOccupancyPeriods
     @StartDate DATE,
     @EndDate DATE
 AS
 BEGIN
-    -- Temporary table to store daily occupancy rates
-    CREATE TABLE #DailyOccupancyRates (
-        OccupancyDate DATE,
-        TotalStock INT,
-        BookedRooms INT,
-        OccupancyRate DECIMAL(5, 2)
-    );
-
-    DECLARE @CurrentDate DATE = @StartDate;
-    WHILE @CurrentDate <= @EndDate
-    BEGIN
-        DECLARE @TotalStock INT;
-        DECLARE @BookedRooms INT;
-
-        -- Calculate total available stock for the current day
-        SELECT @TotalStock = ISNULL(SUM(Stock_Amount), 0)
-        FROM STOCK
-        WHERE Stock_Date = @CurrentDate;
-
-        -- Calculate total booked rooms for the current day
-        SELECT @BookedRooms = COUNT(*)
-        FROM RESERVATIONS
-        WHERE Reservation_Date = @CurrentDate;
-
-        -- Calculate the occupancy rate for the current day
-        INSERT INTO #DailyOccupancyRates (OccupancyDate, TotalStock, BookedRooms, OccupancyRate)
-        SELECT 
-            @CurrentDate,
-            @TotalStock,
-            @BookedRooms,
-            CASE 
-                WHEN @TotalStock > 0 THEN 
-                    CAST((@BookedRooms * 100.0) / @TotalStock AS DECIMAL(5, 2))
-                ELSE 0
-            END;
-
-        SET @CurrentDate = DATEADD(day, 1, @CurrentDate);
-    END
-
-    -- Return the occupancy rates in descending order
-    SELECT * FROM #DailyOccupancyRates
-    ORDER BY OccupancyRate DESC, OccupancyDate;
-
-    DROP TABLE #DailyOccupancyRates;
+    SELECT 
+        S.Stock_Date AS OccupancyDate,
+        SUM(S.Stock_Amount) + (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) AS Total_Occupancy,
+        (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) AS BookedRooms,
+        CAST(CASE 
+            WHEN SUM(S.Stock_Amount) + (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) > 0 THEN 
+                ((SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) * 100.0) / 
+                (SUM(S.Stock_Amount) + (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date))
+            ELSE 0 
+        END AS DECIMAL(5, 2)) AS OccupancyRate
+    FROM 
+        STOCK S
+    WHERE 
+        S.Stock_Date BETWEEN @StartDate AND @EndDate
+    GROUP BY 
+        S.Stock_Date
+    ORDER BY 
+        OccupancyRate DESC, OccupancyDate;
 END
 
 GO
 
+-- CHECKED AND WORKING
+
 -- This stored procedure compares how full are each room type in a specific time period.
+-- For every room_type, Show their occupancy rate for the given period. (also total stock and booked rooms are showed).
 
 CREATE PROCEDURE CompareOccupancyRatesByRoomType
     @StartDate DATE,
     @EndDate DATE
 AS
 BEGIN
-    -- Table to store occupancy rates for each room type
-    CREATE TABLE #RoomTypeOccupancy (
-        Room_Type_ID INT,
-        Room_Type_Description NVARCHAR(255),
-        OccupancyRate DECIMAL(5, 2)
-    );
-
-    -- Calculate occupancy rate for each room type
-    INSERT INTO #RoomTypeOccupancy (Room_Type_ID, Room_Type_Description, OccupancyRate)
     SELECT 
-        RT.Room_Type_ID, 
-        RT.Room_Type_Description, 
-        CASE WHEN SUM(S.Stock_Amount) > 0 THEN 
-             CAST((COUNT(DISTINCT RV.Reservation_ID) * 100.0) / SUM(S.Stock_Amount) AS DECIMAL(5, 2))
-             ELSE 0 END AS OccupancyRate
+        RT.Room_Type_Description,
+        SUM(ISNULL(S.Stock_Amount, 0)) AS TotalStock,
+        COUNT(R.Reservation_ID) AS BookedRooms,
+        CAST(CASE 
+            WHEN SUM(ISNULL(S.Stock_Amount, 0)) > 0 THEN 
+                (COUNT(R.Reservation_ID) * 100.0) / SUM(ISNULL(S.Stock_Amount, 0))
+            ELSE 0 
+        END AS DECIMAL(5, 2)) AS OccupancyRate
     FROM 
         ROOM_TYPE RT
-    LEFT JOIN 
-        PRODUCT PR ON RT.Room_Type_ID = PR.Room_Type_ID
-    LEFT JOIN 
-        STOCK S ON PR.Product_ID = S.Product_ID AND S.Stock_Date BETWEEN @StartDate AND @EndDate
-    LEFT JOIN 
-        RESERVATIONS RV ON PR.Product_ID = RV.Product_ID AND RV.Reservation_Date BETWEEN @StartDate AND @EndDate
+    LEFT JOIN PRODUCT PR ON RT.Room_Type_ID = PR.Room_Type_ID
+    LEFT JOIN STOCK S ON PR.Product_ID = S.Product_ID AND S.Stock_Date BETWEEN @StartDate AND @EndDate
+    LEFT JOIN RESERVATIONS R ON PR.Product_ID = R.Product_ID AND R.Reservation_Date BETWEEN @StartDate AND @EndDate
     GROUP BY 
-        RT.Room_Type_ID, 
-        RT.Room_Type_Description;
-
-    -- Select the calculated occupancy rates
-    SELECT * FROM #RoomTypeOccupancy
-    ORDER BY OccupancyRate DESC;
-
-    -- Cleanup
-    DROP TABLE #RoomTypeOccupancy;
+        RT.Room_Type_Description
+    ORDER BY 
+        OccupancyRate DESC;
 END
-
 
 
 GO
@@ -712,8 +680,10 @@ GO
  --     RATING AND EVALUATION REPORTS        --
 -----------------------------------------------
 
+-- CHECKED AND WORKING.
 
 -- Average rating and reviews for each property
+
 
 CREATE PROCEDURE GetAverageRatingAndReviews
 AS
@@ -742,59 +712,83 @@ GO
 
 -- Stored procedure that returns the highest and lowest rated properties
 
+-- CREATE PROCEDURE IdentifyPropertiesByRating
+-- AS
+-- BEGIN
+--     -- Temporary table to store average ratings for each property
+--     CREATE TABLE #PropertyRatings (
+--         Property_ID INT,
+--         Property_Name NVARCHAR(255),
+--         AverageRating DECIMAL(5, 2)
+--     );
+
+--     -- Calculate average ratings for each property
+--     INSERT INTO #PropertyRatings (Property_ID, Property_Name, AverageRating)
+--     SELECT 
+--         P.Property_ID, 
+--         P.Property_Name, 
+--         AVG(R.Review_Rating) AS AverageRating
+--     FROM 
+--         PROPERTY P
+--     LEFT JOIN 
+--         PRODUCT PR ON P.Property_ID = PR.Property_ID
+--     LEFT JOIN 
+--         RESERVATIONS RV ON PR.Product_ID = RV.Product_ID
+--     LEFT JOIN 
+--         REVIEWS R ON RV.Review_ID = R.Review_ID
+--     WHERE 
+--         R.Review_ID IS NOT NULL
+--     GROUP BY 
+--         P.Property_ID, 
+--         P.Property_Name;
+
+--     -- Select properties with the highest ratings
+--     SELECT TOP 1 WITH TIES 
+--         Property_ID, 
+--         Property_Name, 
+--         AverageRating
+--     FROM 
+--         #PropertyRatings
+--     ORDER BY 
+--         AverageRating DESC;
+
+--     -- Select properties with the lowest ratings
+--     SELECT TOP 1 WITH TIES 
+--         Property_ID, 
+--         Property_Name, 
+--         AverageRating
+--     FROM 
+--         #PropertyRatings
+--     ORDER BY 
+--         AverageRating;
+
+--     -- Cleanup
+--     DROP TABLE #PropertyRatings;
+-- END
+
+
 CREATE PROCEDURE IdentifyPropertiesByRating
 AS
 BEGIN
-    -- Temporary table to store average ratings for each property
-    CREATE TABLE #PropertyRatings (
-        Property_ID INT,
-        Property_Name NVARCHAR(255),
-        AverageRating DECIMAL(5, 2)
-    );
-
-    -- Calculate average ratings for each property
-    INSERT INTO #PropertyRatings (Property_ID, Property_Name, AverageRating)
     SELECT 
         P.Property_ID, 
         P.Property_Name, 
-        AVG(R.Review_Rating) AS AverageRating
+        AVG(CAST(R.Review_Rating AS DECIMAL(5, 2))) AS AverageRating
     FROM 
         PROPERTY P
-    LEFT JOIN 
-        PRODUCT PR ON P.Property_ID = PR.Property_ID
-    LEFT JOIN 
-        RESERVATIONS RV ON PR.Product_ID = RV.Product_ID
-    LEFT JOIN 
-        REVIEWS R ON RV.Review_ID = R.Review_ID
+    LEFT JOIN PRODUCT PR ON P.Property_ID = PR.Property_ID
+    LEFT JOIN RESERVATIONS RV ON PR.Product_ID = RV.Product_ID
+    LEFT JOIN REVIEWS R ON RV.Review_ID = R.Review_ID
     WHERE 
         R.Review_ID IS NOT NULL
     GROUP BY 
         P.Property_ID, 
-        P.Property_Name;
-
-    -- Select properties with the highest ratings
-    SELECT TOP 1 WITH TIES 
-        Property_ID, 
-        Property_Name, 
-        AverageRating
-    FROM 
-        #PropertyRatings
+        P.Property_Name
     ORDER BY 
         AverageRating DESC;
-
-    -- Select properties with the lowest ratings
-    SELECT TOP 1 WITH TIES 
-        Property_ID, 
-        Property_Name, 
-        AverageRating
-    FROM 
-        #PropertyRatings
-    ORDER BY 
-        AverageRating;
-
-    -- Cleanup
-    DROP TABLE #PropertyRatings;
 END
+
+
 
 GO
 
