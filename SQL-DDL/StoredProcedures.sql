@@ -757,10 +757,14 @@ BEGIN
     ELSE
     BEGIN
         -- Insert user data into the table with dynamic User_Type
-        INSERT INTO [dbo].[USER] 
+        -- INSERT INTO [dbo].[USER] 
+        --     (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
+        -- VALUES 
+        --     (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, HASHBYTES('SHA1',@Passwd), @Gender, @Approved);
+           INSERT INTO [dbo].[USER] 
             (Date_of_Birth, User_Type, First_Name, Last_Name, Email, Passwd, Gender, Approved)
         VALUES 
-            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, HASHBYTES('SHA2_256',@Passwd), @Gender, @Approved);
+            (@Date_of_Birth, @User_Type, @First_Name, @Last_Name, @Email, @Passwd, @Gender, @Approved);
     END
 END
 GO
@@ -779,7 +783,8 @@ BEGIN
         SELECT *
         FROM [dbo].[USER]
         WHERE [Email] = @Email
-          AND [Passwd] = HASHBYTES ('SHA2_256',@Passwd)
+        AND [Passwd] = @Passwd
+          --AND [Passwd] = HASHBYTES ('SHA1',@Passwd)
     )
     BEGIN 
         PRINT 'Error: Invalid Email or password';
@@ -793,7 +798,8 @@ BEGIN
         SELECT [user_id],[User_Type],[Approved]
         FROM [dbo].[USER]
         WHERE [Email] = @Email
-        AND [Passwd] = HASHBYTES ('SHA2_256',@Passwd);
+        AND [Passwd] = @Passwd
+        -- AND [Passwd] = HASHBYTES ('SHA1',@Passwd);
     END
 END
 GO

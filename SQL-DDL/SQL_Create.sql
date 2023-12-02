@@ -130,9 +130,9 @@ WITH (
     FIRSTROW = 2
 );
 
-UPDATE [dbo].[USER] 
-SET Passwd = HASHBYTES('SHA2_256', Passwd);
-GO
+-- UPDATE [dbo].[USER] 
+-- SET Passwd = HASHBYTES('SHA1', Passwd);
+-- GO
 
 USE DB
 BULK 

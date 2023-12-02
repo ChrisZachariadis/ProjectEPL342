@@ -272,8 +272,6 @@
 -------------------------------------
      --       REVENUE REPORT       --
 -------------------------------------
-
-
 -- Get the total revenue with the given filters applied.
 
 CREATE PROCEDURE RevenueReport
@@ -316,9 +314,6 @@ GO
 -----------------------------------------
      --  BOOKING STATISTICS REPORTS    --
 -----------------------------------------
-
-
-
 -- Stored procedure that for the specified property,room and location returns the total number of reservations
 
 CREATE PROCEDURE AnalyzeNumberOfReservations
