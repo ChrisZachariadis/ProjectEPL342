@@ -131,7 +131,7 @@ WITH (
 );
 
 UPDATE [dbo].[USER] 
-SET Passwd = HASHBYTES('SHA2_256', Passwd);
+SET Passwd = HASHBYTES('SHA1', Passwd);
 GO
 
 USE DB

@@ -172,6 +172,10 @@ CHECK AGAIN RELATIONAL KAI ER --------
 
 
 
+--------------------------2/12----------------------------------
+
+stored procedures fix
+
 
 	
 
@@ -208,17 +212,3 @@ CHECK AGAIN RELATIONAL KAI ER --------
 
 
 
-
-
-
-
-
-
-							<option value="Rhodes">Rhodes</option>
-                            <option value="Santorini">Santorini</option>
-                            <option value="Thessaloniki">Thessaloniki</option>
-                            <option value="Athens">Athens</option>
-                            <option value="Naxos">Naxos</option>
-                            <option value="Mykonos">Mykonos</option>
-                            <option value="Aridea">Aridea</option>
-                            <option value="Salamina">Salamina</option>
