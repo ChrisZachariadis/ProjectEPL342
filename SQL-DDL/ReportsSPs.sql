@@ -549,9 +549,8 @@ GO
 
 -- based on the filters, we count the total available rooms and the total booked rooms, then we calculate the occupancy rate
 
--- DEN FENONTAI TA PROPERTIES KLP,, TIPONEI MONO MIA STILI ME TO OCCUPANCY RATE!!!!
-
-
+-- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
+GO
 CREATE PROCEDURE CalculateOccupancyRate
     @StartDate DATE,
     @EndDate DATE,
@@ -560,6 +559,7 @@ CREATE PROCEDURE CalculateOccupancyRate
     @PropertyLocation NVARCHAR(50)
 AS
 BEGIN
+    -- Convert 'empty' string to NULL for filtering
     IF (@PropertyTypeName = 'empty')
         SET @PropertyTypeName = NULL;
     IF (@RoomTypeDescription = 'empty')
@@ -567,8 +567,8 @@ BEGIN
     IF (@PropertyLocation = 'empty')
         SET @PropertyLocation = NULL;
 
-    DECLARE @TotalAvailableRoomDays INT;
-    DECLARE @TotalBookedRoomDays INT;
+    DECLARE @TotalAvailableRoomDays INT = 0;
+    DECLARE @TotalBookedRoomDays INT = 0;
 
     -- Calculate the total number of available room-days from the STOCK table
     SELECT @TotalAvailableRoomDays = SUM(S.Stock_Amount)
@@ -602,13 +602,12 @@ BEGIN
             WHEN @TotalAvailableRoomDays > 0 THEN 
                 CAST((@TotalBookedRoomDays * 100.0) / @TotalAvailableRoomDays AS DECIMAL(5, 2))
             ELSE 0
-        END AS OccupancyRate;
+        END AS OccupancyRateForAppliedFilters;
 END
 
 GO
 
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
-
 CREATE PROCEDURE IdentifyHighOccupancyPeriods
     @StartDate DATE,
     @EndDate DATE
@@ -617,40 +616,39 @@ BEGIN
     -- Temporary table to store daily occupancy rates
     CREATE TABLE #DailyOccupancyRates (
         OccupancyDate DATE,
+        TotalStock INT,
+        BookedRooms INT,
         OccupancyRate DECIMAL(5, 2)
     );
 
-    -- Iterate through each day in the date range to calculate occupancy rate
     DECLARE @CurrentDate DATE = @StartDate;
     WHILE @CurrentDate <= @EndDate
     BEGIN
-        DECLARE @TotalPotentialOccupancy INT;
-        DECLARE @TotalBookedRoomDays INT;
+        DECLARE @TotalStock INT;
+        DECLARE @BookedRooms INT;
 
-        -- Calculate total potential occupancy for the current day
-        SELECT @TotalPotentialOccupancy = ISNULL(SUM(Stock_Amount), 0)
+        -- Calculate total available stock for the current day
+        SELECT @TotalStock = ISNULL(SUM(Stock_Amount), 0)
         FROM STOCK
         WHERE Stock_Date = @CurrentDate;
 
-        -- Calculate total booked room-days for the current day
-        SELECT @TotalBookedRoomDays = COUNT(*)
+        -- Calculate total booked rooms for the current day
+        SELECT @BookedRooms = COUNT(*)
         FROM RESERVATIONS
         WHERE Reservation_Date = @CurrentDate;
 
-        -- Add the total booked room-days to the total potential occupancy
-        SET @TotalPotentialOccupancy = @TotalPotentialOccupancy + @TotalBookedRoomDays;
-
-        -- Calculate and store the occupancy rate for the current day
-        INSERT INTO #DailyOccupancyRates (OccupancyDate, OccupancyRate)
+        -- Calculate the occupancy rate for the current day
+        INSERT INTO #DailyOccupancyRates (OccupancyDate, TotalStock, BookedRooms, OccupancyRate)
         SELECT 
-            @CurrentDate, 
+            @CurrentDate,
+            @TotalStock,
+            @BookedRooms,
             CASE 
-                WHEN @TotalPotentialOccupancy > 0 THEN 
-                    CAST((@TotalBookedRoomDays * 100.0) / @TotalPotentialOccupancy AS DECIMAL(5, 2))
+                WHEN @TotalStock > 0 THEN 
+                    CAST((@BookedRooms * 100.0) / @TotalStock AS DECIMAL(5, 2))
                 ELSE 0
             END;
 
-        -- Move to the next day
         SET @CurrentDate = DATEADD(day, 1, @CurrentDate);
     END
 
@@ -658,10 +656,8 @@ BEGIN
     SELECT * FROM #DailyOccupancyRates
     ORDER BY OccupancyRate DESC, OccupancyDate;
 
-    -- Cleanup
     DROP TABLE #DailyOccupancyRates;
 END
-
 
 GO
 
