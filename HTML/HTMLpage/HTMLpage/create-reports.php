@@ -1,14 +1,14 @@
 <?php
 session_start();
-$tableData = [];
 
-// $serverName = $_SESSION["serverName"];
-// $connectionOptions = $_SESSION["connectionOptions"];
-// $conn = sqlsrv_connect($serverName, $connectionOptions);
 
-// if ($conn === false) {
-//   die(print_r(sqlsrv_errors(), true));
-// }
+$serverName = $_SESSION["serverName"];
+$connectionOptions = $_SESSION["connectionOptions"];
+$conn = sqlsrv_connect($serverName, $connectionOptions);
+
+if ($conn === false) {
+  die(print_r(sqlsrv_errors(), true));
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -16,343 +16,198 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $postedVar = array_key_first($_POST);
   switch ($postedVar) {
     case 'ButtonRevenueReport':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-
-      $tsql = "";
+      $tsql = "RevenueReport";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
+      
+      $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
         }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
+    }
 
 
       break;
     case 'ButtonAnalyzeNoOfReservations':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "AnalyzeNumberOfReservations";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
+
+      $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
         }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
+    }
 
 
       break;
     case 'ButtonCompareRTrends':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
-       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
+      $tsql = "CompareReservationTrends";
+      $params = [];
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonCalculateCancRate':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "CalculateCancellationRate";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
+     
+      $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
         }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
+    }
 
-      
+
+
       break;
     case 'ButtonCalcOccRate':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "CalculateOccupancyRate";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
 
-      
+      $order = array('StartDate', 'EndDate', 'PropertyType', 'RoomType', 'Location');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonIDHighOccPeriods':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "IdentifyHighOccupancyPeriods";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonCompareORByRT':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
       $tsql = "";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonAverageRatingAndR':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "GetAverageRatingAndReviews";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
 
-      
+
+
+
       break;
     case 'ButtonIdentifyPByR':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "IdentifyPropertiesByRating";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
 
-      
+
       break;
     case 'ButtonOverviewOfRTInvAndOcc':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
-      $tsql = "";
+      $tsql = "OverviewOfRoomTypeInventoryAndOccupancy";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonGetPropertyRoomBookingStatus':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
       $tsql = "";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonGetRoomsWithMonthlyBookings':
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
       $tsql = "";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
       break;
     case 'ButtonGetRoomsWithMinimumBookings':
-      print_r("ASDASDASD");
-      $tableData = [
-        ['Name' => 'John Doe', 'Email' => 'john@example.com'],
-        ['Name' => 'Jane Doe', 'Email' => 'jane@example.com'],
-        ['Name' => 'Joe Doe', 'Email' => 'test', 'Value' => '2'],
 
-
-        // Add more data as needed
-      ];
-
-      $tableHeaders = ['Name', 'Email', 'Value'];
       $tsql = "";
       $params = [];
-      $counter = 0;
-      foreach ($_POST as $key => $value) {
-        $counter++;
-        if ($counter == 1) {
-          continue;
-        }
-        $params[$key] = $value;
-      }
-      $params[$key] = $value;
-
       
+      $order = array('StartDate', 'EndDate');
+      foreach ($order as $key) {
+        if (isset($_POST[$key])) {
+            array_push($params, $_POST[$key]);
+        }
+    }
+
+
+
       break;
     // Add more cases as needed
   }
-  var_dump($params);
-  // Add more cases as needed
-  // $return = sqlsrv_query($conn, $tsql, $params);
-  // if ($return === false) {
-  //   die(print_r(sqlsrv_errors(), true));
-  // }
+  $tableData = [];
+  $getResults = sqlsrv_query($conn, $tsql, $params);
 
-  // sqlsrv_free_stmt($return);
-  // sqlsrv_close($conn);
+  if ($getResults === false) {
+    die(print_r(sqlsrv_errors(), true));
+  }
+
+
+  $metadata = sqlsrv_field_metadata($getResults);
+  foreach ($metadata as $field) {
+    $tableHeaders[] = $field['Name'];
+  }
+
+  while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+    $tableData[] = $row;
+  }
+
+  sqlsrv_free_stmt($getResults);
+  sqlsrv_close($conn);
 }
 ?>
 
@@ -518,7 +373,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br />
               </span>
             </button>
-            <select name="Property Type" class="create-reports-property-type">
+            <select name="PropertyType" class="create-reports-property-type">
               <option value="empty" selected="">Property Type</option>
               <option value="Resort">Resort</option>
               <option value="Hostel">Hostel</option>
@@ -598,13 +453,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br />
               </span>
             </button>
-            <select name="Property Type" class="create-reports-property-type1">
+            <select name="PropertyType" class="create-reports-property-type1">
               <option value="empty" selected="">Property Type</option>
-              <option value="Option 1">Option 1</option>
               <option value="Resort">Resort</option>
               <option value="Hostel">Hostel</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
               <option value="Hotel">Hotel</option>
               <option value="Lodge">Lodge</option>
               <option value="Motel">Motel</option>
@@ -630,11 +482,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <select name="RoomType" class="create-reports-room-type1">
               <option value="empty" selected="">Room Type</option>
               <option value="Apartment">Apartment</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
               <option value="Quadruple">Quadruple</option>
               <option value="Suite">Suite</option>
-              <option value="Option 3">Option 3</option>
               <option value="Triple">Triple</option>
               <option value="Twin">Twin</option>
               <option value="Double">Double</option>
@@ -653,12 +502,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="Location" class="create-reports-location1">
               <option value="empty" selected="">Location</option>
-              <option value="Option 1">Option 1</option>
               <option value="Rhodes">Rhodes</option>
-              <option value="Option 2">Option 2</option>
               <option value="Santorini">Santorini</option>
               <option value="Thessaloniki">Thessaloniki</option>
-              <option value="Option 3">Option 3</option>
               <option value="Athens">Athens</option>
               <option value="Naxos">Naxos</option>
               <option value="Mykonos">Mykonos</option>
@@ -693,17 +539,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Calculate Cancellation Rate
               </span>
             </button>
-            <select name="Property Type" class="create-reports-property-type2">
+            <select name="PropertyType" class="create-reports-property-type2">
               <option value="empty" selected="">Property Type</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Resort">Resort</option>
               <option value="Hostel">Hostel</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
               <option value="Hotel">Hotel</option>
-              <option value="Option 3">Option 3</option>
               <option value="Lodge">Lodge</option>
               <option value="Motel">Motel</option>
               <option value="Love Hotel">Love Hotel</option>
@@ -727,15 +567,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="RoomType" class="create-reports-room-type2">
               <option value="empty" selected="">Room Type</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Apartment">Apartment</option>
               <option value="Quadruple">Quadruple</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
               <option value="Suite">Suite</option>
-              <option value="Option 3">Option 3</option>
               <option value="Triple">Triple</option>
               <option value="Twin">Twin</option>
               <option value="Double">Double</option>
@@ -754,14 +588,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="Location" class="create-reports-location2">
               <option value="empty" selected="">Location</option>
-              <option value="Option 1">Option 1</option>
               <option value="Rhodes">Rhodes</option>
-              <option value="Option 1">Option 1</option>
               <option value="Santorini">Santorini</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Thessaloniki">Thessaloniki</option>
               <option value="Athens">Athens</option>
               <option value="Naxos">Naxos</option>
@@ -790,20 +618,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br />
               </span>
             </button>
-            <select name="Property Type" class="create-reports-property-type3">
+            <select name="PropertyType" class="create-reports-property-type3">
               <option value="empty" selected="">Property Type</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Resort">Resort</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
               <option value="Hostel">Hostel</option>
-              <option value="Option 2">Option 2</option>
               <option value="Hotel">Hotel</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Lodge">Lodge</option>
               <option value="Motel">Motel</option>
               <option value="Love Hotel">Love Hotel</option>
@@ -827,18 +646,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="RoomType" class="create-reports-room-type3">
               <option value="empty" selected="">Room Type</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Apartment">Apartment</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
               <option value="Quadruple">Quadruple</option>
               <option value="Suite">Suite</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Triple">Triple</option>
               <option value="Twin">Twin</option>
               <option value="Double">Double</option>
@@ -857,18 +667,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="Location" class="create-reports-location3">
               <option value="empty" selected="">Location</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Rhodes">Rhodes</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
               <option value="Santorini">Santorini</option>
-              <option value="Option 3">Option 3</option>
               <option value="Thessaloniki">Thessaloniki</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Athens">Athens</option>
               <option value="Naxos">Naxos</option>
               <option value="Mykonos">Mykonos</option>
@@ -963,22 +764,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Overview Of Room Type Inventory And Occupancy
               </span>
             </button>
-            <select name="Property Type" class="create-reports-property-type4">
+            <select name="PropertyType" class="create-reports-property-type4">
               <option value="empty" selected="">Property Type</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Resort">Resort</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
               <option value="Hostel">Hostel</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Hotel">Hotel</option>
               <option value="Lodge">Lodge</option>
               <option value="Motel">Motel</option>
@@ -1003,21 +792,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="RoomType" class="create-reports-room-type4">
               <option value="empty" selected="">Room Type</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Apartment">Apartment</option>
-              <option value="Option 2">Option 2</option>
               <option value="Quadruple">Quadruple</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Suite">Suite</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Triple">Triple</option>
               <option value="Twin">Twin</option>
               <option value="Double">Double</option>
@@ -1036,21 +813,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </select>
             <select name="Location" class="create-reports-location4">
               <option value="empty" selected="">Location</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
               <option value="Rhodes">Rhodes</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 1">Option 1</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
-              <option value="Option 2">Option 2</option>
               <option value="Santorini">Santorini</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
-              <option value="Option 3">Option 3</option>
               <option value="Thessaloniki">Thessaloniki</option>
-              <option value="Option 3">Option 3</option>
               <option value="Athens">Athens</option>
               <option value="Naxos">Naxos</option>
               <option value="Mykonos">Mykonos</option>
@@ -1083,10 +848,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-min-books input" />
-            <input type="text" name="Min Books" enctype="Surname" required="" placeholder="Minimum Books"
+            <input type="number" name="Min Books" enctype="Surname" required="" placeholder="Minimum Books"
               autocomplete="family-name" class="create-reports-min-books input" />
-            <input type="text" name="PropertyType" required="" placeholder="Property Type" autocomplete="name"
-              class="create-reports-property-type-for-min-books input" />
+              <select name="PropertyType" class="create-reports-property-type-for-min-books input">
+              <option value="empty" selected="">Property Type</option>
+              <option value="Resort">Resort</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Love Hotel">Love Hotel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+              <option value="Country House">Chalet</option>
+              <option value="Chalet">New Option</option>
+            </select>
           </form>
         </div>
         <div class="create-reports-container12">
@@ -1099,8 +888,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-rooms-monthly-bookings input" />
-            <input type="text" name="PropertyType" required="" placeholder="Property Type" autocomplete="name"
-              class="create-reports-property-typefor-room-monthly-bookings input" />
+              <select name="PropertyType" class="create-reports-property-typefor-room-monthly-bookings input">
+              <option value="empty" selected="">Property Type</option>
+              <option value="Resort">Resort</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Love Hotel">Love Hotel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+              <option value="Country House">Chalet</option>
+              <option value="Chalet">New Option</option>
+            </select>
           </form>
         </div>
         <div class="create-reports-container13">
@@ -1111,12 +924,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Get Rooms With Minimum Bookings
               </span>
             </button>
-            <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
+            <input type="number" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-min-books1 input" />
-            <input type="text" name="Min Books" enctype="Surname" required="" placeholder="Minimum Books"
+            <input type="number" name="Min Books" enctype="Surname" required="" placeholder="Minimum Books"
               autocomplete="family-name" class="create-reports-min-books1 input" />
-            <input type="text" name="PropertyType" required="" placeholder="Property Type" autocomplete="name"
-              class="create-reports-property-type-for-min-books1 input" />
+              <select name="PropertyType" class="create-reports-property-type-for-min-books1 input">
+              <option value="empty" selected="">Property Type</option>
+              <option value="Resort">Resort</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Love Hotel">Love Hotel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+              <option value="Country House">Chalet</option>
+              <option value="Chalet">New Option</option>
+            </select>
           </form>
         </div>
       </div>

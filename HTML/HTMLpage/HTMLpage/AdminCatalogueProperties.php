@@ -207,7 +207,7 @@ function products()
 
     if($_SESSION['UserType'] == 'Admin'){
         echo "<a href='unapproved-owners.php'><button type='submit' class='home-button5 button'>View Unapproved Owners</button></a>";
-        echo "<a href=''><button type='submit' class='home-button3 button'>View Reports</button></a>";
+        echo "<a href='create-reports.php'><button type='submit' class='home-button3 button'>View Reports</button></a>";
     }else{
         echo '<a href="add-property.php">
         <button type="button" class="home-button4 button">Add Property</button>
