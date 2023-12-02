@@ -264,7 +264,7 @@ function products($ID)
 
     if($_SESSION['UserType'] == 'Admin'){
         echo "<a href='unapproved-owners.php'><button type='submit' class='home-button5 button'>View Unapproved Owners</button></a>";
-        echo "<a href=''><button type='submit' class='home-button3 button'>View Reports</button></a>";
+        echo "<a href='create-reports.php'><button type='submit' class='home-button3 button'>View Reports</button></a>";
     }else{
         echo '<form action="add-product.php" method="POST">
         <input type="hidden" name="ID" value="'.$_POST['id'].'"/>
