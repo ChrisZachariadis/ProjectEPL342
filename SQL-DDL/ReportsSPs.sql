@@ -1,8 +1,6 @@
 ---------------------------------------------------------------------------------------
      --                             REPORTS                                      --
 ---------------------------------------------------------------------------------------
-
-
 -------------------------------------
      --       REVENUE REPORT       --
 -------------------------------------
@@ -500,7 +498,7 @@ END;
 GO
 
 -----------------------------------------------
- --     PERFORMANCE REPORTS                  --
+ --          PERFORMANCE REPORTS             --
 -----------------------------------------------
 
 CREATE PROCEDURE spGetProperties
@@ -508,7 +506,7 @@ CREATE PROCEDURE spGetProperties
     BEGIN
     SELECT Property_ID, Property_Name
     FROM [dbo].[PROPERTY]
-    END
+END
 
 -- THE FIRLTERS HERE DONT APPLY AS THE PREVIOUS ONES. PROPERTY TYPE NAME IS MANDATORY.
 
@@ -516,22 +514,11 @@ CREATE PROCEDURE spGetProperties
 -- it also returns rooms that where NEVER BOOKED IN THE SPECIFIC PERIOD AS "NEVER BOOKED"
 
 CREATE PROCEDURE GetPropertyRoomBookingStatus
-<<<<<<< Updated upstream
-    @PropertyTypeName NVARCHAR(255),
-=======
     @Property_ID INT,
->>>>>>> Stashed changes
     @StartDate DATE,
     @EndDate DATE
 AS
 BEGIN
-<<<<<<< Updated upstream
-    -- Check for 'empty' input and set to NULL
-    IF (@PropertyTypeName = 'empty')
-        SET @PropertyTypeName = NULL;
-
-=======
->>>>>>> Stashed changes
     -- Select rooms that were booked every day within the specified period
     SELECT 
         PR.Product_ID, 
@@ -542,11 +529,7 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-<<<<<<< Updated upstream
-        PT.Property_Type_Name = @PropertyTypeName AND
-=======
         P.Property_ID = @Property_ID AND
->>>>>>> Stashed changes
         NOT EXISTS (
             SELECT DISTINCT S.Stock_Date
             FROM STOCK S
@@ -569,33 +552,23 @@ BEGIN
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
     INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-<<<<<<< Updated upstream
-        PT.Property_Type_Name = @PropertyTypeName AND
-=======
-        P.Propert_ID = @Property_ID AND
->>>>>>> Stashed changes
+        P.Property_ID = @Property_ID AND
         NOT EXISTS (
             SELECT 1
             FROM RESERVATIONS R
             WHERE R.Product_ID = PR.Product_ID AND R.Reservation_Date BETWEEN @StartDate AND @EndDate
         )
 END
-
-
-
 GO
 
 -- Stored procedure for generating a report of all rooms in a specific property that had at least ONE BOOKING EACH MONTH of a given calendar year
 -- cannot have null property id (diladi na tiponei gia ola ta ids)
 
 CREATE PROCEDURE GetRoomsWithMonthlyBookings
-    @PropertyTypeName NVARCHAR(255),
+    @Property_ID INT,
     @Year INT
 AS
 BEGIN
-    IF (@PropertyTypeName = 'empty')
-        SET @PropertyTypeName = NULL;
-
     -- Select rooms that were booked at least once every month
     SELECT 
         PR.Product_ID, 
@@ -604,10 +577,8 @@ BEGIN
         PRODUCT PR
     INNER JOIN 
         PROPERTY P ON PR.Property_ID = P.Property_ID
-    INNER JOIN 
-        PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
-        PT.Property_Type_Name = @PropertyTypeName AND
+        PR.Property_ID = @Property_ID AND
         12 = ( -- Check if the room was booked in all 12 months of the year
             SELECT COUNT(DISTINCT MONTH(RV.Reservation_Date))
             FROM RESERVATIONS RV
@@ -616,32 +587,30 @@ BEGIN
                 YEAR(RV.Reservation_Date) = @Year
         )
 END
-
-
--- Alternative to the previous one but now we have minimum number of booking per month
 GO
 
+
 CREATE PROCEDURE GetRoomsWithMinBookings
-    @Property_Type_Name NVARCHAR(255),
+    @PropertyID INT,
     @Year INT,
     @MinBookings INT
 AS
 BEGIN
+    -- Select rooms that meet or exceed the minimum booking threshold for a specific property
     SELECT 
         PR.Product_ID, 
         PR.Product_Description, 
         COUNT(DISTINCT RV.Reservation_ID) AS NumberOfBookings
     FROM 
         PRODUCT PR
-    INNER JOIN 
-        PROPERTY P ON PR.Property_ID = P.Property_ID
     LEFT JOIN 
         RESERVATIONS RV ON PR.Product_ID = RV.Product_ID AND YEAR(RV.Reservation_Date) = @Year
     WHERE 
-        (SELECT Property_Type_Name FROM [dbo].[PROPERTY_TYPE] WHERE Property_Type_ID = P.Property_Type_ID) = @Property_Type_Name
+        PR.Property_ID = @PropertyID
     GROUP BY 
         PR.Product_ID, 
         PR.Product_Description
     HAVING 
         COUNT(DISTINCT RV.Reservation_ID) >= @MinBookings;
 END
+GO
