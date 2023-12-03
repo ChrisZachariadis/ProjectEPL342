@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+$tableData = [];
 
 $serverName = $_SESSION["serverName"];
 $connectionOptions = $_SESSION["connectionOptions"];

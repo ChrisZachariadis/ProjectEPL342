@@ -20,14 +20,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if ($getResults === false) {
     $message = "Wrong credentials."; // Your message
-echo "<script type='text/javascript'>",
-     "window.onload = function() {",
-     "  setTimeout(function() {",
-     "    alert('$message');",
-     "    window.location.href = 'Login.php';",
-     "  }, 1000);", // Delays the alert by 1000 milliseconds (1 second)
-     "};",
-     "</script>";    
+// echo "<script type='text/javascript'>",
+//      "window.onload = function() {",
+//      "  setTimeout(function() {",
+//      "    alert('$message');",
+//      "    window.location.href = 'Login.php';",
+//      "  }, 1000);", // Delays the alert by 1000 milliseconds (1 second)
+//      "};",
+//      "</script>";    
     exit;
   }
 

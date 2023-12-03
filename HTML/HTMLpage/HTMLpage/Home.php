@@ -3,10 +3,9 @@ session_start();
 
 //LUIGI: DESKTOP-HQM94Q5
 //PETTE: DESKTOP-H9FM89T
-
 $sqlDBname = "DB";
 //$_SESSION["serverName"] = "DESKTOP-H9FM89T\MSSQLSERVER01";
-$_SESSION["serverName"] = "DESKTOP-H9FM89T\MSSQLSERVER01";
+$_SESSION["serverName"] = " DESKTOP-HQM94Q5\MSSQLSERVER01";
 $_SESSION["connectionOptions"] = array(
   "Database" => $sqlDBname
 );
