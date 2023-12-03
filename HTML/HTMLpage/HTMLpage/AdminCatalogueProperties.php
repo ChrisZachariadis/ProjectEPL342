@@ -47,9 +47,9 @@ function products()
               alt='image'
               class='home-image'
             />
-            <span class='Text1'>ID:$ID:     Location:$Location</span>
-            <span class='Text2'>$Desc</span>
-            <span class='Text3'>Type:$Type</span>
+            <span class='Text1'><strong>ID:</strong> $ID     <strong>Location:</strong> $Location</span>
+            <span class='Text2'><strong>Description:</strong> $Desc</span>
+            <span class='Text3'><strong>Type:</strong> $Type</span>
             <form action='AdminCatalogueProduct.php' method='POST'>
             <input type='hidden' name='id' value='$ID'>
             <button type='submit' class='home-button button'>VIEW</button>

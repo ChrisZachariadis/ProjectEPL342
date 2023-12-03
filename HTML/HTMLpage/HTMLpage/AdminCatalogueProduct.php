@@ -55,7 +55,7 @@ function reviews()
 
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         // echo "<span>{$row['Review_Rating']} </span>";
-        echo "<span>{$row['Review_Description']} </span>";
+        echo "<span>{$row['Review_Rating']}: {$row['Review_Description']} |</span>";
     }
 
 

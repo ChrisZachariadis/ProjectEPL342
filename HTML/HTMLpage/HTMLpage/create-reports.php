@@ -88,10 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       break;
     case 'ButtonIDHighOccPeriods':
 
-      $tsql = "{call IdentifyHighOccupancyPeriods(?, ?)}";
+      $tsql = "{call IdentifyHighOccupancyPeriods(?, ?, ?)}";
       $params = [];
 
-      $order = array('StartDate', 'EndDate');
+      $order = array('PropertyType', 'RoomType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
           array_push($params, $_POST[$key]);
@@ -102,10 +102,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       break;
     case 'ButtonCompareORByRT':
 
-      $tsql = "{call CompareOccupancyRatesByRoomType(?, ?)}";
+      $tsql = "{call CompareOccupancyRatesByRoomType(?, ?, ?, ?)}";
       $params = [];
 
-      $order = array('StartDate', 'EndDate');
+      $order = array('StartDate', 'EndDate', 'PropertyType', 'Location');
       foreach ($order as $key) {
         if (isset($_POST[$key])) {
           array_push($params, $_POST[$key]);
@@ -201,7 +201,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tableHeaders[] = $field['Name'];
   }
 
-  var_dump(sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC));
+  //var_dump(sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC));
 
   while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     var_dump($row);
@@ -398,8 +398,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <option value="Tent">Tent</option>
               <option value="Villa">Villa</option>
               <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="Country House">Country House</option>
+              <option value="Chalet">Chalet</option>
             </select>
             <select name="RoomType" class="create-reports-room-type">
               <option value="empty" selected="">Room Type</option>
@@ -479,7 +479,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <option value="Villa">Villa</option>
               <option value="Homestay">Homestay</option>
               <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="Chalet">Chalet</option>
             </select>
             <select name="RoomType" class="create-reports-room-type1">
               <option value="empty" selected="">Room Type</option>
@@ -564,8 +564,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <option value="Tent">Tent</option>
               <option value="Villa">Villa</option>
               <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="Country House">Country House</option>
+              <option value="Chalet">Chalet</option>
             </select>
             <select name="RoomType" class="create-reports-room-type2">
               <option value="empty" selected="">Room Type</option>
@@ -643,8 +643,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <option value="Tent">Tent</option>
               <option value="Villa">Villa</option>
               <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="Country House">Country House</option>
+              <option value="Chalet">Chalet</option>
             </select>
             <select name="RoomType" class="create-reports-room-type3">
               <option value="empty" selected="">Room Type</option>
@@ -695,10 +695,66 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <br />
               </span>
             </button>
-            <input type="text" name="EndDate" enctype="Surname" required="" placeholder="End Date"
-              autocomplete="family-name" class="create-reports-end-date5 input" />
-            <input type="text" name="StartDate" required="" placeholder="Start Date" autocomplete="name"
-              class="create-reports-start-date5 input" />
+              <select name="PropertyType" class="create-reports-end-date5 input">
+              <option value="empty" selected="">Property Type</option>
+              <option value="Resort">Resort</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Love Hotel">Love Hotel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+              <option value="Country House">Country House</option>
+              <option value="Chalet">Chalet</option>
+            </select>
+            <select name="RoomType" class="create-reports-start-date5 input">
+              <option value="empty" selected="">Room Type</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Quadruple">Quadruple</option>
+              <option value="Suite">Suite</option>
+              <option value="Triple">Triple</option>
+              <option value="Twin">Twin</option>
+              <option value="Double">Double</option>
+              <option value="Single">Single</option>
+              <option value="Studio">Studio</option>
+              <option value="Family">Family</option>
+              <option value="Twin/Double">Twin/Double</option>
+              <option value="Dormitory Room">Dormitory Room</option>
+              <option value="Bed in Dormitory">Bed in Dormitory</option>
+              <option value="Bungalow">Bungalow</option>
+              <option value="Chalet">Chalet</option>
+              <option value="Holiday Home">Holiday Home</option>
+              <option value="Villa">Villa</option>
+              <option value="Mobile Home">Mobile Home</option>
+              <option value="Tent">Tent</option>
+            </select>
+            
+            <select name="Location" class="create-reports-location3" style="right:615px; top:10px;">
+              <option value="empty" selected="">Location</option>
+              <option value="Rhodes">Rhodes</option>
+              <option value="Santorini">Santorini</option>
+              <option value="Thessaloniki">Thessaloniki</option>
+              <option value="Athens">Athens</option>
+              <option value="Naxos">Naxos</option>
+              <option value="Mykonos">Mykonos</option>
+              <option value="Aridea">Aridea</option>
+              <option value="Salamina">Salamina</option>
+            </select>
+
           </form>
         </div>
         <div class="create-reports-container07">
@@ -715,6 +771,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               autocomplete="family-name" class="create-reports-end-date6 input" />
             <input type="text" name="StartDate" required="" placeholder="Start Date" autocomplete="name"
               class="create-reports-start-date6 input" />
+
+              <select name="PropertyType" class="create-reports-property-type3" style="top: 35px;">
+              <option value="empty" selected="">Property Type</option>
+              <option value="Resort">Resort</option>
+              <option value="Hostel">Hostel</option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Love Hotel">Love Hotel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Hotel">Hotel</option>
+              <option value="Lodge">Lodge</option>
+              <option value="Motel">Motel</option>
+              <option value="Capsule Hotel">Capsule Hotel</option>
+              <option value="Japanese Style Hotel">
+                Japanese Style Hotel
+              </option>
+              <option value="Apartment">Apartment</option>
+              <option value="Tent">Tent</option>
+              <option value="Villa">Villa</option>
+              <option value="Homestay">Homestay</option>
+              <option value="Country House">Country House</option>
+              <option value="Chalet">Chalet</option>
+            </select>
+
+              <select name="Location" class="create-reports-location3" style="right:460apx; top:35px;">
+              <option value="empty" selected="">Location</option>
+              <option value="Rhodes">Rhodes</option>
+              <option value="Santorini">Santorini</option>
+              <option value="Thessaloniki">Thessaloniki</option>
+              <option value="Athens">Athens</option>
+              <option value="Naxos">Naxos</option>
+              <option value="Mykonos">Mykonos</option>
+              <option value="Aridea">Aridea</option>
+              <option value="Salamina">Salamina</option>
+            </select>
           </form>
         </div>
         <span class="create-reports-rating-text">
@@ -766,7 +861,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 Overview Of Room Type Inventory And Occupancy
               </span>
             </button>
-            <select name="PropertyType" class="create-reports-property-type4">
+            <select name="PropertyType" class="create-reports-property-type4" >
               <option value="empty" selected="">Property Type</option>
               <option value="Resort">Resort</option>
               <option value="Hostel">Hostel</option>
@@ -789,8 +884,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <option value="Tent">Tent</option>
               <option value="Villa">Villa</option>
               <option value="Homestay">Homestay</option>
-              <option value="Country House">Chalet</option>
-              <option value="Chalet">New Option</option>
+              <option value="Country House">Country House</option>
+              <option value="Chalet">Chalet</option>
             </select>
             <select name="RoomType" class="create-reports-room-type4">
               <option value="empty" selected="">Room Type</option>
@@ -853,7 +948,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="text" name="StartDate" required="" placeholder="Start Date" autocomplete="name"
               class="create-reports-year-for-min-books input" />
 
-            <select name="PropertyType" class="create-reports-property-type-for-min-books input">
+            <select name="PropertyType" class="create-reports-property-type-for-min-books input" required="">
               <option value="" selected="">Property Name</option>
               <?php
 
@@ -894,7 +989,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </button>
             <input type="text" name="Year" enctype="Surname" required="" placeholder="Year" autocomplete="family-name"
               class="create-reports-year-for-rooms-monthly-bookings input" />
-            <select name="PropertyType" class="create-reports-property-typefor-room-monthly-bookings input">
+            <select name="PropertyType" class="create-reports-property-typefor-room-monthly-bookings input" required="">
               <option value="" selected="">Property Name</option>
               <?php
 
@@ -938,7 +1033,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="number" name="MinBooks" enctype="Surname" required="" placeholder="Minimum Books"
               autocomplete="family-name" class="create-reports-min-books1 input" />
             <select name="PropertyType" class="create-reports-property-type-for-min-books1 input" required>
-              <option value="" selected="">Property Name</option>
+              <option value="" selected="" >Property Name</option>
               <?php
 
 
