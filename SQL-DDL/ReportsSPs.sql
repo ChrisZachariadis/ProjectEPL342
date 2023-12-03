@@ -1,12 +1,12 @@
----------------------------------------------------------------------------------------
-     --                             REPORTS                                      --
----------------------------------------------------------------------------------------
 -------------------------------------
      --       REVENUE REPORT       --
 -------------------------------------
+<<<<<<< Updated upstream
 
 --(1)
 
+=======
+>>>>>>> Stashed changes
 -- Get the total revenue with the given filters applied.
 CREATE PROCEDURE RevenueReport
     @StartDate DATE,
@@ -56,10 +56,11 @@ BEGIN
         P.Property_Location
 END
 GO
-
+------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------
      --  BOOKING STATISTICS REPORTS    --
 -----------------------------------------
+<<<<<<< Updated upstream
 
 ----- (1) ------
 
@@ -67,6 +68,9 @@ GO
 -- Stored procedure that for the specified property,room and location returns the total number of reservations
 
 
+=======
+-- Get total number of reservations based on filters.
+>>>>>>> Stashed changes
 CREATE PROCEDURE AnalyzeNumberOfReservations
     @StartDate DATE,
     @EndDate DATE,
@@ -115,16 +119,14 @@ END
 
 GO
 
+<<<<<<< Updated upstream
 
 ----- (2) ------
 
+=======
+--COMPARE  RESERVATION TRENDS AMONG PROPERTY TYPES-----------------------------------------
+>>>>>>> Stashed changes
 --ELEGXEI TO POSOSTO TON RESERVATIONS TOY KATHE PROPERTY TYPE SE SXESI ME TA TOTAL RESERVATION. 
---Diladi to pososto ton reservations gia kathe property type.
-
--- STORED PROCEDURE FOR THE COMPARISON OF RESERVATION TRENDS-----
-
--- For each property, count the number of reservations and the percentage of total reservations for each property type.
--- reservation count by the total reservation count and then * 100.
 CREATE PROCEDURE CompareReservationTrends
     @StartDate DATE,
     @EndDate DATE
@@ -163,12 +165,14 @@ BEGIN
 END
 GO
 
+<<<<<<< Updated upstream
 
 ----- (3) ------
 
+=======
+>>>>>>> Stashed changes
 -- Based on the filters, we count the total number of reservations and the total number of cancelled reservations, 
 -- then we calculate the cancellation rate.
-
 CREATE PROCEDURE CalculateCancellationRate
     @StartDate DATE,
     @EndDate DATE,
@@ -231,6 +235,7 @@ GO
      --    OCCUPATION REPORTS          --
 -----------------------------------------
 
+<<<<<<< Updated upstream
 
 ----- (1) ------
 
@@ -238,6 +243,11 @@ GO
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
 
 
+=======
+-- based on the filters, we count the total available rooms and the total booked rooms, then we calculate the occupancy rate
+-- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
+-- DEN FENONTAI TA PROPERTIES KLP,, TIPONEI MONO MIA STILI ME TO OCCUPANCY RATE!!!!
+>>>>>>> Stashed changes
 CREATE PROCEDURE CalculateOccupancyRate
     @StartDate DATE,
     @EndDate DATE,
@@ -281,63 +291,211 @@ BEGIN
         R.Reservation_Date BETWEEN @StartDate AND @EndDate AND
         (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
         (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
-        (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation);
+        (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation) AND
+        R.Reservation_Status = 'Upcoming';
 
     -- Calculate and return the occupancy rate
     SELECT 
         CASE 
             WHEN @TotalAvailableRoomDays > 0 THEN 
-                CAST((@TotalBookedRoomDays * 100.0) / @TotalAvailableRoomDays AS DECIMAL(5, 2))
+                CAST((@TotalBookedRoomDays * 100.0) / (@TotalAvailableRoomDays+@TotalBookedRoomDays) AS DECIMAL(5, 2))
             ELSE 0
         END AS OccupancyRateForAppliedFilters;
 END
 GO
 
+<<<<<<< Updated upstream
 ----- (2) ------
 
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
 
+=======
+-- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
+>>>>>>> Stashed changes
 -- sort the date start by the date with the highest number of reservation following by the occupation rate.
 -- fthinousa seira
-
 CREATE PROCEDURE IdentifyHighOccupancyPeriods
-    @StartDate DATE,
-    @EndDate DATE
+    @PropertyTypeName NVARCHAR(50),
+    @RoomTypeDescription NVARCHAR(50),
+    @PropertyLocation NVARCHAR(50)
 AS
 BEGIN
-    SELECT 
-        S.Stock_Date AS OccupancyDate,
-        SUM(S.Stock_Amount) + (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) AS Total_Occupancy,
-        (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) AS BookedRooms,
-        CAST(CASE 
-            WHEN SUM(S.Stock_Amount) + (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) > 0 THEN 
-                ((SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date) * 100.0) / 
-                (SUM(S.Stock_Amount) + (SELECT COUNT(*) FROM RESERVATIONS R WHERE R.Reservation_Date = S.Stock_Date))
-            ELSE 0 
-        END AS DECIMAL(5, 2)) AS OccupancyRate
-    FROM 
-        STOCK S
-    WHERE 
-        S.Stock_Date BETWEEN @StartDate AND @EndDate
-    GROUP BY 
-        S.Stock_Date
-    ORDER BY 
-        OccupancyRate DESC, OccupancyDate;
-END
+    -- Set start and end dates for the year 2023
+    DECLARE @StartDate DATE = '2023-01-01';
+    DECLARE @EndDate DATE = '2023-12-31';
+
+    -- Convert 'empty' string to NULL for filtering
+    IF (@PropertyTypeName = 'empty')
+        SET @PropertyTypeName = NULL;
+    IF (@RoomTypeDescription = 'empty')
+        SET @RoomTypeDescription = NULL;
+    IF (@PropertyLocation = 'empty')
+        SET @PropertyLocation = NULL;
+
+    DECLARE @DateCursor DATE = @StartDate;
+    DECLARE @TotalAvailableRoomDays INT;
+    DECLARE @TotalBookedRoomDays INT;
+    DECLARE @OccupancyRate DECIMAL(5, 2);
+
+    -- Define a table variable to store high occupancy dates
+    DECLARE @HighOccupancyDates TABLE (OccupancyDate DATE, OccupancyRate DECIMAL(5, 2));
+
+    WHILE @DateCursor <= @EndDate
+    BEGIN
+        -- Reset counts for each date
+        SET @TotalAvailableRoomDays = 0;
+        SET @TotalBookedRoomDays = 0;
+
+        -- Calculate total available room-days
+        SELECT @TotalAvailableRoomDays = SUM(S.Stock_Amount)
+        FROM STOCK S
+        INNER JOIN PRODUCT PR ON S.Product_ID = PR.Product_ID
+        INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
+        INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
+        INNER JOIN ROOM_TYPE RT ON PR.Room_Type_ID = RT.Room_Type_ID
+        WHERE 
+            S.Stock_Date = @DateCursor AND
+            (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+            (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
+            (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation);
+
+        -- Calculate total booked room-days
+        SELECT @TotalBookedRoomDays = COUNT(*)
+        FROM RESERVATIONS R
+        INNER JOIN PRODUCT PR ON R.Product_ID = PR.Product_ID
+        INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
+        INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
+        INNER JOIN ROOM_TYPE RT ON PR.Room_Type_ID = RT.Room_Type_ID
+        WHERE 
+            R.Reservation_Date = @DateCursor AND
+            (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+            (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
+            (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation) AND
+            R.Reservation_Status = 'Upcoming';
+
+        -- Calculate occupancy rate
+        SET @OccupancyRate = CASE 
+                                WHEN @TotalAvailableRoomDays > 0 THEN 
+                                    (@TotalBookedRoomDays * 100.0) / @TotalAvailableRoomDays
+                                ELSE 0
+                             END;
+
+        -- Insert into table variable if occupancy rate exceeds threshold
+        IF @OccupancyRate >= 0.40
+            INSERT INTO @HighOccupancyDates (OccupancyDate, OccupancyRate)
+            VALUES (@DateCursor, @OccupancyRate);
+
+        -- Move to next date
+        SET @DateCursor = DATEADD(DAY, 1, @DateCursor);
+    END;
+
+    -- Output the accumulated results as a single result set
+    SELECT * FROM @HighOccupancyDates;
+END;
 GO
 
+<<<<<<< Updated upstream
 ----- (3) ------
+=======
+>>>>>>> Stashed changes
 
--- This stored procedure compares how full are each room type in a specific time period.
--- For every room_type, Show their occupancy rate for the given period. (also total stock and booked rooms are showed).
+
+-- CREATE PROCEDURE IdentifyHighOccupancyPeriods
+--     @PropertyTypeName NVARCHAR(50),
+--     @RoomTypeDescription NVARCHAR(50),
+--     @PropertyLocation NVARCHAR(50)
+-- AS
+-- BEGIN
+--     -- Set start and end dates for the year 2023
+--     DECLARE @StartDate DATE = '2023-01-01';
+--     DECLARE @EndDate DATE = '2023-12-31';
+
+--     -- Convert 'empty' string to NULL for filtering
+--     IF (@PropertyTypeName = 'empty')
+--         SET @PropertyTypeName = NULL;
+--     IF (@RoomTypeDescription = 'empty')
+--         SET @RoomTypeDescription = NULL;
+--     IF (@PropertyLocation = 'empty')
+--         SET @PropertyLocation = NULL;
+
+--     DECLARE @DateCursor DATE = @StartDate;
+--     DECLARE @TotalAvailableRoomDays INT;
+--     DECLARE @TotalBookedRoomDays INT;
+--     DECLARE @OccupancyRate DECIMAL(5, 2);
+
+--     CREATE TABLE #HighOccupancyDates (OccupancyDate DATE, OccupancyRate DECIMAL(5, 2));
+
+--     WHILE @DateCursor <= @EndDate
+--     BEGIN
+--         -- Reset counts for each date
+--         SET @TotalAvailableRoomDays = 0;
+--         SET @TotalBookedRoomDays = 0;
+
+--         -- Calculate total available room-days
+--         SELECT @TotalAvailableRoomDays = SUM(S.Stock_Amount)
+--         FROM STOCK S
+--         INNER JOIN PRODUCT PR ON S.Product_ID = PR.Product_ID
+--         INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
+--         INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
+--         INNER JOIN ROOM_TYPE RT ON PR.Room_Type_ID = RT.Room_Type_ID
+--         WHERE 
+--             S.Stock_Date = @DateCursor AND
+--             (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+--             (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
+--             (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation);
+
+--         -- Calculate total booked room-days
+--         SELECT @TotalBookedRoomDays = COUNT(*)
+--         FROM RESERVATIONS R
+--         INNER JOIN PRODUCT PR ON R.Product_ID = PR.Product_ID
+--         INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
+--         INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
+--         INNER JOIN ROOM_TYPE RT ON PR.Room_Type_ID = RT.Room_Type_ID
+--         WHERE 
+--             R.Reservation_Date = @DateCursor AND
+--             (@PropertyTypeName IS NULL OR PT.Property_Type_Name = @PropertyTypeName) AND
+--             (@RoomTypeDescription IS NULL OR RT.Room_Type_Description = @RoomTypeDescription) AND
+--             (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation) AND
+--             R.Reservation_Status = 'Upcoming';
+
+--         -- Calculate occupancy rate
+--         SET @OccupancyRate = CASE 
+--                                 WHEN @TotalAvailableRoomDays > 0 THEN 
+--                                     (@TotalBookedRoomDays * 100.0) / @TotalAvailableRoomDays
+--                                 ELSE 0
+--                              END;
+
+--         -- Add to results if occupancy rate exceeds threshold
+--         IF @OccupancyRate >= 0.40
+--             INSERT INTO #HighOccupancyDates (OccupancyDate, OccupancyRate)
+--             VALUES (@DateCursor, @OccupancyRate);
+
+--         -- Move to next date
+--         SET @DateCursor = DATEADD(DAY, 1, @DateCursor);
+--     END;
+
+--     -- Return the high occupancy dates
+--     SELECT * FROM #HighOccupancyDates;
+--     DROP TABLE #HighOccupancyDates;
+-- END;
+-- GO
+
 
 CREATE PROCEDURE CompareOccupancyRatesByRoomType
     @StartDate DATE,
     @EndDate DATE,
+<<<<<<< Updated upstream
     @PropertyLocation NVARCHAR(255),  
     @PropertyTypeName NVARCHAR(255)   
 AS
 BEGIN
+=======
+    @PropertyLocation NVARCHAR(255),   -- New parameter for Property Location
+    @PropertyTypeName NVARCHAR(255)    -- Parameter for Property Type Name
+AS
+BEGIN
+
+>>>>>>> Stashed changes
     IF (@PropertyLocation = 'empty')
         SET @PropertyLocation = NULL;
     IF (@PropertyTypeName = 'empty')
@@ -366,7 +524,10 @@ BEGIN
     ORDER BY 
         OccupancyRate DESC;
 END
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 
 GO
 
@@ -374,10 +535,14 @@ GO
  --     RATING AND EVALUATION REPORTS        --
 -----------------------------------------------
 
+<<<<<<< Updated upstream
 ----- (1) ------
 
 -- Average rating and number of reviews for each property
 
+=======
+-- Average rating and reviews for each property
+>>>>>>> Stashed changes
 CREATE PROCEDURE GetAverageRatingAndReviews
 AS
 BEGIN
@@ -403,10 +568,14 @@ BEGIN
 END
 GO
 
+<<<<<<< Updated upstream
 ----- (2) ------
 
 -- Stored procedure that returns the highest and lowest average rated properties
 
+=======
+-- Stored procedure that returns the highest and lowest rated properties
+>>>>>>> Stashed changes
 CREATE PROCEDURE IdentifyPropertiesByRating
 AS
 BEGIN
@@ -414,7 +583,11 @@ BEGIN
         SELECT 
             P.Property_ID, 
             P.Property_Name, 
+<<<<<<< Updated upstream
             AVG(CAST(R.Review_Rating AS DECIMAL(5, 2))) AS AverageRating
+=======
+            AVG(R.Review_Rating) AS AverageRating
+>>>>>>> Stashed changes
         FROM 
             PROPERTY P
         LEFT JOIN PRODUCT PR ON P.Property_ID = PR.Property_ID
@@ -430,6 +603,7 @@ BEGIN
     OR AverageRating = (SELECT MIN(AverageRating) FROM RatedProperties);
 END
 GO
+<<<<<<< Updated upstream
 
 
 -----------------------------------------------
@@ -439,8 +613,12 @@ GO
 ----- (1) ------
 
 
+=======
+-----------------------------------------------
+ --     ROOM AVAILABILITY REPORT             --
+-----------------------------------------------
+>>>>>>> Stashed changes
 -- Stored procedure that returns the total stock, the occupied stock, and the occupancy rate with the applied filters.
-
 CREATE PROCEDURE OverviewOfRoomTypeInventoryAndOccupancy
     @StartDate DATE,
     @EndDate DATE,
@@ -449,7 +627,6 @@ CREATE PROCEDURE OverviewOfRoomTypeInventoryAndOccupancy
     @PropertyLocation NVARCHAR(50)
 AS
 BEGIN
-
     IF (@PropertyTypeName = 'empty')
         SET @PropertyTypeName = NULL;
     IF (@RoomTypeDescription = 'empty')
@@ -463,9 +640,11 @@ BEGIN
         RT.Room_Type_Description, 
         SUM(S.Stock_Amount) AS TotalStock,
         COUNT(RV.Reservation_ID) AS OccupiedStock,
-        CASE WHEN SUM(S.Stock_Amount) > 0 THEN 
-             CAST((COUNT(RV.Reservation_ID) * 100.0) / SUM(S.Stock_Amount) AS DECIMAL(5, 2))
-             ELSE 0 END AS OccupancyRate
+        ( SUM(S.Stock_Amount)-COUNT(RV.Reservation_ID)) AS TotalAvailableStock
+        
+        -- CASE WHEN SUM(S.Stock_Amount) > 0 THEN 
+        --      CAST((COUNT(RV.Reservation_ID) * 100.0) / SUM(S.Stock_Amount) AS DECIMAL(5, 2))
+        --      ELSE 0 END AS OccupancyRate
     FROM 
         ROOM_TYPE RT
     LEFT JOIN 
@@ -490,23 +669,21 @@ GO
 -----------------------------------------------
  --          PERFORMANCE REPORTS             --
 -----------------------------------------------
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 CREATE PROCEDURE spGetProperties
     AS
     BEGIN
     SELECT Property_ID, Property_Name
     FROM [dbo].[PROPERTY]
 END
-
--- THE FIRLTERS HERE DONT APPLY AS THE PREVIOUS ONES. PROPERTY TYPE NAME IS MANDATORY.
+GO
 
 -- this store procedure returns rooms that where BOOKED EVERY DAY IN THE SPECIFIC PERIOD AS "FULLY BOOKED"
 -- it also returns rooms that where NEVER BOOKED IN THE SPECIFIC PERIOD AS "NEVER BOOKED"
-
-
-GO
-
 CREATE PROCEDURE GetPropertyRoomBookingStatus
     @Property_ID INT,
     @StartDate DATE,
@@ -514,26 +691,22 @@ CREATE PROCEDURE GetPropertyRoomBookingStatus
 AS
 BEGIN
     -- Select rooms that were booked every day within the specified period
-    SELECT 
+     SELECT 
         PR.Product_ID, 
         PR.Product_Description, 
         'Fully Booked' AS BookingStatus
     FROM 
         PRODUCT PR
     INNER JOIN PROPERTY P ON PR.Property_ID = P.Property_ID
-    INNER JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
     WHERE 
         P.Property_ID = @Property_ID AND
         NOT EXISTS (
-            SELECT DISTINCT S.Stock_Date
+            SELECT 1
             FROM STOCK S
-            WHERE S.Product_ID = PR.Product_ID AND S.Stock_Date BETWEEN @StartDate AND @EndDate
-            EXCEPT
-            SELECT R.Reservation_Date
-            FROM RESERVATIONS R
-            WHERE R.Product_ID = PR.Product_ID AND R.Reservation_Date BETWEEN @StartDate AND @EndDate
+            WHERE S.Product_ID = PR.Product_ID AND 
+                  S.Stock_Date BETWEEN @StartDate AND @EndDate AND
+                  S.Stock_Amount > 0
         )
-
     UNION ALL
 
     -- Select rooms that had no bookings within the same period
@@ -556,8 +729,6 @@ END
 GO
 
 -- Stored procedure for generating a report of all rooms in a specific property that had at least ONE BOOKING EACH MONTH of a given calendar year
--- cannot have null property id (diladi na tiponei gia ola ta ids)
-
 CREATE PROCEDURE GetRoomsWithMonthlyBookings
     @Property_ID INT,
     @Year INT
@@ -582,7 +753,6 @@ BEGIN
         )
 END
 GO
-
 
 CREATE PROCEDURE GetRoomsWithMinBookings
     @PropertyID INT,
