@@ -1,12 +1,9 @@
 -------------------------------------
      --       REVENUE REPORT       --
 -------------------------------------
-<<<<<<< Updated upstream
 
 --(1)
 
-=======
->>>>>>> Stashed changes
 -- Get the total revenue with the given filters applied.
 CREATE PROCEDURE RevenueReport
     @StartDate DATE,
@@ -60,7 +57,6 @@ GO
 -----------------------------------------
      --  BOOKING STATISTICS REPORTS    --
 -----------------------------------------
-<<<<<<< Updated upstream
 
 ----- (1) ------
 
@@ -68,9 +64,6 @@ GO
 -- Stored procedure that for the specified property,room and location returns the total number of reservations
 
 
-=======
--- Get total number of reservations based on filters.
->>>>>>> Stashed changes
 CREATE PROCEDURE AnalyzeNumberOfReservations
     @StartDate DATE,
     @EndDate DATE,
@@ -119,13 +112,9 @@ END
 
 GO
 
-<<<<<<< Updated upstream
 
 ----- (2) ------
 
-=======
---COMPARE  RESERVATION TRENDS AMONG PROPERTY TYPES-----------------------------------------
->>>>>>> Stashed changes
 --ELEGXEI TO POSOSTO TON RESERVATIONS TOY KATHE PROPERTY TYPE SE SXESI ME TA TOTAL RESERVATION. 
 CREATE PROCEDURE CompareReservationTrends
     @StartDate DATE,
@@ -165,12 +154,9 @@ BEGIN
 END
 GO
 
-<<<<<<< Updated upstream
 
 ----- (3) ------
 
-=======
->>>>>>> Stashed changes
 -- Based on the filters, we count the total number of reservations and the total number of cancelled reservations, 
 -- then we calculate the cancellation rate.
 CREATE PROCEDURE CalculateCancellationRate
@@ -235,7 +221,6 @@ GO
      --    OCCUPATION REPORTS          --
 -----------------------------------------
 
-<<<<<<< Updated upstream
 
 ----- (1) ------
 
@@ -243,11 +228,6 @@ GO
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
 
 
-=======
--- based on the filters, we count the total available rooms and the total booked rooms, then we calculate the occupancy rate
--- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
--- DEN FENONTAI TA PROPERTIES KLP,, TIPONEI MONO MIA STILI ME TO OCCUPANCY RATE!!!!
->>>>>>> Stashed changes
 CREATE PROCEDURE CalculateOccupancyRate
     @StartDate DATE,
     @EndDate DATE,
@@ -304,14 +284,10 @@ BEGIN
 END
 GO
 
-<<<<<<< Updated upstream
 ----- (2) ------
 
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
 
-=======
--- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
->>>>>>> Stashed changes
 -- sort the date start by the date with the highest number of reservation following by the occupation rate.
 -- fthinousa seira
 CREATE PROCEDURE IdentifyHighOccupancyPeriods
@@ -394,10 +370,7 @@ BEGIN
 END;
 GO
 
-<<<<<<< Updated upstream
 ----- (3) ------
-=======
->>>>>>> Stashed changes
 
 
 -- CREATE PROCEDURE IdentifyHighOccupancyPeriods
@@ -484,18 +457,10 @@ GO
 CREATE PROCEDURE CompareOccupancyRatesByRoomType
     @StartDate DATE,
     @EndDate DATE,
-<<<<<<< Updated upstream
     @PropertyLocation NVARCHAR(255),  
     @PropertyTypeName NVARCHAR(255)   
 AS
 BEGIN
-=======
-    @PropertyLocation NVARCHAR(255),   -- New parameter for Property Location
-    @PropertyTypeName NVARCHAR(255)    -- Parameter for Property Type Name
-AS
-BEGIN
-
->>>>>>> Stashed changes
     IF (@PropertyLocation = 'empty')
         SET @PropertyLocation = NULL;
     IF (@PropertyTypeName = 'empty')
@@ -524,10 +489,6 @@ BEGIN
     ORDER BY 
         OccupancyRate DESC;
 END
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 
 GO
 
@@ -535,14 +496,10 @@ GO
  --     RATING AND EVALUATION REPORTS        --
 -----------------------------------------------
 
-<<<<<<< Updated upstream
 ----- (1) ------
 
 -- Average rating and number of reviews for each property
 
-=======
--- Average rating and reviews for each property
->>>>>>> Stashed changes
 CREATE PROCEDURE GetAverageRatingAndReviews
 AS
 BEGIN
@@ -568,14 +525,10 @@ BEGIN
 END
 GO
 
-<<<<<<< Updated upstream
 ----- (2) ------
 
 -- Stored procedure that returns the highest and lowest average rated properties
 
-=======
--- Stored procedure that returns the highest and lowest rated properties
->>>>>>> Stashed changes
 CREATE PROCEDURE IdentifyPropertiesByRating
 AS
 BEGIN
@@ -583,11 +536,7 @@ BEGIN
         SELECT 
             P.Property_ID, 
             P.Property_Name, 
-<<<<<<< Updated upstream
-            AVG(CAST(R.Review_Rating AS DECIMAL(5, 2))) AS AverageRating
-=======
             AVG(R.Review_Rating) AS AverageRating
->>>>>>> Stashed changes
         FROM 
             PROPERTY P
         LEFT JOIN PRODUCT PR ON P.Property_ID = PR.Property_ID
@@ -603,7 +552,6 @@ BEGIN
     OR AverageRating = (SELECT MIN(AverageRating) FROM RatedProperties);
 END
 GO
-<<<<<<< Updated upstream
 
 
 -----------------------------------------------
@@ -613,11 +561,6 @@ GO
 ----- (1) ------
 
 
-=======
------------------------------------------------
- --     ROOM AVAILABILITY REPORT             --
------------------------------------------------
->>>>>>> Stashed changes
 -- Stored procedure that returns the total stock, the occupied stock, and the occupancy rate with the applied filters.
 CREATE PROCEDURE OverviewOfRoomTypeInventoryAndOccupancy
     @StartDate DATE,
@@ -669,11 +612,8 @@ GO
 -----------------------------------------------
  --          PERFORMANCE REPORTS             --
 -----------------------------------------------
-<<<<<<< Updated upstream
 
 
-=======
->>>>>>> Stashed changes
 CREATE PROCEDURE spGetProperties
     AS
     BEGIN
