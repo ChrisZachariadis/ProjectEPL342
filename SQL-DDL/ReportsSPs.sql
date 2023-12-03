@@ -5,7 +5,8 @@
      --       REVENUE REPORT       --
 -------------------------------------
 
--- Checked and working
+--(1)
+
 -- Get the total revenue with the given filters applied.
 CREATE PROCEDURE RevenueReport
     @StartDate DATE,
@@ -59,8 +60,12 @@ GO
 -----------------------------------------
      --  BOOKING STATISTICS REPORTS    --
 -----------------------------------------
+
+----- (1) ------
+
 -- Checked and working
 -- Stored procedure that for the specified property,room and location returns the total number of reservations
+
 
 CREATE PROCEDURE AnalyzeNumberOfReservations
     @StartDate DATE,
@@ -79,10 +84,10 @@ BEGIN
         SET @PropertyLocation = NULL;
 
     SELECT 
-        COUNT(R.Reservation_ID) AS NumberOfReservations,
+        P.Property_Location,
         PT.Property_Type_Name, 
         RT.Room_Type_Description, 
-        P.Property_Location
+        COUNT(R.Reservation_ID) AS NumberOfReservations
     FROM 
         RESERVATIONS R
     INNER JOIN 
@@ -103,50 +108,15 @@ BEGIN
         PT.Property_Type_Name, 
         RT.Room_Type_Description, 
         P.Property_Location
+    ORDER BY 
+        P.Property_Location ASC;
 END
+
+
 GO
 
------------------------------------------
-     --  BOOKING STATISTICS REPORTS    --
------------------------------------------
--- Stored procedure that for the specified property,room and location returns the total number of reservations
 
-CREATE PROCEDURE AnalyzeNumberOfReservations
-    @StartDate DATE = NULL,
-    @EndDate DATE = NULL,
-    @PropertyTypeID INT = NULL,
-    @RoomTypeID INT = NULL,
-    @PropertyLocation NVARCHAR(50) = NULL 
-AS
-BEGIN
-    SELECT 
-        COUNT(R.Reservation_ID) AS NumberOfReservations,
-        PT.Property_Type_Name, 
-        RT.Room_Type_Description, 
-        P.Property_Location
-    FROM 
-        RESERVATIONS R
-    INNER JOIN 
-        PRODUCT PR ON R.Product_ID = PR.Product_ID
-    INNER JOIN 
-        PROPERTY P ON PR.Property_ID = P.Property_ID
-    INNER JOIN 
-        PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID
-    INNER JOIN 
-        ROOM_TYPE RT ON PR.Room_Type_ID = RT.Room_Type_ID
-    WHERE 
-        (@StartDate IS NULL OR R.Reservation_Date >= @StartDate) AND
-        (@EndDate IS NULL OR R.Reservation_Date <= @EndDate) AND
-        (@PropertyTypeID IS NULL OR PT.Property_Type_ID = @PropertyTypeID) AND
-        (@RoomTypeID IS NULL OR RT.Room_Type_ID = @RoomTypeID) AND
-        (@PropertyLocation IS NULL OR P.Property_Location = @PropertyLocation)
-    GROUP BY 
-        PT.Property_Type_Name, 
-        RT.Room_Type_Description, 
-        P.Property_Location
-END
-GO
-
+----- (2) ------
 
 --ELEGXEI TO POSOSTO TON RESERVATIONS TOY KATHE PROPERTY TYPE SE SXESI ME TA TOTAL RESERVATION. 
 --Diladi to pososto ton reservations gia kathe property type.
@@ -193,6 +163,8 @@ BEGIN
 END
 GO
 
+
+----- (3) ------
 
 -- Based on the filters, we count the total number of reservations and the total number of cancelled reservations, 
 -- then we calculate the cancellation rate.
@@ -252,17 +224,19 @@ BEGIN
             ELSE 0
         END AS CancellationRate;
 END
+
 GO
 
 -----------------------------------------
      --    OCCUPATION REPORTS          --
 -----------------------------------------
 
--- based on the filters, we count the total available rooms and the total booked rooms, then we calculate the occupancy rate
 
+----- (1) ------
+
+-- based on the filters, we count the total available rooms and the total booked rooms, then we calculate the occupancy rate
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
-GO
--- DEN FENONTAI TA PROPERTIES KLP,, TIPONEI MONO MIA STILI ME TO OCCUPANCY RATE!!!!
+
 
 CREATE PROCEDURE CalculateOccupancyRate
     @StartDate DATE,
@@ -319,10 +293,9 @@ BEGIN
 END
 GO
 
+----- (2) ------
 
---CHECKED AND WORKING
 -- Stored procedure that returns the highest and lowest occupancy rates for each property type in a specific time.
-
 
 -- sort the date start by the date with the highest number of reservation following by the occupation rate.
 -- fthinousa seira
@@ -353,16 +326,22 @@ BEGIN
 END
 GO
 
--- CHECKED AND WORKING
+----- (3) ------
 
 -- This stored procedure compares how full are each room type in a specific time period.
 -- For every room_type, Show their occupancy rate for the given period. (also total stock and booked rooms are showed).
 
 CREATE PROCEDURE CompareOccupancyRatesByRoomType
     @StartDate DATE,
-    @EndDate DATE
+    @EndDate DATE,
+    @PropertyLocation NVARCHAR(255),  
+    @PropertyTypeName NVARCHAR(255)   
 AS
 BEGIN
+    IF (@PropertyLocation = 'empty')
+        SET @PropertyLocation = NULL;
+    IF (@PropertyTypeName = 'empty')
+        SET @PropertyTypeName = NULL;
     SELECT 
         RT.Room_Type_Description,
         SUM(ISNULL(S.Stock_Amount, 0)) AS TotalStock,
@@ -377,22 +356,27 @@ BEGIN
     LEFT JOIN PRODUCT PR ON RT.Room_Type_ID = PR.Room_Type_ID
     LEFT JOIN STOCK S ON PR.Product_ID = S.Product_ID AND S.Stock_Date BETWEEN @StartDate AND @EndDate
     LEFT JOIN RESERVATIONS R ON PR.Product_ID = R.Product_ID AND R.Reservation_Date BETWEEN @StartDate AND @EndDate
+    LEFT JOIN PROPERTY P ON PR.Property_ID = P.Property_ID  -- Linking to property
+    LEFT JOIN PROPERTY_TYPE PT ON P.Property_Type_ID = PT.Property_Type_ID -- Linking to property type
+    WHERE 
+        (P.Property_Location = @PropertyLocation OR @PropertyLocation IS NULL) AND 
+        (PT.Property_Type_Name = @PropertyTypeName OR @PropertyTypeName IS NULL)
     GROUP BY 
         RT.Room_Type_Description
     ORDER BY 
         OccupancyRate DESC;
 END
-GO
 
+
+GO
 
 -----------------------------------------------
  --     RATING AND EVALUATION REPORTS        --
 -----------------------------------------------
 
--- CHECKED AND WORKING.
+----- (1) ------
 
--- Average rating and reviews for each property
-
+-- Average rating and number of reviews for each property
 
 CREATE PROCEDURE GetAverageRatingAndReviews
 AS
@@ -419,35 +403,41 @@ BEGIN
 END
 GO
 
--- MAYBE WORKING ?? NEED TO CHECK LOGIC AGAIN 
+----- (2) ------
 
--- Stored procedure that returns the highest and lowest rated properties
+-- Stored procedure that returns the highest and lowest average rated properties
 
 CREATE PROCEDURE IdentifyPropertiesByRating
 AS
 BEGIN
-    SELECT 
-        P.Property_ID, 
-        P.Property_Name, 
-        AVG(CAST(R.Review_Rating AS DECIMAL(5, 2))) AS AverageRating
-    FROM 
-        PROPERTY P
-    LEFT JOIN PRODUCT PR ON P.Property_ID = PR.Property_ID
-    LEFT JOIN RESERVATIONS RV ON PR.Product_ID = RV.Product_ID
-    LEFT JOIN REVIEWS R ON RV.Review_ID = R.Review_ID
-    WHERE 
-        R.Review_ID IS NOT NULL
-    GROUP BY 
-        P.Property_ID, 
-        P.Property_Name
-    ORDER BY 
-        AverageRating DESC;
+    WITH RatedProperties AS (
+        SELECT 
+            P.Property_ID, 
+            P.Property_Name, 
+            AVG(CAST(R.Review_Rating AS DECIMAL(5, 2))) AS AverageRating
+        FROM 
+            PROPERTY P
+        LEFT JOIN PRODUCT PR ON P.Property_ID = PR.Property_ID
+        LEFT JOIN RESERVATIONS RV ON PR.Product_ID = RV.Product_ID
+        LEFT JOIN REVIEWS R ON RV.Review_ID = R.Review_ID
+        WHERE 
+            R.Review_ID IS NOT NULL
+        GROUP BY 
+            P.Property_ID, P.Property_Name
+    )
+    SELECT * FROM RatedProperties
+    WHERE AverageRating = (SELECT MAX(AverageRating) FROM RatedProperties)
+    OR AverageRating = (SELECT MIN(AverageRating) FROM RatedProperties);
 END
 GO
+
 
 -----------------------------------------------
  --     ROOM AVAILABILITY REPORT             --
 -----------------------------------------------
+
+----- (1) ------
+
 
 -- Stored procedure that returns the total stock, the occupied stock, and the occupancy rate with the applied filters.
 
@@ -500,6 +490,7 @@ GO
 -----------------------------------------------
  --          PERFORMANCE REPORTS             --
 -----------------------------------------------
+
 
 CREATE PROCEDURE spGetProperties
     AS
