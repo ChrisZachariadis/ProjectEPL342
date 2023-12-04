@@ -6,17 +6,17 @@
 EXEC RevenueReport
     @StartDate = '1/1/2023', 
     @EndDate = '12/31/2023',   
-    @PropertyTypeName = 'Appartment',    
-    @RoomTypeDescription = 'Double',         
-    @PropertyLocation = 'Athens';  
+    @PropertyTypeName = 'Apartment',    
+    @RoomTypeDescription = 'empty',         
+    @PropertyLocation = 'empty';  
 
 GO
 
 EXEC AnalyzeNumberOfReservations 
 @StartDate = '1/1/2023', 
 @EndDate = '12/31/2023', 
-@PropertyTypeID = 'empty', 
-@RoomTypeID = 'empty', 
+@PropertyTypeName = 'empty', 
+@RoomTypeDescription = 'empty', 
 @PropertyLocation = 'Athens';
 
 GO
@@ -78,13 +78,23 @@ EXEC OverviewOfRoomTypeInventoryAndOccupancy
     @PropertyLocation = 'empty';
 GO
 
+
+--ANAFORES APODOSEIS:
+
+EXEC GetPropertyRoomBookingStatus
+    @Property_ID = 1,
+    @StartDate = '1/1/2023', 
+    @EndDate = '1/5/2023';
+
+GO
+
 EXEC GetRoomsWithMonthlyBookings 
-    @PropertyName = 'Hotel', 
+    @Property_ID = 1, 
     @Year = 2023;
 GO
 
 EXEC GetRoomsWithMinBookings 
-    @PropertyID = 3, 
+    @PropertyID = 1, 
     @Year = 2023,
     @MinBookings = 1;
 
