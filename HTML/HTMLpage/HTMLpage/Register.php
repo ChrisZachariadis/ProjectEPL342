@@ -83,10 +83,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <option value="">Gender</option>
         <option value="M">Male</option>
         <option value="F">Female</option>
-        <option value="F">Attack Helicopter</option>
-        <option value="F">Chair</option>
-        <option value="F">PC</option>
-        <option value="F">Kuma</option>
     </select>
   </div>
 
