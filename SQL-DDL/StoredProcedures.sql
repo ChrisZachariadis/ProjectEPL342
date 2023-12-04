@@ -379,6 +379,8 @@ CREATE PROCEDURE spInsert_Product
 AS
 BEGIN
     DECLARE @Room_Type_ID INT
+	DECLARE @Date DATE = '2023-01-01' -- Initialize the start date
+    DECLARE @EndDate DATE = '2023-12-31' -- Initialize the end date
 
     -- Check if the @User_ID matches the User_ID for the specified Property_ID
     IF EXISTS (
@@ -395,7 +397,19 @@ BEGIN
 
         -- Insert the product 
         INSERT INTO [dbo].[PRODUCT] ( Product_Price, Max_Guests, Product_Description, Room_Type_ID, Property_ID)
-        VALUES (@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);        
+        VALUES (@Product_Price, @Max_Guests, @Product_Description, @Room_Type_ID, @Property_ID);       
+		
+		WHILE @Date <= @EndDate
+		BEGIN
+			PRINT @Date
+        -- Insert a row into STOCK table for each date
+        INSERT INTO [dbo].[STOCK] (Product_ID, Stock_Date, Stock_Amount)
+        VALUES ((SELECT TOP 1 Product_ID FROM [dbo].[PRODUCT] ORDER BY Product_ID DESC), @Date, 0)
+
+        -- Increment the date by 1 day
+        SET @Date = DATEADD(DAY, 1, @Date)
+    END
+
     END
     ELSE
     BEGIN
@@ -784,9 +798,32 @@ BEGIN
 END
 GO
 ------------------------------------------------------------------------------------------------------------
+CREATE PROCEDURE addStock
+    @Product_ID INT,
+    @StartDate DATE,
+    @EndDate DATE,
+    @Stock_Amount INT
+AS
+BEGIN
+    DECLARE @CurrentDate DATE = @StartDate;
 
-
-
+    WHILE @CurrentDate <= @EndDate
+    BEGIN
+        IF EXISTS (
+            SELECT 1
+            FROM STOCK
+            WHERE Product_ID = @Product_ID AND Stock_Date = @CurrentDate
+        )
+        BEGIN
+            -- Update existing stock record
+            UPDATE STOCK
+            SET Stock_Amount = @Stock_Amount
+            WHERE Product_ID = @Product_ID AND Stock_Date = @CurrentDate;
+        END
+        -- Move to the next date
+        SET @CurrentDate = DATEADD(DAY, 1, @CurrentDate);
+    END
+END
 
 
 
