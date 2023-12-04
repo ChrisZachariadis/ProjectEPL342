@@ -76,7 +76,7 @@ CREATE TABLE [dbo].[FACILITIES] (
 );
 
 CREATE TABLE [dbo].[STOCK] (
-    Stock_ID INT NOT NULL,
+    Stock_ID INT IDENTITY (1,1),
 	--FK
 	  Product_ID INT NOT NULL,
     Stock_Date DATE NOT NULL,
