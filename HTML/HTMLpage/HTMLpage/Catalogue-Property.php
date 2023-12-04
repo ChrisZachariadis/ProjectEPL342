@@ -27,7 +27,7 @@ if ($conn === false) {
 $tsql = "{call getProductsBasedOnFilters (?, ?, ?, ?, ?)}";
 
 $params = array($Location, $Room, $Property, $date_from, $date_to);
-var_dump($params);
+
 $return = sqlsrv_query($conn, $tsql, $params);
 if ($return === false) {
   die(print_r(sqlsrv_errors(), true));

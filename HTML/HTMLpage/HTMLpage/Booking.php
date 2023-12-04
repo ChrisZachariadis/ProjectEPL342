@@ -28,7 +28,7 @@ if (isset($_POST['ID'])) {
 
     $tsql ="{call getID}";
     $getResults = sqlsrv_query($conn, $tsql);
-    var_dump($getResults);
+
     if ($getResults === false) {
         die(print_r(sqlsrv_errors(), true));
     }
@@ -55,7 +55,7 @@ if (isset($_POST['RID'])) {
     $tsql = "{call makeReview (?, ?, ?)}";
     $params = array($RID, $TEXT, $REVIEW); // replace 'Electronics' with the category you want
     $ans = sqlsrv_query($conn, $tsql, $params);
-    var_dump($ans);
+
     if ($ans == false) {
         die(print_r(sqlsrv_errors(), true));
     }

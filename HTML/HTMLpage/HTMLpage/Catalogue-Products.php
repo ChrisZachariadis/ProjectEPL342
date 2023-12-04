@@ -176,11 +176,11 @@ echo "<button onclick=\"location.href='Home.php'\" type='button' class='log' sty
 ?>
       <link href="./css/Catalogue-Products.css" rel="stylesheet" />
       <div class="facilities">
-      <h2>Facilities</h2>
-      <?php facilities(); ?>
-      <h2>Reviews</h2>
-      <?php reviews(); ?>
-      </div>
+            <h2>Facilities</h2>
+            <?php facilities(); ?>
+            <h2>Reviews</h2>
+            <?php reviews(); ?>
+        </div>
 
       <div class="home-container">
         <h1 id="TITLE" class="home-text">Available Products</h1>

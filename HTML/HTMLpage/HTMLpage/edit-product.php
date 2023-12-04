@@ -124,7 +124,7 @@ if(isset($_POST['editQuantity'])){
 
   $tsql = "{call addStock (?, ?, ?, ?)}";
   $params = array($productID, $startDate, $endDate, $Quantity);
-  var_dump($params);
+ 
   $getResults = sqlsrv_query($conn, $tsql, $params);
   if ($getResults === false) {
     die(print_r(sqlsrv_errors(), true));

@@ -187,16 +187,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Add more cases as needed
   }
   $tableData = [];
-  var_dump($tsql, $params);
+
   $getResults = sqlsrv_query($conn, $tsql, $params);
-  var_dump($getResults);
+
   if ($getResults === false) {
     die(print_r(sqlsrv_errors(), true));
   }
 
 
   $metadata = sqlsrv_field_metadata($getResults);
-  var_dump($metadata);
+
   foreach ($metadata as $field) {
     $tableHeaders[] = $field['Name'];
   }
@@ -204,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   //var_dump(sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC));
 
   while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-    var_dump($row);
+
     $tableData[] = $row;
   }
 
@@ -967,7 +967,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
                 $ID = $row['Property_ID'];
                 $Name = $row['Property_Name'];
-                var_dump($row);
+                
                 echo "<option value='$ID'>$Name</option>";
               }
 
@@ -1008,7 +1008,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
                 $ID = $row['Property_ID'];
                 $Name = $row['Property_Name'];
-                var_dump($row);
+                
                 echo "<option value='$ID'>$Name</option>";
               }
 
@@ -1051,7 +1051,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
                 $ID = $row['Property_ID'];
                 $Name = $row['Property_Name'];
-                var_dump($row);
+                
                 echo "<option value='$ID'>$Name</option>";
               }
 

@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $tsql = "{call spRegister_User (?, ?, ?, ?, ?, ?, ?)}";
   $params = array($birth, $UserType, $FName, $LName, $email, $passwd, $gender); // replace 'Electronics' with the category you want
   $getResults = sqlsrv_query($conn, $tsql, $params);
-  var_dump($getResults);
+ 
   if ($getResults === false) {
     echo '<script type="text/javascript">',
      'window.onload = function() {',

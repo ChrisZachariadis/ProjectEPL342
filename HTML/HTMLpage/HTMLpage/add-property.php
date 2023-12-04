@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $tsql = "{call spInsert_Property(?, ?, ?, ? ,? ,?, ?, ?, ?, ?)}";
     $params = array($propertyName, $address, $description, $coordinates, $location, $UserID, $ownerFirstName, $ownerLastName, $propertyType, $UserID);
-    var_dump($params);
+
     $getResults = sqlsrv_query($conn, $tsql, $params);
     if ($getResults === false) {
       die(print_r(sqlsrv_errors(), true));

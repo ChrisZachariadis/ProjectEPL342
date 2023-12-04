@@ -15,6 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $maxGuests = $_POST['MaxGuests']; // Assuming this is a text input
     $propertyID = $_POST['ID']; // Assuming this is a text input
     $UserID = $_SESSION['UserID'];
+    
 
     $serverName = $_SESSION["serverName"];
     $connectionOptions = $_SESSION["connectionOptions"];
@@ -29,11 +30,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $getResults = sqlsrv_query($conn, $tsql, $params);
     if ($getResults === false) {
       die(print_r(sqlsrv_errors(), true));
-    }
+    } 
 
-    if ($getResults === false) {
-      die(print_r(sqlsrv_errors(), true));
-    }
+    sqlsrv_free_stmt($getResults);
+    sqlsrv_close($conn);
+
 
   }
 }
@@ -174,7 +175,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  <link rel="stylesheet" href="..css./style.css" />
+  
   <div>
     <link href="./css/add-product.css" rel="stylesheet" />
 
