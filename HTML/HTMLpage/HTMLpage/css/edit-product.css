@@ -9,6 +9,22 @@
   justify-content: flex-end;
   background-image: url('https://a.travel-assets.com/findyours-php/viewfinder/images/res70/73000/73472-Nafplio.jpg');
 }
+.edit-product-form-container2 {
+  top: 713px;
+  left: 53px;
+  width: 1107px;
+  height: 133px;
+  margin: auto;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  border-color: #07282f;
+  border-style: solid;
+  border-width: 5px;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .edit-product-form-container {
   top: 272px;
   left: 53px;
@@ -24,6 +40,7 @@
   flex-direction: column;
   justify-content: center;
 }
+
 .edit-product-form {
   top: 98px;
   right: -26px;
@@ -124,4 +141,57 @@
   font-size: 36px;
   text-transform: capitalize;
   text-decoration: none;
+}
+
+.edit-product-startDate {
+  top: 20%;
+  left: 35px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+
+.edit-product-endDate {
+  top: 20%;
+  left: 262px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+
+.edit-product-amount {
+  top: 20%;
+  left: 494px;
+  width: 20%;
+  height: 80px;
+  position: absolute;
+  align-self: flex-start;
+  border-radius: 8px;
+  padding-right: 4px;
+}
+
+.edit-product-add-button {
+  left: 758px;
+  width: 225px;
+  bottom: 31px;
+  height: 50px;
+  position: absolute;
+  font-size: 0.75rem;
+  transition: 0.3s;
+  padding-top: var(--dl-space-space-unit);
+  border-width: 0px;
+  padding-left: var(--dl-space-space-twounits);
+  padding-right: var(--dl-space-space-twounits);
+  padding-bottom: var(--dl-space-space-unit);
+  text-transform: uppercase;
+  background-color: #000000;
+}
+.edit-product-add-button:hover {
+  transform: scale(1.02);
 }
